@@ -47,7 +47,8 @@ public class PlayerMove : MonoBehaviour
         Vector3 dir = new Vector3(h, 0, v);
         dir = dir.normalized;
 
-        playerAnim.SetFloat("MoveMotion", dir.magnitude);
+        playerAnim.SetFloat("speedX", h);
+        playerAnim.SetFloat("speedY", v);
 
         // 2-1. 메인 카메라를 기준으로 방향을 변환한다.
         dir = Camera.main.transform.TransformDirection(dir);

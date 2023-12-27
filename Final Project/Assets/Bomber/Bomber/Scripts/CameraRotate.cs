@@ -19,6 +19,6 @@ public class CameraRotate : MonoBehaviour
 
         my = Mathf.Clamp(my, -90f, 90f);
 
-        transform.eulerAngles = new Vector3(-my, mx, 0);
+        transform.eulerAngles = new Vector3(-my, mx + 90, 0);
     }
 }
