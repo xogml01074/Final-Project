@@ -1461,7 +1461,7 @@ GameObject:
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1721181831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1477,6 +1477,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 1721181832}
   enemyFactory: {fileID: 7099689981922686693, guid: f7fb297c28018824b83e96f312de9fad, type: 3}
   gameLevel: {fileID: 1358022371}
+  cnt: 1
 --- !u!4 &1721181832
 Transform:
   m_ObjectHideFlags: 0
@@ -1499,10 +1500,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2128444343, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.312
+      objectReference: {fileID: 0}
+    - target: {fileID: 2128444343, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 2340762470792437606, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
       propertyPath: bulletTxt
       value: 
       objectReference: {fileID: 1238334643}
+    - target: {fileID: 2340762470792437607, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2340762470995678382, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
       propertyPath: m_RootOrder
       value: 8

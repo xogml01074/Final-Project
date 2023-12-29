@@ -39,14 +39,15 @@ public class PlayerFire : MonoBehaviour
         wMode = WeaponMode.Normal;
 
         playerAnim = GetComponentInChildren<Animator>();
-        bulletTxt.text = $"{currentCount} / 6 ";
+        // bulletTxt.text = $"{currentCount} / 6 ";
     }
 
     private void Update()
     {
         Fire();
         Reloading();
-        bulletTxt.text = $"{currentCount} / 6";
+        // bulletTxt.text = $"{currentCount} / 6";
+        meleeAttack();
     }
     public void Fire()
     {
@@ -97,5 +98,18 @@ public class PlayerFire : MonoBehaviour
         print("Reloading");
         yield return new WaitForSeconds(3F);
         currentCount = bulletCount;
+    }
+
+    void meleeAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            playerAnim.SetTrigger("Attack");
+            Collider[] cols = Physics.OverlapSphere(transform.position, 1f, 1 << 8);
+            for (int i = 0; i < cols.Length; i++)
+            {
+                cols[i].gameObject.GetComponent<EnemyTest>().HitEnemy(7);
+            }
+        }
     }
 }

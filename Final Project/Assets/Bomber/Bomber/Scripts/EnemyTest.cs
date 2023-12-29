@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,6 +12,7 @@ public class EnemyTest : MonoBehaviour
     public GameObject itemFactory;
     public NavMeshAgent navEnemy;
     GameObject player;
+    public Animator enemyAnim;
 
     private void Start()
     {
@@ -22,6 +24,9 @@ public class EnemyTest : MonoBehaviour
     {
         Die();
         navEnemy.destination = player.transform.position;
+        DistanceCheck();
+        float dcc = Vector3.Distance(player.transform.position, enemy.transform.position);
+        enemyAnim.SetFloat("Distance", dcc);
     }
     public void Die()
     {
@@ -40,6 +45,45 @@ public class EnemyTest : MonoBehaviour
             // 파괴
             Destroy(enemy);
         }
+    }
+
+
+    public void MoveSpeedValue()
+    {
+        if (gameObject.name == "skinless zombie" || gameObject.name == "Zombie")
+        {
+            navEnemy.speed = 1f;
+        }
+        else if (gameObject.name == "YE_Zombie")
+        {
+            navEnemy.speed = 2f;
+        }
+    }
+    public void DistanceCheck()
+    {
+        float dcc = Vector3.Distance(player.transform.position, enemy.transform.position);
+        navEnemy.isStopped = false;
+        if (dcc > 20)
+        {
+            MoveSpeedValue();
+        }
+        else if (dcc < 7f && dcc > 1.5f)
+        {
+            navEnemy.speed = 2.5f;
+        }
+        else if (dcc <= 1.5f)
+        {
+            navEnemy.isStopped = true;
+            Attack();
+            return;
+        }
+    }
+
+    public void Attack()
+    {
+        float dcc = Vector3.Distance(player.transform.position, enemy.transform.position);
+        enemyAnim.SetTrigger("Attack");
+        player.GetComponent<PlayerMove>().Damaged(3);
     }
 
     // 맞았을때 처리
