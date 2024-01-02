@@ -90,5 +90,6 @@ public class EnemyTest : MonoBehaviour
     public void HitEnemy(int hitpower)
     {
         enemyHp -= hitpower;
+        print("123");
     }
 }
