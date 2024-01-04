@@ -1,9 +1,10 @@
+using Fusion;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerFire : MonoBehaviour
+public class PlayerFire : NetworkBehaviour
 {
     // 발사 위치
     public GameObject firePosition;
@@ -33,7 +34,7 @@ public class PlayerFire : MonoBehaviour
     }
     WeaponMode wMode;
 
-    private void Start()
+    public override void Spawned()
     {
         // 무기 기본 모드를 노멀 모드로 설정한다.
         wMode = WeaponMode.Normal;
@@ -42,7 +43,7 @@ public class PlayerFire : MonoBehaviour
         // bulletTxt.text = $"{currentCount} / 6 ";
     }
 
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
         Fire();
         Reloading();

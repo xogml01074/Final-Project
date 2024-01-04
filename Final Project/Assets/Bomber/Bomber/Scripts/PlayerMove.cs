@@ -1,8 +1,9 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : NetworkBehaviour
 {
 
     // 이동 속도 변수
@@ -26,15 +27,34 @@ public class PlayerMove : MonoBehaviour
     // 플레이어 체력 변수
     public int hp = 20;
 
+    // 애니메이터 변수
     public Animator playerAnim;
 
-    private void Start()
+    public Transform camPosition;
+
+    [Networked] private NetworkButtons _buttonsPrevious { get; set; }
+
+    public override void Spawned()
     {
         // 캐릭터 컨트롤러 컴포넌트 받아오기
         cc = GetComponent<CharacterController>();
+
+        // 애니메이터 받아오기
+        playerAnim = GetComponentInChildren<Animator>();
+
+        if (Object.HasInputAuthority)
+        {
+            GameManager.gm.player = this;
+            // hpSlider = GameManager.gm.hpSlider;
+
+            CamFollow cf = Camera.main.GetComponent<CamFollow>();
+            cf.target = camPosition;
+
+            GameManager.gm.pr = GetComponent<PlayerRotate>();
+        }
     }
 
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
         Move();
     }

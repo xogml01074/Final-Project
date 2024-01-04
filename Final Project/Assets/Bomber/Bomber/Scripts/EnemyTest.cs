@@ -34,8 +34,6 @@ public class EnemyTest : MonoBehaviour
         // 적 피가 0 이하일때
         if (enemyHp <= 0)
         {
-            GameManager.gm.killCount();
-            GameManager.gm.scoreCount();
             if (rv == Random.Range(0, 8))
             {
                 print("Unique Item Dropped!");

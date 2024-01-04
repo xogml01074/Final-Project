@@ -1,8 +1,9 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRotate : MonoBehaviour
+public class PlayerRotate : NetworkBehaviour
 {
     // 회전 속도 변수
     [SerializeField]
@@ -11,7 +12,7 @@ public class PlayerRotate : MonoBehaviour
     // 회전 값 변수
     float mx = 0;
 
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
         // 사용자의 마우스 입력을 받아 플레이어를 회전시키고 싶다.
         // 1. 마우스 좌우 입력을 받는다.
