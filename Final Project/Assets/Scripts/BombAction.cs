@@ -38,7 +38,7 @@ public class BombAction : MonoBehaviour
         for (int i = 0; i < cols.Length; i++)
         {
             cols[i].gameObject.GetComponent<EnemyTest>().HitEnemy(attackPower);
-            cols[i].gameObject.GetComponent<TitanScript>().HitTitan(attackPower);
+            // cols[i].gameObject.GetComponent<TitanScript>().HitTitan(attackPower);
         }
 
         bombParticle.Play();
