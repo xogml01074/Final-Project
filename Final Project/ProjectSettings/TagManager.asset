@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Enemy
   - Bomb
+  - FxTemporaire
+  - SecondCamera
+  - BulletSpawn
+  - Weapon
   layers:
   - Default
   - TransparentFX
@@ -16,7 +20,7 @@ TagManager:
   - Player
   - Bullet
   - Enemy
-  - 
+  - Spawner
   - 
   - 
   - 

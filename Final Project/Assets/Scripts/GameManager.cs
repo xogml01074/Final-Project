@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class GameManager : NetworkBehaviour
 {
     public static GameManager gm;
-    public int enemyCount;
     public Text countTxt;
     public int score;
     public Text scoreTxt;
@@ -24,9 +23,12 @@ public class GameManager : NetworkBehaviour
     // 게임 상태 상수
     public enum GameState
     {
-        Run,
-        Pause,
-        GameOver
+        Login,
+        Loding,
+        Ready,
+        Start,
+        GameOver,
+        End,
     }
 
     // 현재의 게임 상태 변수
@@ -41,12 +43,6 @@ public class GameManager : NetworkBehaviour
     // PlayerMove 클래스 변수
     public PlayerMove player;
 
-    // 옵션 화면 UI 오브젝트 변수
-    public GameObject gameOption;
-
-    public Slider hpSlider;
-    public GameObject hitEffect;
-
     public List<GameObject> players;
 
     public PlayerRotate pr;
@@ -55,7 +51,7 @@ public class GameManager : NetworkBehaviour
     public override void Spawned()
     {
         // 초기 게임 상태는 준비 상태로 설정한다.
-        gState = GameState.Run;
+        gState = GameState.Ready;
 
         // 게임 상태 UI 오브젝트에서 Text 컴포넌트를 가져온다.
         gameText = gameLabel.GetComponent<Text>();
@@ -113,41 +109,7 @@ public class GameManager : NetworkBehaviour
         gameLabel.SetActive(false);
 
         // 상태를 "게임 중" 상태로 변경한다.
-        gState = GameState.Run;
-    }
-
-    // 옵션 화면 켜기
-    public void OpenOptionWindow()
-    {
-        // 옵션 창을 활성화한다.
-        gameOption.SetActive(true);
-        // 게임 속도를 0배속으로 전환한다.
-        Time.timeScale = 0f;
-        // 게임 상태를 일시 정지 상태로 변경한다.
-        gState = GameState.Pause;
-    }
-
-    // 계속하기 옵션
-    public void CloseOptionWindow()
-    {
-        // 옵션 창을 비활성화한다.
-        gameOption.SetActive(false);
-        // 게임 속도를 1배속으로 전환한다.
-        Time.timeScale = 1f;
-        // 게임 상태를 게임 중 상태로 변경한다.
-        gState = GameState.Run;
-    }
-
-    // 다시하기 옵션
-    public void RestartGame()
-    {
-        // 게임 속도를 1배속으로 전환한다.
-        Time.timeScale = 1f;
-        // 현재 씬 번호를 다시 로드한다.
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-        // 로딩 화면 씬을 로드한다.
-        SceneManager.LoadScene(1);
+        gState = GameState.Start;
     }
 
     // 게임 종료 옵션
@@ -166,41 +128,4 @@ public class GameManager : NetworkBehaviour
     {
         players.Remove(obj);
     }
-
-
-    /*private void Start()
-    {
-        enemyCount = 0;
-        countTxt.text = $"{enemyCount} Kill";
-        score = 0;
-        scoreTxt.text = $"Score : {score}";
-        // et = GameObject.FindWithTag("Enemy");
-    }
-
-    // 적 킬 수 카운트
-    public void killCount()
-    {
-        ++enemyCount;
-        countTxt.text = $"{enemyCount} Kill";
-    }
-
-    public void scoreCount()
-    {
-        int randomValue = 1;
-
-        // 1 / 10 확률로 점수 3배 획득
-        if (randomValue == 1)
-        {
-            score += 30;
-            scoreTxt.text = $"Score : {score}";
-            print("Rare Score");
-        }
-
-        // 아닐경우 일반 점수
-        else
-        {
-            score += 10;
-            scoreTxt.text = $"Score : {score}";
-        }
-    }*/
 }
