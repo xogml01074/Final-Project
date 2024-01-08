@@ -1,6 +1,5 @@
 using Fusion;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMove : NetworkBehaviour
@@ -34,7 +33,8 @@ public class PlayerMove : NetworkBehaviour
 
     [Networked] private NetworkButtons _buttonsPrevious { get; set; }
 
-    public override void Spawned()
+    //    public override void Spawned()
+    private void Start()
     {
         // 캐릭터 컨트롤러 컴포넌트 받아오기
         cc = GetComponent<CharacterController>();
@@ -54,9 +54,14 @@ public class PlayerMove : NetworkBehaviour
         }
     }
 
-    public override void FixedUpdateNetwork()
+    //    public override void FixedUpdateNetwork()
+    private void Update()
     {
         Move();
+        if (hp <= 0)
+        {
+            Die();
+        }
     }
 
     public void Move()
@@ -79,14 +84,14 @@ public class PlayerMove : NetworkBehaviour
 
 
         // 2-2. 만일, 점프 중이었고, 다시 바닥에 착지했다면...
-        if (isJumping && cc.collisionFlags == CollisionFlags.Below)
-        {
+        //if (isJumping && cc.collisionFlags == CollisionFlags.Below)
+        //{
             // 점프 전 상태로 초기화한다.
-            isJumping = false;
+        //    isJumping = false;
 
             // 캐릭터 수직 속도를 0으로 만든다.
-            yVelocity = 0;
-        }
+        //    yVelocity = 0;
+        //}
 
         // 2-4. 캐릭터 수직 속도에 중력 값을 적용한다.
         yVelocity += gravity * Time.deltaTime;
@@ -97,15 +102,37 @@ public class PlayerMove : NetworkBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
+            print("work");
             playerAnim.SetFloat("speedX", h);
             playerAnim.SetFloat("speedY", v);
             cc.Move(dir * moveSpeed * Time.deltaTime * 2);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            playerAnim.SetTrigger("Dodge");
         }
     }
 
     public void Damaged(int damage)
     {
         hp -= damage;
-        // 다치는 애니메이션
+        playerAnim.SetTrigger("Hit");
+    }
+
+    public void Die()
+    {
+        StopAllCoroutines();
+        DieProcess();
+
+    }
+
+    IEnumerator DieProcess()
+    {
+        playerAnim.SetTrigger("Die");
+        cc.enabled = false;
+        yield return new WaitForSeconds(2f);
+        print("소멸!");
+        Destroy(gameObject);
     }
 }

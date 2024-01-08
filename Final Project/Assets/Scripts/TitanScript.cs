@@ -42,7 +42,6 @@ public class TitanScript : MonoBehaviour
 
     private void Update()
     {
-        // 현재 상태를 체크해 해당 상태별로 정해진 기능을 수행하게 하고 싶다.
         switch (t_State)
         {
             case TitanState.Idle:
@@ -62,7 +61,6 @@ public class TitanScript : MonoBehaviour
                 break;
         }
 
-        // 현재 hp(%)를 hp 슬라이더의 value에 반영한다.
         hpSlider.value = (float)currentHp / maxHp;
 
         float dcc = Vector3.Distance(nearplayer.transform.position, titan.transform.position);
@@ -72,19 +70,15 @@ public class TitanScript : MonoBehaviour
     // 죽음 상태 함수
     void Die()
     {
-        // 진행 중인 피격 코루틴을 중지한다.
         StopAllCoroutines();
 
-        // 죽음 상태를 처리하기 위한 코루틴을 실행한다.
         StartCoroutine(DieProcess());
     }
 
     IEnumerator DieProcess()
     {
-        // 캐릭터 컨트롤러 컴포넌트를 비활성화시킨다.
         tcc.enabled = false;
 
-        // 2초 동안 기다린 후에 자기 자신을 제거한다.
         yield return new WaitForSeconds(2f);
         print("소멸!");
         Destroy(gameObject);
@@ -92,17 +86,14 @@ public class TitanScript : MonoBehaviour
 
     void Damaged()
     {
-        // 피격 상태를 처리하기 위한 코루틴을 실행한다.
         StartCoroutine(DamageProcess());
     }
 
     // 데미지 처리용 코루틴 함수
     IEnumerator DamageProcess()
     {
-        // 피격 모션 시간만큼 기다린다.
         yield return new WaitForSeconds(1f);
 
-        // 현재 상태를 이동 상태로 전환한다.
         t_State = TitanState.Move;
         print("상태 전환 : Damaged -> Move");
     }
@@ -156,17 +147,6 @@ public class TitanScript : MonoBehaviour
         // 만일, 플레이어와의 거리가 공격 범위 밖이라면 플레이어를 향해 이동한다.
         if (minDistance > attackDistance)
         {
-            /*
-            // 이동 방향 설정
-            Vector3 dir = (player.position - transform.position).normalized;
-
-            // 캐릭터 컨트롤러를 이용해 이동하기
-            cc.Move(dir * moveSpeed * Time.deltaTime);
-
-            // 플레이어를 향해 방향을 전환한다.
-            transform.forward = dir;
-            */
-
             // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화한다.
             navTitan.isStopped = true;
             navTitan.ResetPath();
