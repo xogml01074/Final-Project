@@ -7,9 +7,9 @@ public class ZombiesSpawner : MonoBehaviour
 {
     public BoxCollider rangeCollider;
 
-    public GameObject Zombie;
+    public List<GameObject> Zombies;
 
-    public float spawnDelay = 2.25f;
+    public float spawnDelay = 3f;
     public float currentTime;
 
     private void Start()
@@ -21,15 +21,22 @@ public class ZombiesSpawner : MonoBehaviour
 
     private void Update()
     {
+        currentTime += Time.deltaTime;
         SetSpawnDelay();
     }
 
     IEnumerator ZombieSPawn()
     {
+        int idx = 0;
+
         while (true)
         {
+            // 일정 시간이 지나면 좀비의 종류를 증가시키는 코드
+            if (currentTime > 300)
+                idx = GetZombieType();
+
             Vector3 spawnPos = GetSpawnPoint();
-            Instantiate(Zombie, spawnPos, Quaternion.identity);
+            Instantiate(Zombies[idx], spawnPos, Quaternion.identity);
 
             yield return new WaitForSeconds(spawnDelay);
         }
@@ -40,13 +47,8 @@ public class ZombiesSpawner : MonoBehaviour
         if (spawnDelay == 1f)
             return;
 
-        currentTime += Time.deltaTime;
-
-        if (currentTime >= 60)
-        {
+        if (currentTime % 60 == 0)
             spawnDelay -= 0.25f;
-            currentTime = 0;
-        }
     }
 
     // 콜라이더 범위안에 랜덤한 스폰포인트를 생성해 반환하는 메소드
@@ -66,5 +68,17 @@ public class ZombiesSpawner : MonoBehaviour
         spawnPos += basePos;
 
         return spawnPos;
+    }
+
+    // 좀비 종류를 랜덤으로 변경하는 메소드
+    private int GetZombieType()
+    {
+        int rd = Random.Range(0, 100);
+
+        if (rd > 30)
+            return 0;
+
+        else
+            return 1;
     }
 }

@@ -9,6 +9,7 @@ public class ZombieMovement : MonoBehaviour
     public enum ZombieType
     {
         Zombie,
+        SkinlessZombie,
     }
 
     private enum ZombieState
