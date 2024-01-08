@@ -8,6 +8,7 @@ public class ZombiesSpawner : MonoBehaviour
     public BoxCollider rangeCollider;
 
     public List<GameObject> Zombies;
+    public GameObject boss;
 
     public float spawnDelay = 3f;
     public float currentTime;
@@ -16,7 +17,7 @@ public class ZombiesSpawner : MonoBehaviour
     {
         rangeCollider = GetComponent<BoxCollider>();
 
-        StartCoroutine(nameof(ZombieSPawn));
+        StartCoroutine(nameof(ZombieSpawn));
     }
 
     private void Update()
@@ -25,7 +26,7 @@ public class ZombiesSpawner : MonoBehaviour
         SetSpawnDelay();
     }
 
-    IEnumerator ZombieSPawn()
+    IEnumerator ZombieSpawn()
     {
         int idx = 0;
 
