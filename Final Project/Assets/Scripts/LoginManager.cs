@@ -15,9 +15,6 @@ public class LoginManager : MonoBehaviour
 
     private NetworkRunner _runnerInstance = null;
 
-    // 사용자 데이터를 새로 저장하거나 저장된 데이터를 읽어
-    // 사용자의 입력과 일치하는지 검사하게 하고 싶다.
-
     // 유저 아이디 변수
     public InputField id;
 
@@ -27,15 +24,13 @@ public class LoginManager : MonoBehaviour
     // 검사 텍스트 변수
     public Text notify;
 
-    public Text usersList;
-
     private void Start()
     {
         // 검사 텍스트 창을 비운다.
         notify.text = "";
     }
 
-    // 게임 실행을 위한 코드들
+    // 새로운 세션을 생성하는 코드
     public void StartSharedSession()
     {
         string roomName =
