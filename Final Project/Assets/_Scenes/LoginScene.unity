@@ -1447,7 +1447,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1272960478}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2037448274}
+        m_TargetAssemblyTypeName: LoginManager, Assembly-CSharp
+        m_MethodName: CheckUserData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1272960478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2151,7 +2163,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1727342179}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2037448274}
+        m_TargetAssemblyTypeName: LoginManager, Assembly-CSharp
+        m_MethodName: SaveUserDate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1727342179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2491,7 +2515,7 @@ MonoBehaviour:
   _networkRunnerPrefab: {fileID: 4885347167019494471, guid: 47042cc57141a614f9c340c78f75787c, type: 3}
   _playerDataPrefab: {fileID: 6626354724404853868, guid: 926b943850d843b47996241cc6b5a826, type: 3}
   _roomName: {fileID: 1388635872}
-  _gameSceneName: 
+  _gameSceneName: CharacterChoiceScene
   id: {fileID: 10203599}
   password: {fileID: 369555164}
   notify: {fileID: 818179013}

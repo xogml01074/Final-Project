@@ -8,9 +8,6 @@ using UnityEngine.UI;
 public class GameManager : NetworkBehaviour
 {
     public static GameManager gm;
-    public Text countTxt;
-    public int score;
-    public Text scoreTxt;
 
     private void Awake()
     {
@@ -23,10 +20,9 @@ public class GameManager : NetworkBehaviour
     // 게임 상태 상수
     public enum GameState
     {
-        Login,
-        Loding,
         Ready,
         Start,
+        Respawn,
         GameOver,
         End,
     }
@@ -61,9 +57,6 @@ public class GameManager : NetworkBehaviour
 
         // 게임 준비 -> 게임 중 상태로 전환하기
         StartCoroutine(ReadyToStart());
-
-        // 플레이어 오브젝트를 찾은 후 플레이어의 PlayerMove 컴포넌트 받아오기
-        //player = GameObject.Find("Player").GetComponent<PlayerMove>();
     }
 
     public override void FixedUpdateNetwork()
@@ -100,7 +93,7 @@ public class GameManager : NetworkBehaviour
         yield return new WaitForSeconds(2f);
 
         // 상태 텍스트의 내용을 "Go!"로 한다.
-        gameText.text = "Go!";
+        gameText.text = "게임 시작!";
 
         // 0.5초간대기한다.
         yield return new WaitForSeconds(0.5f);

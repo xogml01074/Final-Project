@@ -35,6 +35,7 @@ public class LoginManager : MonoBehaviour
         notify.text = "";
     }
 
+    // 게임 실행을 위한 코드들
     public void StartSharedSession()
     {
         string roomName =
@@ -44,6 +45,7 @@ public class LoginManager : MonoBehaviour
         StartGame(GameMode.Shared, roomName, _gameSceneName);
     }
 
+    // 플레이어의 데이터 관리 메소드
     private void SetPlayerData()
     {
         PlayerData playerData = FindObjectOfType<PlayerData>();
@@ -53,8 +55,10 @@ public class LoginManager : MonoBehaviour
         playerData.UserID = id.text;
     }
 
+    // 게임시작 메소드
     private async void StartGame(GameMode mode, string roomName, string sceneName)
     {
+        // 게임 플레이 씬으로 넘어가기 전 까지의 비동기처리
         _runnerInstance = FindObjectOfType<NetworkRunner>();
         if (_runnerInstance == null)
             _runnerInstance = Instantiate(_networkRunnerPrefab);
@@ -65,202 +69,71 @@ public class LoginManager : MonoBehaviour
         {
             GameMode = mode,
             SessionName = roomName,
-            PlayerCount = 4,
+            PlayerCount = 3,
         };
 
+        await _runnerInstance.StartGame(startGameArgs);
+
         StartGameResult res = await _runnerInstance.StartGame(startGameArgs);
+        // 접속 실패 체크
         if (!res.Ok)
         {
+            // 접속이 실패한 이유가 방이 다 차서라면 "방이 가득찼습니다." 출력
             if (res.ShutdownReason == ShutdownReason.GameIsFull)
                 notify.text = "방이 가득찼습니다.";
+            // 아니라면 게임이 실행되지 않은 이유 출력
             else
                 notify.text = res.ShutdownReason.ToString();
 
             return;
         }
 
-        // _runnerInstance.SetActiveScene(sceneName);
+        // 게임시작 (다음 씬으로 변경)
+        _runnerInstance.SetActiveScene(sceneName);
     }
 
-    // 아이디와 패스워드 저장 함수
-    public void SaveUserData()
-    {
-        // 만일 입력 검사에 문제가 있으면 함수를 종료한다.
-        if (!CheckInput(id.text, password.text))
-        {
-            return;
-        }
-
-        StartCoroutine(JoinDataPost(id.text, password.text));
-
-        // 만일 시스템에 저장돼 있는 아이디가 존재하지 않는다면
-        if (!PlayerPrefs.HasKey(id.text))
-        {
-            // 사용자의 아이디는 키(key)로 패스워드를 값(value)으로 설정해 저장한다.
-            PlayerPrefs.SetString(id.text, password.text);
-            notify.text = "아이디 생성이 완료됐습니다.";
-        }
-        // 그렇지 않으면, 이미 존재한다는 메시지를 출력한다.
-        else
-        {
-            notify.text = "이미 존재하는 아이디입니다.";
-        }
-    }
-
-    // 로그인 함수
     public void CheckUserData()
     {
-        // 만일 입력 검사에 문제가 있으면 함수를 종료한다.
-        if (!CheckInput(id.text, password.text))
-        {
+        if(!CheckInput(id.text, password.text))
             return;
-        }
 
-        StartCoroutine(GetLastLoginTime(id.text));
+        // 사용자가 입력한 아이디를 Key로 사용해 저장된 Value값을 함수에 저장
+        string pass = PlayerPrefs.GetString(id.text);
 
-        StartCoroutine(LoginDataPost(id.text, password.text));
+        // 만약 저장된 Value값과 입력된 비밀번호가 일치한다면 세션 실행
+        if (password.text == pass)
+            StartSharedSession();
+
+        else
+            notify.text = "입력하신 아이디와 패스워드가 일치하지 않습니다.";
     }
 
-    IEnumerator GetLastLoginTime(string id)
-    {
-        PlayerData playerData = FindObjectOfType<PlayerData>();
-        if (playerData == null)
-            playerData = Instantiate(_playerDataPrefab);
 
-        string url = "http://localhost/fps_game/login_time.php";
-        WWWForm form = new WWWForm();
-        form.AddField("usernamePost", id);
-        using (UnityWebRequest www = UnityWebRequest.Post(url, form))
-        {
-            yield return www.SendWebRequest();
-            if (www.error == null)
-            {
-                switch (www.downloadHandler.text)
-                {
-                    case "NULL":
-                        break;
-                    case "user not found":
-                        break;
-                    default:
-                        playerData.LoginTime = www.downloadHandler.text;
-                        break;
-                }
-            }
-        }
-    }
-
-    IEnumerator LoginDataPost(string id, string password)
+    // 아이디 비밀번호 입력확인 메소드
+    private bool CheckInput(string id, string pwd)
     {
-        string url = "http://localhost/fps_game/login.php";
-        WWWForm form = new WWWForm();
-        form.AddField("usernamePost", id);
-        form.AddField("passwordPost", password);
-        using (UnityWebRequest www = UnityWebRequest.Post(url, form))
-        {
-            yield return www.SendWebRequest();
-            if (www.error == null)
-            {
-                switch (www.downloadHandler.text)
-                {
-                    case "login success":
-                        StartSharedSession();
-                        break;
-                    case "password incorrect":
-                        notify.text = "잘못된 비밀번호";
-                        break;
-                    case "user not found":
-                        notify.text = "사용자 없음";
-                        break;
-                }
-            }
-            else
-            {
-                Debug.Log("error");
-            }
-        }
-    }
-
-    // 입력 완료 확인 함수
-    bool CheckInput(string id, string pwd)
-    {
-        // 만일, 입력란이 하나라도 비어 있으면 유저 정보 입력을 요구한다.
+        // 만일 입력란이 하나라도 비어 있으면 유저 정보 입력 요구
         if (id == "" || pwd == "")
         {
-            notify.text = "아이디 또는 패스워드를 입력해주세요.";
+            notify.text = "아이디 또는 비밀번호를 입력해주세요.";
             return false;
         }
-        // 입력이 비어 있지 않으면 true를 반환한다.
-        {
+
+        else
             return true;
-        }
     }
 
-    IEnumerator JoinDataPost(string id, string password)
+    // 플레이어의 아이디 비밀번호 저장 메소드
+    public void SaveUserDate()
     {
-        string url = "http://localhost/fps_game/join.php";
-        WWWForm form = new WWWForm();
-        form.AddField("usernamePost", id);
-        form.AddField("passwordPost", password);
-        using (UnityWebRequest www = UnityWebRequest.Post(url, form))
+        // 만약 저장되어있는 아이디가 존재하지 않을시 아이디 생성
+        if (!PlayerPrefs.HasKey(id.text))
         {
-            yield return www.SendWebRequest();
-            if (www.error == null)
-            {
-                switch (www.downloadHandler.text)
-                {
-                    case "success":
-                        notify.text = "아이디 생성이 완료되었습니다.";
-                        break;
-                    case "already exist":
-                        notify.text = "이미 존재하는 아이디입니다.";
-                        break;
-                    case "fail":
-                        notify.text = "아이디 생성이 실패했습니다.";
-                        break;
-                }
-            }
-            else
-            {
-                notify.text = "로그인 서버 접속 실패";
-            }
+            PlayerPrefs.SetString(id.text, password.text);
+            notify.text = "아이디 생성이 완료되었습니다.";
         }
-    }
 
-    [System.Serializable]
-
-    public class User
-    {
-        public int id;
-        public string username;
-    }
-
-    public class Users
-    {
-        public User[] Items;
-    }
-
-    IEnumerator UserListPost()
-    {
-        string url = "http://localhost/fps_game/user_list.php";
-        WWWForm form = new WWWForm();
-        using (UnityWebRequest www = UnityWebRequest.Post(url, form))
-        {
-            yield return www.SendWebRequest();
-            if (www.error == null)
-            {
-                string jsonStr = "{\"Items\":" + www.downloadHandler.text + "}";
-                Users users = JsonUtility.FromJson<Users>(jsonStr);
-                string userStr = "";
-                foreach (User user in users.Items)
-                    userStr += $"ID : {user.id}, Name : {user.username}\n";
-
-                usersList.text = userStr;
-            }
-        }
-    }
-
-    public void UserList()
-    {
-        StartCoroutine(UserListPost());
+        else
+            notify.text = "이미 존재하는 아이디 입니다.";
     }
 }
