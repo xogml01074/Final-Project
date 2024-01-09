@@ -11,8 +11,8 @@ public class ZombieSpawnerManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(nameof(SetAcitiveSpawner));
-        StartCoroutine(nameof(BossSpawn));
+        StartCoroutine(SetAcitiveSpawner());
+        StartCoroutine(BossSpawn());
     }
 
     // 좀비 스포너 시간별 활성화 코루틴

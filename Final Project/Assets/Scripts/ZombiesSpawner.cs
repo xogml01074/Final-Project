@@ -17,7 +17,7 @@ public class ZombiesSpawner : MonoBehaviour
     {
         rangeCollider = GetComponent<BoxCollider>();
 
-        StartCoroutine(nameof(ZombieSpawn));
+        StartCoroutine(ZombieSpawn());
     }
 
     private void Update()
