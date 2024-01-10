@@ -1,7 +1,5 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,32 +20,31 @@ public enum FireMode
 
 public class PlayerController : MonoBehaviour
 {
-    // ÇÃ·¹ÀÌ¾î »óÅÂ º¯¼ö
+    // í”Œë ˆì´ì–´ ìƒíƒœ ë³€ìˆ˜
     public PlayerState playerState;
 
-    // ¹ß»ç »óÅÂ º¯¼ö
+    // ë°œì‚¬ ìƒíƒœ ë³€ìˆ˜
     public FireMode fireMode;
 
-    // ÇÃ·¹ÀÌ¾î ¼Óµµ º¯¼ö
-    public float moveSpeed = 4f;
+    // í”Œë ˆì´ì–´ ì†ë„ ë³€ìˆ˜
+    public float moveSpeed;
 
-    // Ä³¸¯ÅÍ ÄÁÆ®·Ñ·¯ º¯¼ö
+    // ìºë¦­í„° ì»¨íŠ¸ë¡¤ëŸ¬ ë³€ìˆ˜
     CharacterController cc;
 
-    // Áß·Â º¯¼ö
+    // ì¤‘ë ¥ ë³€ìˆ˜
     public float gravity = -10f;
 
     public float yVelocity = 0;
 
-    Animator anim;
+    public Animator anim;
 
-    // Á¡ÇÁ È®ÀÎ º¯¼ö
+    // ì í”„ í™•ì¸ ë³€ìˆ˜
     public bool isJump = false;
 
     public float jumpPower = 3f;
 
-    public GameObject bulletHole;
-
+    // ì‚¬ê²© ë°œì‚¬ ìœ„ì¹˜ ë³€ìˆ˜
     public GameObject firePoint;
 
     public GameObject[] eff_Flash;
@@ -56,13 +53,14 @@ public class PlayerController : MonoBehaviour
 
     public GameObject bullet;
     
+    // ì‚¬ê²© ëª¨ë“œ í™•ì¸ ë³€ìˆ˜
     bool isFire = false;
 
+    // ì‚¬ê²© ë”œë ˆì´ ë³€ìˆ˜
     int delay = 0;
-
     public int setDelay = 50;
 
-    public int reLoadDelay = 1000;
+    public int reloadDelay = 1000;
 
     public float hp = 100;
 
@@ -74,17 +72,25 @@ public class PlayerController : MonoBehaviour
 
     public Text hpText;
 
+    // íƒ„ì°½ ë³€ìˆ˜
     public float bulletMagarzion = 30;
 
     public Text magerzionText;
 
+    // ë¡œì¼“ ë³€ìˆ˜
+    public GameObject rocket;
+    public Text rocketDelayText;
+    public Slider rocketBar;
+
+    // ë¡œì¼“ ë”œë ˆì´ ë³€ìˆ˜
+    public float rocketDelay = 0;
+    public float setRocketDelay = 5f;
+
     private void Start()
     {
         cc = GetComponent<CharacterController>();
-        anim = GetComponent<Animator>();
         playerState = PlayerState.Idle;
         fireMode = FireMode.One;
-
     }
 
 
@@ -92,60 +98,85 @@ public class PlayerController : MonoBehaviour
     {
         if (delay > 0)
             delay--;
+        if (rocketDelay > 0)
+            rocketDelay -= Time.deltaTime;
+
+        //hpText.text = hp.ToString();
+        //magerzionText.text = bulletMagarzion.ToString() + "/30";
+        //rocketBar.value = rocketDelay;
+        //hpBar.value = hp;
+
+        /*if (rocketDelay <= 0)
+            rocketDelayText.text = "";
+        else
+            rocketDelayText.text = rocketDelay.ToString("0.00");*/
+
+        if (anim.GetBool("back") || anim.GetBool("crouch"))
+            moveSpeed = 3;
+        else if (anim.GetBool("run"))
+            moveSpeed = 7;
+        else
+            moveSpeed = 4;
+
+        if (!isFire) // 'isFire'ê°€ ê±°ì§“ì¼ ê²½ìš° ë§ˆìš°ìŠ¤ ì™¼ìª½ì„ ëˆ„ë¥´ë©´ ì‚¬ê²©í•œë‹¤.
+        {
+            if (Input.GetMouseButtonDown(0)) 
+            {
+                if (delay <= 0 && bulletMagarzion >= 1)
+                {
+                    bulletMagarzion--;
+                    delay = setDelay;
+
+                    Instantiate(bullet);
+
+                    StartCoroutine(ShootEffectOn(0.05f));
+                }
+            }
+        }
+        if (isFire) // 'isFire'ê°€ ì°¸ì¼ ê²½ìš° ë§ˆìš°ìŠ¤ ì™¼ìª½ì„ ëˆ„ë¥´ë©´ ì—°ì‚¬í•œë‹¤.
+        {
+            if (Input.GetMouseButton(0)) 
+            {
+                if (delay <= 0 && bulletMagarzion >= 1)
+                {
+                    bulletMagarzion--;
+                    delay = setDelay;
+
+                    Instantiate(bullet);
+                    
+                    StartCoroutine(ShootEffectOn(0.05f));
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1)) // ë§ˆìš°ìŠ¤ ì˜¤ë¥¸ìª½ì„ ëˆ„ë¥´ë©´ ë¡œì¼“ì„ ë°œì‚¬í•œë‹¤.
+        {
+            if (rocketDelay <= 0)
+            {
+                rocketDelay = setRocketDelay;
+
+                Instantiate(rocket);
+            }
+        }
 
         PlayerMoving();
         AnimationUpdate();
         ChangeFM();
         ReloadMagarzion();
-
-        hpText.text = hp.ToString();
-        magerzionText.text = bulletMagarzion.ToString() + "/30";
-
-        if (!isFire)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (delay <= 0 && bulletMagarzion >= 1)
-                {
-                    bulletMagarzion--;
-                    delay = setDelay;
-                    
-                    Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
-
-                    StartCoroutine(ShootEffectOn(0.05f));
-                }
-            }
-        }
-        if (isFire)
-        {
-            if (Input.GetMouseButton(0))
-            {
-                if (delay <= 0 && bulletMagarzion >= 1)
-                {
-                    bulletMagarzion--;
-                    delay = setDelay;
-
-                    Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
-                    
-                    StartCoroutine(ShootEffectOn(0.05f));
-                }
-            }
-        }
-
     }
 
-    // ÇÃ·¹ÀÌ¾î ÀÌµ¿ ÇÔ¼ö
+    // í”Œë ˆì´ì–´ ì´ë™ í•¨ìˆ˜
     public void PlayerMoving()
     {
-        // ÀÔ·Â Å°¸¦ ¹Ş¾Æ¿Â´Ù.
+        // ì…ë ¥ í‚¤ë¥¼ ë°›ì•„ì˜¨ë‹¤.
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         
-        // ÀÌµ¿ ¹æÇâÀ» ¼³Á¤ÇÑ´Ù.
+        // ì´ë™ ë°©í–¥ì„ ì„¤ì •í•œë‹¤.
         Vector3 dir = new Vector3(h, 0, v);
         dir = dir.normalized;
 
-        // ÇÃ·¹ÀÌ¾î°¡ Á×¾úÀ»¶§ ¿òÁ÷ÀÓÀ» ¸ØÃá´Ù.
+        // í”Œë ˆì´ì–´ê°€ ì£½ì—ˆì„ë•Œ ì›€ì§ì„ì„ ë©ˆì¶˜ë‹¤.
         if (playerState != PlayerState.Die)
         {
             if (h != 0 || v != 0)
@@ -154,11 +185,11 @@ public class PlayerController : MonoBehaviour
                 playerState = PlayerState.Idle;
         }
 
-        // ÇÃ·¹ÀÌ¾î°¡ Move°¡ ¾Æ´Ò°æ¿ì ¿òÁ÷ÀÓÀ» ¸ØÃá´Ù.
+        // í”Œë ˆì´ì–´ê°€ Moveê°€ ì•„ë‹ê²½ìš° ì›€ì§ì„ì„ ë©ˆì¶˜ë‹¤.
         if (playerState != PlayerState.Move)
             anim.SetBool("move", false);
 
-        // º¸´Â ¹æÇâÀ» ¼³Á¤ÇÑ´Ù.
+        // ë³´ëŠ” ë°©í–¥ì„ ì„¤ì •í•œë‹¤.
         dir = Camera.main.transform.TransformDirection(dir);
 
         yVelocity += gravity * Time.deltaTime;
@@ -173,7 +204,7 @@ public class PlayerController : MonoBehaviour
             isJump = false;
         }
         
-        // Space¸¦ ´©¸£¸é Á¡ÇÁ
+        // Spaceë¥¼ ëˆ„ë¥´ë©´ ì í”„
         if (Input.GetKeyDown(KeyCode.Space) && !isJump)
         {
             anim.SetTrigger("jump");
@@ -181,53 +212,32 @@ public class PlayerController : MonoBehaviour
             isJump = true;
         }
 
-        // ÀÌµ¿Áß ¾Ö´Ï¸ŞÀÌ¼Ç º¯°æ
+        // ì´ë™ì¤‘ ì• ë‹ˆë©”ì´ì…˜ ë³€ê²½
         if (anim.GetBool("move"))
         {
-            // LeftShift¸¦ ´©¸£´Â Áß¿¡´Â ´Ş¸°´Ù
+            // LeftShiftë¥¼ ëˆ„ë¥´ëŠ” ì¤‘ì—ëŠ” ë‹¬ë¦°ë‹¤
             if (Input.GetKey(KeyCode.LeftShift))
-            {
-                moveSpeed = 7;
                 anim.SetBool("run", true);
-            }
             else
-            {
-                moveSpeed = 4;
                 anim.SetBool("run", false);
-            }
 
             if (Input.GetKey(KeyCode.A))
-            {
                 anim.SetBool("left", true);
-            }
             else
-            {
                 anim.SetBool("left", false);
-            }
 
             if (Input.GetKey(KeyCode.D))
-            {
                 anim.SetBool("right", true);
-
-            }
             else
-            { 
                 anim.SetBool("right", false);
-            }
 
             if (Input.GetKey(KeyCode.S))
-            {
                 anim.SetBool("back", true);
-                moveSpeed = 3;
-            }
             else
-            { 
                 anim.SetBool("back", false);
-                moveSpeed = 4;
-            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             switch (anim.GetBool("crouch"))
             {
@@ -247,7 +257,6 @@ public class PlayerController : MonoBehaviour
         switch (playerState)
         { 
             case PlayerState.Idle:
-                //anim
                 break;
             case PlayerState.Move:
                 anim.SetBool("move", true);
@@ -258,17 +267,17 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ShootEffectOn(float duration)
     {
-        // ·£´ıÇÏ°Ô ¼ıÀÚ¸¦ »Ì´Â´Ù.
+        // ëœë¤í•˜ê²Œ ìˆ«ìë¥¼ ë½‘ëŠ”ë‹¤.
         int num = Random.Range(0, eff_Flash.Length - 1);
-        // ÀÌÆåÆ® ¿ÀºêÁ§Æ® ¹è¿­¿¡¼­ »ÌÈù ¼ıÀÚ¿¡ ÇØ´çÇÏ´Â ÀÌÆåÆ® ¿ÀºêÁ§Æ®¸¦ È°¼ºÈ­ÇÑ´Ù.
+        // ì´í™íŠ¸ ì˜¤ë¸Œì íŠ¸ ë°°ì—´ì—ì„œ ë½‘íŒ ìˆ«ìì— í•´ë‹¹í•˜ëŠ” ì´í™íŠ¸ ì˜¤ë¸Œì íŠ¸ë¥¼ í™œì„±í™”í•œë‹¤.
         eff_Flash[num].SetActive(true);
-        // ÁöÁ¤ÇÑ ½Ã°£¸¸Å­ ±â´Ù¸°´Ù.
+        // ì§€ì •í•œ ì‹œê°„ë§Œí¼ ê¸°ë‹¤ë¦°ë‹¤.
         yield return new WaitForSeconds(duration);
-        // ÀÌÆåÆ® ¿ÀºêÁ§Æ®¸¦ ´Ù½Ã ºñÈ°¼ºÈ­ÇÑ´Ù.
+        // ì´í™íŠ¸ ì˜¤ë¸Œì íŠ¸ë¥¼ ë‹¤ì‹œ ë¹„í™œì„±í™”í•œë‹¤.
         eff_Flash[num].SetActive(false);
     }
 
-    public void ChangeFM()
+    public void ChangeFM() // ì‚¬ê²© ëª¨ë“œ ë³€ê²½ í•¨ìˆ˜
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -286,14 +295,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void ReloadMagarzion() // ÀçÀåÀü ÇÔ¼ö
+    public void ReloadMagarzion() // ì¬ì¥ì „ í•¨ìˆ˜
     {
-        if (Input.GetKeyDown(KeyCode.R)) // RÅ°¸¦ ´©¸£¸é ÀçÀåÀü ÇÑ´Ù.
+        if (Input.GetKeyDown(KeyCode.R)) // Rí‚¤ë¥¼ ëˆ„ë¥´ë©´ ì¬ì¥ì „ í•œë‹¤.
         {
             anim.SetTrigger("reloading");
-            delay = reLoadDelay;
+            delay = reloadDelay;
             bulletMagarzion = 30;
-            
         }
     }
 }
