@@ -39,6 +39,9 @@ public class GameManager : NetworkBehaviour
     // PlayerMove 클래스 변수
     public PlayerMove player;
 
+    // PlayerController 클래스 변수
+    public PlayerController player_Attacker;
+
     public List<GameObject> players;
 
     public PlayerRotate pr;
@@ -62,11 +65,11 @@ public class GameManager : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
         // 만일, 플레이어의 hp가 0이하라면...
-        if (player != null && player.hp <= 0)
+        if (player != null && player.hp <= 0 || player_Attacker != null && player_Attacker.hp <= 0)
         {
             // 플레이어의 애니메이션을 멈춘다.
             player.GetComponentInChildren<Animator>().SetFloat("MoveMotion", 0f);
-
+            
             // 상태 텍스트를 활성화한다.
             gameLabel.SetActive(true);
 

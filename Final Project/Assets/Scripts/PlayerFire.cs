@@ -34,8 +34,7 @@ public class PlayerFire : NetworkBehaviour
     }
     WeaponMode wMode;
 
-    // public override void Spawned()
-    private void Start()
+    public override void Spawned()
     {
         // 무기 기본 모드를 노멀 모드로 설정한다.
         wMode = WeaponMode.Normal;
@@ -44,8 +43,7 @@ public class PlayerFire : NetworkBehaviour
         // bulletTxt.text = $"{currentCount} / 6 ";
     }
 
-    // public override void FixedUpdateNetwork()
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
         Fire();
         Reloading();
@@ -111,7 +109,7 @@ public class PlayerFire : NetworkBehaviour
             Collider[] cols = Physics.OverlapSphere(transform.position, 1f, 1 << 8);
             for (int i = 0; i < cols.Length; i++)
             {
-                cols[i].gameObject.GetComponent<ZombieMovement>().Hurt(7);
+                cols[i].gameObject.GetComponent<EnemyTest>().HitEnemy(7);
             }
         }
     }

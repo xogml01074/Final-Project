@@ -1,8 +1,9 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletCtrl : MonoBehaviour
+public class BulletCtrl : NetworkBehaviour
 {
     public float speed = 100f;
 
@@ -14,7 +15,7 @@ public class BulletCtrl : MonoBehaviour
 
     public float bulletPower = 10f;
 
-    private void Start()
+    public override void Spawned()
     {
         // 사격 포인트 오브젝트를 찾는다. 
         firePoint = GameObject.Find("MuzzlePoint");

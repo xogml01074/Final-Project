@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Fusion;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +19,7 @@ public enum FireMode
     Fire,
 }
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     // 플레이어 상태 변수
     public PlayerState playerState;
@@ -86,83 +87,93 @@ public class PlayerController : MonoBehaviour
     public float rocketDelay = 0;
     public float setRocketDelay = 5f;
 
-    private void Start()
+    public Transform camPosition;
+
+    public override void Spawned()
     {
         cc = GetComponent<CharacterController>();
+
+        if (Object.HasInputAuthority)
+        {
+            GameManager.gm.player_Attacker = this;
+
+            CamFollow cf = Camera.main.GetComponent<CamFollow>();
+            cf.target = camPosition;
+        }
+
         playerState = PlayerState.Idle;
         fireMode = FireMode.One;
     }
 
 
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
-        if (delay > 0)
-            delay--;
-        if (rocketDelay > 0)
-            rocketDelay -= Time.deltaTime;
-
-        //hpText.text = hp.ToString();
-        //magerzionText.text = bulletMagarzion.ToString() + "/30";
-        //rocketBar.value = rocketDelay;
-        //hpBar.value = hp;
-
-        /*if (rocketDelay <= 0)
-            rocketDelayText.text = "";
-        else
-            rocketDelayText.text = rocketDelay.ToString("0.00");*/
-
-        if (anim.GetBool("back") || anim.GetBool("crouch"))
-            moveSpeed = 3;
-        else if (anim.GetBool("run"))
-            moveSpeed = 7;
-        else
-            moveSpeed = 4;
-
-        if (!isFire) // 'isFire'가 거짓일 경우 마우스 왼쪽을 누르면 사격한다.
+        if (GameManager.gm.gState != GameManager.GameState.Start)
         {
-            if (Input.GetMouseButtonDown(0)) 
+            if (delay > 0)
+                delay--;
+            if (rocketDelay > 0)
+                rocketDelay -= Time.deltaTime;
+
+            //hpText.text = hp.ToString();
+            //magerzionText.text = bulletMagarzion.ToString() + "/30";
+            //rocketBar.value = rocketDelay;
+            //hpBar.value = hp;
+
+            /*if (rocketDelay <= 0)
+                rocketDelayText.text = "";
+            else
+                rocketDelayText.text = rocketDelay.ToString("0.00");*/
+
+            if (anim.GetBool("back") || anim.GetBool("crouch"))
+                moveSpeed = 3;
+            else if (anim.GetBool("run"))
+                moveSpeed = 7;
+            else
+                moveSpeed = 4;
+
+            if (!isFire) // 'isFire'가 거짓일 경우 마우스 왼쪽을 누르면 사격한다.
             {
-                if (delay <= 0 && bulletMagarzion >= 1)
+                if (Input.GetMouseButtonDown(0))
                 {
                     bulletMagarzion--;
-                    delay = setDelay;
 
                     Instantiate(bullet);
 
                     StartCoroutine(ShootEffectOn(0.05f));
                 }
             }
-        }
-        if (isFire) // 'isFire'가 참일 경우 마우스 왼쪽을 누르면 연사한다.
-        {
-            if (Input.GetMouseButton(0)) 
+            if (isFire) // 'isFire'가 참일 경우 마우스 왼쪽을 누르면 연사한다.
             {
-                if (delay <= 0 && bulletMagarzion >= 1)
+                if (Input.GetMouseButton(0))
                 {
-                    bulletMagarzion--;
-                    delay = setDelay;
+                    if (delay <= 0 && bulletMagarzion >= 1)
+                    {
+                        bulletMagarzion--;
+                        delay = setDelay;
 
-                    Instantiate(bullet);
-                    
-                    StartCoroutine(ShootEffectOn(0.05f));
+                        Instantiate(bullet);
+
+                        StartCoroutine(ShootEffectOn(0.05f));
+                    }
                 }
             }
-        }
 
-        if (Input.GetMouseButtonDown(1)) // 마우스 오른쪽을 누르면 로켓을 발사한다.
-        {
-            if (rocketDelay <= 0)
+            if (Input.GetMouseButtonDown(1)) // 마우스 오른쪽을 누르면 로켓을 발사한다.
             {
-                rocketDelay = setRocketDelay;
+                if (rocketDelay <= 0)
+                {
+                    rocketDelay = setRocketDelay;
 
-                Instantiate(rocket);
+                    Instantiate(rocket);
+                }
             }
-        }
 
-        PlayerMoving();
-        AnimationUpdate();
-        ChangeFM();
-        ReloadMagarzion();
+            PlayerMoving();
+            AnimationUpdate();
+            ChangeFM();
+            ReloadMagarzion();
+        }
     }
 
     // 플레이어 이동 함수

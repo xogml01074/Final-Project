@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -532,6 +532,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c56097b7c3eef4f8956faa8456f1d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 20
+  currentHp: 20
 --- !u!1 &683219712
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,6 +824,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c56097b7c3eef4f8956faa8456f1d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 20
+  currentHp: 20
 --- !u!1001 &937130118
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -974,11 +978,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c009e43c49d1a944f94d80746f77cdaf, type: 3}
+  m_Script: {fileID: 11500000, guid: 71e6bf45e17fbe340842d372aca2a47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 2128444343}
-  rotateSpeed: 150
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -991,6 +994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 405b8890b1e0f5c4db2ac7864b206f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotSpeed: 300
 --- !u!1001 &976908557
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1172,6 +1176,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a363b78e9e0ea540a926780d7c2e470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+  level: 0
 --- !u!1 &1368896347
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,6 +1306,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c56097b7c3eef4f8956faa8456f1d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 20
+  currentHp: 20
 --- !u!1 &1455437411
 GameObject:
   m_ObjectHideFlags: 0
@@ -1466,6 +1474,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ab0e201b48e0646882dde86f27a2ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 1721181832}
+  enemyFactory: {fileID: 7099689981922686693, guid: f7fb297c28018824b83e96f312de9fad, type: 3}
+  gameLevel: {fileID: 1358022371}
+  cnt: 1
 --- !u!4 &1721181832
 Transform:
   m_ObjectHideFlags: 0
@@ -1496,10 +1508,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 2340762470792437604, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
-      propertyPath: rotSpeed
-      value: 150
-      objectReference: {fileID: 0}
     - target: {fileID: 2340762470792437606, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
       propertyPath: bulletTxt
       value: 
@@ -1508,25 +1516,21 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 2340762470792437607, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
-      propertyPath: camPosition
-      value: 
-      objectReference: {fileID: 2128444343}
     - target: {fileID: 2340762470995678382, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2340762470995678382, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.8
+      value: 1.31
       objectReference: {fileID: 0}
     - target: {fileID: 2340762470995678382, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2340762470995678382, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3
+      value: 4.06
       objectReference: {fileID: 0}
     - target: {fileID: 2340762470995678382, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1657,13 +1661,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796b29a8079f0cd42a59e66ccec86587, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  _gState: 0
-  gameLabel: {fileID: 0}
-  player: {fileID: 0}
-  players: []
-  pr: {fileID: 0}
-  loginTime: {fileID: 0}
+  enemyCount: 0
+  countTxt: {fileID: 1455437413}
+  score: 0
+  scoreTxt: {fileID: 154381985}
 --- !u!4 &2145110106
 Transform:
   m_ObjectHideFlags: 0
