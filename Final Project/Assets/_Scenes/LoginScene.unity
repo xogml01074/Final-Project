@@ -214,7 +214,7 @@ MonoBehaviour:
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterLimit: 12
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
   m_Text: 
   m_CaretBlinkRate: 0.85
-  m_CaretWidth: 1
+  m_CaretWidth: 2
   m_ReadOnly: 0
   m_ShouldActivateOnSelect: 1
 --- !u!114 &10203600
@@ -514,14 +514,14 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 369555165}
   m_TextComponent: {fileID: 503956819}
   m_Placeholder: {fileID: 93265885}
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterLimit: 12
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -536,7 +536,7 @@ MonoBehaviour:
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
   m_Text: 
   m_CaretBlinkRate: 0.85
-  m_CaretWidth: 1
+  m_CaretWidth: 2
   m_ReadOnly: 0
   m_ShouldActivateOnSelect: 1
 --- !u!114 &369555165
@@ -986,7 +986,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 711459520}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1008,7 +1008,7 @@ Transform:
   - {fileID: 1796095225}
   - {fileID: 369555163}
   m_Father: {fileID: 1561907905}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &818179011
 GameObject:
@@ -1081,8 +1081,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC544\uC774\uB514 \uB610\uB294 \uD328\uC2A4\uC6CC\uB4DC\uAC00 \uC77C\uCE58\uD558\uC9C0
-    \uC54A\uC2B5\uB2C8\uB2E4"
+  m_Text: 
 --- !u!222 &818179014
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1260,7 +1259,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1039930169}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ID
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1282,7 +1281,7 @@ Transform:
   - {fileID: 209051935}
   - {fileID: 10203598}
   m_Father: {fileID: 1561907905}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1238521955
 GameObject:
@@ -1907,8 +1906,8 @@ RectTransform:
   - {fileID: 818179012}
   - {fileID: 1920810000}
   - {fileID: 650030151}
-  - {fileID: 711459520}
   - {fileID: 1039930169}
+  - {fileID: 711459520}
   - {fileID: 1912250067}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -2379,7 +2378,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1912250067}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RoomName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2519,7 +2518,6 @@ MonoBehaviour:
   id: {fileID: 10203599}
   password: {fileID: 369555164}
   notify: {fileID: 818179013}
-  usersList: {fileID: 0}
 --- !u!4 &2037448275
 Transform:
   m_ObjectHideFlags: 0

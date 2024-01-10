@@ -24,12 +24,6 @@ public class LoginManager : MonoBehaviour
     // 검사 텍스트 변수
     public Text notify;
 
-    private void Start()
-    {
-        // 검사 텍스트 창을 비운다.
-        notify.text = "";
-    }
-
     // 새로운 세션을 생성하는 코드
     public void StartSharedSession()
     {
