@@ -153,7 +153,7 @@ public class ZombieMovement : MonoBehaviour
 
     }
 
-    private void Hurt(float damage)
+    public void Hurt(float damage)
     {
         currentHp -= damage;
 
