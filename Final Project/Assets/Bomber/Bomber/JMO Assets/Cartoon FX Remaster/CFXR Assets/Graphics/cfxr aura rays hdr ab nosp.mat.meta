@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Final Project/Assets/Bomber/Bomber/JMO Assets/Cartoon FX Remaster/CFXR Assets/Graphics/cfxr aura rays hdr ab nosp.mat.meta
 guid: 59b66e1956031654985c136e6927a7d8
+========
+guid: 09c1989f2f343984f9c6fd3c73ba6623
+>>>>>>>> dec218fda67c4ec5c7d4c6896cb83ebc11cbf51d:Final Project/Assets/Attacker/Basic Shooter Pack (1)/Materials/Ch15_body1.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000
