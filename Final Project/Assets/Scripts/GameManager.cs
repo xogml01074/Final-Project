@@ -22,9 +22,8 @@ public class GameManager : NetworkBehaviour
     {
         Ready,
         Start,
-        Respawn,
         GameOver,
-        End,
+        Clear,
     }
 
     // 현재의 게임 상태 변수
@@ -41,7 +40,6 @@ public class GameManager : NetworkBehaviour
 
     // PlayerController 클래스 변수
     public PlayerController player_Attacker;
-
     public List<GameObject> players;
 
     public PlayerRotate pr;
@@ -64,36 +62,13 @@ public class GameManager : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        // 만일, 플레이어의 hp가 0이하라면...
-        if (player != null && player.hp <= 0 || player_Attacker != null && player_Attacker.hp <= 0)
-        {
-            // 플레이어의 애니메이션을 멈춘다.
-            player.GetComponentInChildren<Animator>().SetFloat("MoveMotion", 0f);
-            
-            // 상태 텍스트를 활성화한다.
-            gameLabel.SetActive(true);
-
-            // 상태 텍스트의 내용을 'Game Over'로 한다.
-            gameText.text = "Game Over";
-
-            // 상태 텍스트의 색상을 붉은색으로 한다.
-            gameText.color = new Color32(255, 0, 0, 255);
-
-            // 상태 텍스트의 자식 오브젝트의 트랜스폼 컴포넌트를 가져온다.
-            Transform buttons = gameText.transform.GetChild(0);
-
-            // 버튼 오브젝트를 활성화한다.
-            buttons.gameObject.SetActive(true);
-
-            // 상태를 '게임 오버' 상태로 변경한다.
-            gState = GameState.GameOver;
-        }
+        ClearOrNot();
     }
 
     IEnumerator ReadyToStart()
     {
         // 2초간 대기한다.
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         // 상태 텍스트의 내용을 "Go!"로 한다.
         gameText.text = "게임 시작!";
@@ -106,6 +81,25 @@ public class GameManager : NetworkBehaviour
 
         // 상태를 "게임 중" 상태로 변경한다.
         gState = GameState.Start;
+    }
+
+    private void ClearOrNot()
+    {
+        if (gState == GameState.Clear)
+        {
+            gameLabel.SetActive(true);
+            gameText.text = "클리어!";
+
+            Time.timeScale = 0f;
+        }
+
+        else if (gState == GameState.GameOver)
+        {
+            gameLabel.SetActive(true);
+            gameText.text = "전원사망";
+
+            Time.timeScale = 0f;
+        }
     }
 
     // 게임 종료 옵션
