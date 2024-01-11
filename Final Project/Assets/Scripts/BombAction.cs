@@ -10,35 +10,33 @@ public class BombAction : MonoBehaviour
     public int attackPower = 20;
 
     // 폭발 효과 반경
-    public float explosionRadius = 999999f;
+    public float explosionRadius = 15f;
 
     public ParticleSystem bombParticle;
 
     public GameObject bomb;
 
-    LayerMask enemyLayer;
+    public LayerMask enemyLayer;
 
     private void Start()
     {
         bombParticle = GetComponentInChildren<ParticleSystem>();
         bombParticle.Pause();
-
-        enemyLayer = LayerMask.NameToLayer("Enemy");
     }
     // 충돌했을 때의 처리
     private void OnCollisionEnter(Collision collision)
     {
-        int layerMask = (1 << enemyLayer);
-
         // 폭발 효과 반경 내에서 레이어가 'Enemy'(8)인 모든 게임 오브젝트들의 Collider 컴포넌트를 배열에 저장한다
-        Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, layerMask);
+        Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, 1 << 8);
+
+        print(collision);
 
         // 저장된 Collider 배열에 있는 모든 에너미에게 수류탄 데미지를 적용한다.
         // 여기 안됨
-        for (int i = 0; i < cols.Length; i++)
+        for (int i = 0; i < cols.Length; ++i)
         {
-            cols[i].gameObject.GetComponent<EnemyTest>().HitEnemy(attackPower);
-            // cols[i].gameObject.GetComponent<TitanScript>().HitTitan(attackPower);
+            cols[i].GetComponent<ZombieMovement>().Hurt(attackPower);
+            cols[i].GetComponent<TitanScript>().HitEnemy(attackPower);
         }
 
         bombParticle.Play();

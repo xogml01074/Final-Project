@@ -102,7 +102,6 @@ public class PlayerMove : NetworkBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            print("work");
             playerAnim.SetFloat("speedX", h);
             playerAnim.SetFloat("speedY", v);
             cc.Move(dir * moveSpeed * Time.deltaTime * 2);

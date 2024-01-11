@@ -67,6 +67,9 @@ MonoBehaviour:
   explosionRadius: 3
   bombParticle: {fileID: 198572880945154666}
   bomb: {fileID: 493161431230664325}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!135 &9163359683127378714
 SphereCollider:
   m_ObjectHideFlags: 0
