@@ -71,7 +71,7 @@ public class LoginManager : MonoBehaviour
         }
 
         // 게임시작 (다음 씬으로 변경)
-        _runnerInstance.SetActiveScene(sceneName);
+        _runnerInstance.LoadScene(sceneName);
     }
 
     public void CheckUserData()

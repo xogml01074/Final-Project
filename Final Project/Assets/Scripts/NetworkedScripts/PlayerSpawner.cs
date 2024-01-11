@@ -15,10 +15,10 @@ public class PlayerSpawner : NetworkBehaviour
 
     public void SpawnPlayer(PlayerRef player)
     { 
-        int index = player % spawnPoints.Length;
-        var spawnPosition = spawnPoints[index].position;
+        //int index = player % spawnPoints.Length;
+        //var spawnPosition = spawnPoints[index].position;
 
-        var playerObject = Runner.Spawn(playerNetworkPrefab, spawnPosition, Quaternion.identity, player);
-        Runner.SetPlayerObject(player, playerObject);
+        //var playerObject = Runner.Spawn(playerNetworkPrefab, spawnPosition, Quaternion.identity, player);
+        //Runner.SetPlayerObject(player, playerObject);
     }
 }

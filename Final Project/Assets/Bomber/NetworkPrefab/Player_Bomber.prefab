@@ -1090,7 +1090,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913bf6d5499f81a4381f2704584250c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
   rotSpeed: 300
 --- !u!114 &4554060025370764813
 MonoBehaviour:
@@ -1104,7 +1103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc02fd4429dff1a4ab26fa48575db7fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
   moveSpeed: 7
   yVelocity: 0
   jumpPower: 2
@@ -1124,7 +1122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6d2d4eecbe8b9c48bf17fd892195ef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
   firePosition: {fileID: 4554060025423695203}
   bombFactory: {fileID: 493161431230664325, guid: 5307548206cdc0549a5461de62c0aab9, type: 3}
   throwPower: 10
@@ -1144,21 +1141,15 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SortKey: 754987849
   ObjectInterest: 1
-  DefaultInterestGroups: []
-  DestroyWhenStateAuthorityLeaves: 0
-  AllowStateAuthorityOverride: 1
-  AoiPositionSource: {fileID: 0}
   Flags: 264449
-  NetworkGuid:
-    RawGuidValue: f8d84bfe87e52f3408ab3a51d2d38927
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 4554060025370764814}
   - {fileID: 4554060025370764813}
   - {fileID: 4554060025370764812}
   - {fileID: 4604660580293921428}
-  SimulationBehaviours: []
 --- !u!114 &4604660580293921428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1171,30 +1162,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378411a89480da345945c2f888327a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  InterpolationSpace: 0
-  InterpolationTarget: {fileID: 0}
-  InterpolateErrorCorrection: 1
-  InterpolatedErrorCorrectionSettings:
-    MinRate: 3.3
-    MaxRate: 10
-    PosBlendStart: 0.25
-    PosBlendEnd: 1
-    PosMinCorrection: 0.025
-    PosTeleportDistance: 2
-    RotBlendStart: 0.1
-    RotBlendEnd: 0.5
-    RotTeleportRadians: 1.5
-  UseLegacySharedModeInterpolation: 0
-  TargetInterpolationDelay: 0.03
   gravity: -20
   jumpImpulse: 8
   acceleration: 10
   braking: 10
   maxSpeed: 2
   rotationSpeed: 15
-  _IsGrounded: 0
-  _Velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &4554060025423695203
 GameObject:
   m_ObjectHideFlags: 0
