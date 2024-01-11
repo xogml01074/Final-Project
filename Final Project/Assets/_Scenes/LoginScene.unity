@@ -1505,8 +1505,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC544\uC774\uB514 \uB610\uB294 \uBE44\uBC00\uBC88\uD638\uAC00 \uC77C\uCE58\uD558\uC9C0
-    \uC54A\uC2B5\uB2C8\uB2E4"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64fa1cba7e754a141bd0beb615b275b0, type: 2}
   m_sharedMaterial: {fileID: 549343570774594440, guid: 64fa1cba7e754a141bd0beb615b275b0, type: 2}
@@ -2793,7 +2792,7 @@ MonoBehaviour:
   _gameSceneName: CharacterChoiceScene
   id: {fileID: 10203599}
   password: {fileID: 369555164}
-  notify: {fileID: 0}
+  notify: {fileID: 1345151368}
 --- !u!4 &2037448275
 Transform:
   m_ObjectHideFlags: 0

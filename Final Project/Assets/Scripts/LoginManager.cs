@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Fusion;
+using TMPro;
 
 public class LoginManager : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class LoginManager : MonoBehaviour
     public InputField password;
 
     // 검사 텍스트 변수
-    public Text notify;
+    public TextMeshProUGUI notify;
 
     // 새로운 세션을 생성하는 메소드
     public void StartSharedSession()
