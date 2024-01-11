@@ -50,12 +50,6 @@ public class GameManager : NetworkBehaviour
         // 초기 게임 상태는 준비 상태로 설정한다.
         gState = GameState.Ready;
 
-        // 게임 상태 UI 오브젝트에서 Text 컴포넌트를 가져온다.
-        gameText = gameLabel.GetComponent<Text>();
-
-        // 상태 텍스트의 색상을 주황색으로 한다.
-        gameText.color = new Color32(255, 185, 0, 255);
-
         // 게임 준비 -> 게임 중 상태로 전환하기
         StartCoroutine(ReadyToStart());
     }
@@ -69,15 +63,6 @@ public class GameManager : NetworkBehaviour
     {
         // 2초간 대기한다.
         yield return new WaitForSeconds(1f);
-
-        // 상태 텍스트의 내용을 "Go!"로 한다.
-        gameText.text = "게임 시작!";
-
-        // 0.5초간대기한다.
-        yield return new WaitForSeconds(0.5f);
-
-        // 상태 텍스트를 비활성화한다.
-        gameLabel.SetActive(false);
 
         // 상태를 "게임 중" 상태로 변경한다.
         gState = GameState.Start;

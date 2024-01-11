@@ -1,6 +1,9 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class UIManager : MonoBehaviour
 {
@@ -8,6 +11,8 @@ public class UIManager : MonoBehaviour
 
     public GameObject onlineBtns;
     public GameObject options;
+
+    public InputField inputNickName;
 
     private void Awake()
     {
@@ -22,6 +27,11 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        inputNickName.text = PlayerPrefs.GetString("NickName");
+    }
+
     public void OnClickOptionsSave()
     {
         PlayerPrefs.SetFloat("BGMSound", BGMManager.bgm.bgmSlider.value);
@@ -34,6 +44,16 @@ public class UIManager : MonoBehaviour
         onlineBtns.SetActive(true);
     }
 
+    public void OnClickCreate()
+    {
+        NetworkCallback.Nc.RunGame(GameMode.Host);
+    }
+
+    public void OnClickJoin()
+    {
+        NetworkCallback.Nc.RunGame(GameMode.Client);
+    }
+
     public void OnClickOptions()
     {
         options.SetActive(true);
@@ -42,5 +62,11 @@ public class UIManager : MonoBehaviour
     public void OnClickExitOptions()
     {
         options.SetActive(false);
+    }
+
+    public void SetNickName()
+    {
+        PlayerPrefs.SetString("NickName", inputNickName.text);
+        PlayerPrefs.Save();
     }
 }
