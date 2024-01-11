@@ -1,10 +1,7 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Fusion;
-using UnityEngine.Networking;
-using System.Collections;
-using System.Collections.Generic;
 
 public class LoginManager : MonoBehaviour
 {
@@ -15,26 +12,22 @@ public class LoginManager : MonoBehaviour
 
     private NetworkRunner _runnerInstance = null;
 
-    // 유저 아이디 변수
     public InputField id;
-
-    // 유저 패스워드 변수
     public InputField password;
 
     // 검사 텍스트 변수
     public Text notify;
 
-    // 새로운 세션을 생성하는 코드
+    // 새로운 세션을 생성하는 메소드
     public void StartSharedSession()
     {
-        string roomName =
-            string.IsNullOrEmpty(_roomName.text) ? "BasicRoom" : _roomName.text;
+        string roomName = string.IsNullOrEmpty(_roomName.text) ? $"{id}'s room" : _roomName.text;
 
         SetPlayerData();
         StartGame(GameMode.Shared, roomName, _gameSceneName);
     }
 
-    // 플레이어의 데이터 관리 메소드
+    // 플레이어의 데이터 관리 메소드 
     private void SetPlayerData()
     {
         PlayerData playerData = FindObjectOfType<PlayerData>();
@@ -61,9 +54,8 @@ public class LoginManager : MonoBehaviour
             PlayerCount = 3,
         };
 
-        await _runnerInstance.StartGame(startGameArgs);
-
         StartGameResult res = await _runnerInstance.StartGame(startGameArgs);
+
         // 접속 실패 체크
         if (!res.Ok)
         {

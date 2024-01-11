@@ -12,6 +12,7 @@ public class ZombiesSpawner : MonoBehaviour
 
     public float spawnDelay = 3f;
     public float currentTime;
+    public int count;
 
     private void Start()
     {
@@ -33,7 +34,7 @@ public class ZombiesSpawner : MonoBehaviour
         while (true)
         {
             // 일정 시간이 지나면 좀비의 종류를 증가시키는 코드
-            if (currentTime > 300)
+            if (count <= 5)
                 idx = GetZombieType();
 
             Vector3 spawnPos = GetSpawnPoint();
@@ -48,8 +49,12 @@ public class ZombiesSpawner : MonoBehaviour
         if (spawnDelay == 1f)
             return;
 
-        if (currentTime % 60 == 0)
+        if (currentTime <= 60)
+        {
             spawnDelay -= 0.25f;
+            currentTime = 0;
+            count++;
+        }
     }
 
     // 콜라이더 범위안에 랜덤한 스폰포인트를 생성해 반환하는 메소드
