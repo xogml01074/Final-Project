@@ -5316,7 +5316,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0
-  m_Text: Zombie Suvival
+  m_Text: Zombie Survival
 --- !u!222 &1920810002
 CanvasRenderer:
   m_ObjectHideFlags: 0
