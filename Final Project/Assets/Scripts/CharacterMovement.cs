@@ -9,6 +9,8 @@ public class CharacterMovement : NetworkBehaviour
 
     [SerializeField]
     private Camera cam;
+    [SerializeField]
+    private GameObject miniMapCam;
 
     [SerializeField]
     private Text nickNameTxt;
@@ -32,10 +34,12 @@ public class CharacterMovement : NetworkBehaviour
         if (!Object.HasInputAuthority)
         {
             Destroy(cam.gameObject);
+            Destroy(miniMapCam);
             return;
         }
-
+        
         cam.gameObject.SetActive(true);
+        miniMapCam.SetActive(true);
         RPC_SendNickName(UIManager.ui.inputNickName.text);
     }
 
@@ -69,6 +73,7 @@ public class CharacterMovement : NetworkBehaviour
 
         inputDir = Vector2.zero;
 
+        // 버튼 입력값 설정
         if (buttons.IsSet(Buttons.forward))
         {
             inputDir += Vector2.up;

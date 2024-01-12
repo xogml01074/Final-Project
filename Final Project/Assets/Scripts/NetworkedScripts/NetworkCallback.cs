@@ -175,14 +175,9 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
             if (players.playerObject != null)
                 continue;
 
-            var obj = this.runner.Spawn(playerPrefab, Vector3.zero, Quaternion.identity, players.playerRef);
+            var obj = this.runner.Spawn(playerPrefab, SetPlayerSpawnPos.SetSpawnPosition(), Quaternion.identity, players.playerRef);
 
             players.playerObject = obj;
-
-            var cc = obj.GetComponent<CharacterController>();
-            cc.enabled = false;
-            obj.transform.position = new Vector3(0, 10, 0);
-            cc.enabled = true;
         }
     }
 
@@ -213,12 +208,7 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
 
         foreach (var player in runningPlayers)
         {
-            var obj = this.runner.Spawn(playerPrefab, Vector3.zero, Quaternion.identity, player.playerRef);
-
-            var cc = obj.GetComponent<CharacterController>();
-            cc.enabled = false;
-            obj.transform.position = new Vector3(0, 10, 0);
-            cc.enabled = true;
+            var obj = this.runner.Spawn(playerPrefab, SetPlayerSpawnPos.SetSpawnPosition(), Quaternion.identity, player.playerRef);
         }
     }
 
