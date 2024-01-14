@@ -26,7 +26,7 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
 {
     public static NetworkCallback Nc;
 
-    public NetworkRunner runner = null;
+    public NetworkRunner runner;
 
     public List<Player> runningPlayers = new List<Player>();
     public NetworkPrefabRef playerPrefab;
@@ -209,6 +209,8 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
         foreach (var player in runningPlayers)
         {
             var obj = this.runner.Spawn(playerPrefab, SetPlayerSpawnPos.SetSpawnPosition(), Quaternion.identity, player.playerRef);
+
+            player.playerObject = obj;
         }
     }
 
@@ -216,6 +218,7 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
     {
         if(!this.runner.IsServer)
             return;
+
     }
 
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)

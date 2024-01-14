@@ -21,7 +21,7 @@ public class ZombieMovement : MonoBehaviour
     }
 
     public ZombieType zType;
-    private ZombieState zState = ZombieState.Idle;
+    private ZombieState zState;
 
     public NavMeshAgent agent;
     public Animator anim;
@@ -33,11 +33,9 @@ public class ZombieMovement : MonoBehaviour
 
     public float maxHp = 100;
     public float currentHp = 100;
-    public bool live;
 
     private void Start()
     {
-        live = true;
         SetSpeed();
     }
     private void Update()
@@ -50,6 +48,7 @@ public class ZombieMovement : MonoBehaviour
     {
         if (zType == ZombieType.Zombie)
             agent.speed = 2;
+
         else if (zType == ZombieType.SkinlessZombie)
             agent.speed = 1.2f;
     }
@@ -103,7 +102,7 @@ public class ZombieMovement : MonoBehaviour
         }
 
         target = closestPlayer;
-        // 만약 타겟이 없거나 플레이어와의 거리가 공격 거리보다 멀다면
+        // 만약 타겟이 있지만 플레이어와의 거리가 공격 거리보다 멀다면
         if (target != null && distance > attackDistnace)
         {
             zState = ZombieState.Move;
@@ -122,6 +121,8 @@ public class ZombieMovement : MonoBehaviour
 
         if (zType == ZombieType.Zombie)
             anim.SetBool("Idle", true);
+        else
+            return;
     }
 
     private void Move()
@@ -158,25 +159,18 @@ public class ZombieMovement : MonoBehaviour
         currentHp -= damage;
 
         if (currentHp <= 0)
-        {
-            live = false;
             zState = ZombieState.Dead;
-            anim.SetTrigger("Dead");
-        }
     }
 
     private void Dead()
     {
-        if (live)
-            return;
-
         StartCoroutine(DeadProcess());
     }
 
     IEnumerator DeadProcess()
     {
         agent.velocity = Vector3.zero;
-
+        anim.SetTrigger("Dead");
         yield return new WaitForSeconds(1.5f);
 
         Destroy(gameObject);

@@ -44,14 +44,9 @@ public class UIManager : MonoBehaviour
         onlineBtns.SetActive(true);
     }
 
-    public void OnClickCreate()
+    public void OnClickCreateOrJoin()
     {
-        NetworkCallback.Nc.RunGame(GameMode.Host);
-    }
-
-    public void OnClickJoin()
-    {
-        NetworkCallback.Nc.RunGame(GameMode.Client);
+        NetworkCallback.Nc.RunGame(GameMode.AutoHostOrClient);
     }
 
     public void OnClickOptions()
