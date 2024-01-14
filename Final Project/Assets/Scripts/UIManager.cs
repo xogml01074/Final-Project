@@ -1,6 +1,7 @@
 using Fusion;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +10,13 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager ui;
 
-    public GameObject onlineBtns;
+    public GameObject menu;
     public GameObject options;
+    
+    public GameObject lobby;
+    public Button refereshBtn;
+    public Transform sessionListContent;
+    public GameObject sessionPrefab;
 
     public InputField inputNickName;
 
@@ -41,12 +47,28 @@ public class UIManager : MonoBehaviour
 
     public void OnClickOnline()
     {
-        onlineBtns.SetActive(true);
+        NetworkCallback.Nc.ConnectToLobby(inputNickName.text);
+        menu.SetActive(false);
+        lobby.SetActive(true);
     }
 
-    public void OnClickCreateOrJoin()
+    public void OnClickCreate()
     {
-        NetworkCallback.Nc.RunGame(GameMode.AutoHostOrClient);
+        lobby.SetActive(false);
+        NetworkCallback.Nc.CreateSession();
+    }
+
+    public void OnClickRefresh()
+    {
+        StartCoroutine(RefreshWait());
+    }
+
+    IEnumerator RefreshWait()
+    {
+        refereshBtn.interactable = false;
+        NetworkCallback.Nc.RefreshSessionListUI();
+        yield return new WaitForSeconds(3);
+        refereshBtn.interactable = true;
     }
 
     public void OnClickOptions()
