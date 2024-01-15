@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Bomb
   - Enemy
+  - SecondCamera
+  - BulletSpawn
+  - Weapon
+  - FxTemporaire
+  - Options
   layers:
   - Default
   - TransparentFX
@@ -16,8 +21,8 @@ TagManager:
   - Bullet
   - Player
   - Enemy
-  - 
-  - 
+  - Spawner
+  - MiniMap
   - 
   - 
   - 

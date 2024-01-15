@@ -26,14 +26,7 @@ public class BulletCtrl : NetworkBehaviour
 
         GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * speed);
 
-        StartCoroutine(DestroyDeley());
-    }
-
-    IEnumerator DestroyDeley()
-    {
-        yield return new WaitForSeconds(5f);
-
-        Runner.Despawn(Object);
+        Destroy(gameObject, 5f);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -47,13 +40,13 @@ public class BulletCtrl : NetworkBehaviour
         {
             if (Physics.Raycast(ray, out hitPoint))
             {
+                Destroy(gameObject);
+
                 bloodEff.transform.position = gameObject.transform.position;
                 
                 bloodEff.transform.forward = hitPoint.normal;
 
-                Runner.Spawn(bloodEff);
-
-                Runner.Despawn(Object);
+                Instantiate(bloodEff);
             }
         }
         // ¾Æ´Ò°æ¿ì ÅºÈç ¿ÀºêÁ§Æ®¸¦ »ý¼ºÇÑ´Ù.
@@ -61,14 +54,15 @@ public class BulletCtrl : NetworkBehaviour
         {
             if (Physics.Raycast(ray, out hitPoint))
             {
+                Destroy(gameObject);
+
                 bulletHole.transform.position = gameObject.transform.position;
 
                 bulletHole.transform.forward = hitPoint.normal;
 
-                Runner.Spawn(bulletHole);
-                
-                Runner.Despawn(Object);
+                Instantiate(bulletHole);
             }
-        }        
+        }
+        
     }
 }

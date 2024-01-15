@@ -10,7 +10,7 @@ public class PlayerRotate : NetworkBehaviour
     private float rotSpeed = 300f;
 
     // 회전 값 변수
-    public float mx = 0;
+    float mx = 0;
 
     // public override void FixedUpdateNetwork()
     private void Update()
@@ -24,13 +24,5 @@ public class PlayerRotate : NetworkBehaviour
 
         // 2. 회전 방향으로 물체를 회전시킨다.
         transform.eulerAngles = new Vector3(0, mx, 0);
-    }
-
-    public override void FixedUpdateNetwork()
-    {
-        if (GetInput(out NetworkInputData data))
-        {
-            transform.eulerAngles = new Vector3(0, data.mx, 0);
-        }
     }
 }

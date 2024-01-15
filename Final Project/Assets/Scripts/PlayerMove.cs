@@ -42,16 +42,16 @@ public class PlayerMove : NetworkBehaviour
         // 애니메이터 받아오기
         playerAnim = GetComponentInChildren<Animator>();
 
-        if (Object.HasInputAuthority)
-        {
-            GameManager.gm.player = this;
-            // hpSlider = GameManager.gm.hpSlider;
+        //if (Object.HasInputAuthority)
+        //{
+        //    GameManager.gm.player = this;
+        //    // hpSlider = GameManager.gm.hpSlider;
 
-            CamFollow cf = Camera.main.GetComponent<CamFollow>();
-            cf.target = camPosition;
+        //    CamFollow cf = Camera.main.GetComponent<CamFollow>();
+        //    cf.target = camPosition;
 
-            GameManager.gm.pr = GetComponent<PlayerRotate>();
-        }
+        //    GameManager.gm.pr = GetComponent<PlayerRotate>();
+        //}
     }
 
     //    public override void FixedUpdateNetwork()

@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player
 {
@@ -26,10 +27,12 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
 {
     public static NetworkCallback Nc;
 
-    public NetworkRunner runner = null;
+    public NetworkRunner runner;
 
     public List<Player> runningPlayers = new List<Player>();
     public NetworkPrefabRef playerPrefab;
+
+    private List<SessionInfo> _sessions = new List<SessionInfo>();
 
     private float yaw;
     public float Yaw 
@@ -68,17 +71,10 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
         if (Nc == null)
         {
             Nc = this;
-            runner = gameObject.AddComponent<NetworkRunner>();
         }
 
         else
             Destroy(gameObject);
-    }
-
-
-    private void Start()
-    {
-
     }
 
     private void Update()
@@ -86,14 +82,60 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
         Yaw += Input.GetAxis("Mouse X");
         Pitch -= Input.GetAxis("Mouse Y");
     }
-    public async void RunGame(GameMode mode)
+    public void ConnectToLobby(string playerName)
     {
+        if (runner == null)
+        {
+            runner = gameObject.AddComponent<NetworkRunner>();
+        }
+        else
+            return;
+
+        runner.JoinSessionLobby(SessionLobby.Shared);
+    }
+
+
+    public void RefreshSessionListUI()
+    {
+        // 생성되어있는 세션 리스트 전부 삭제
+        foreach (Transform child in UIManager.ui.sessionListContent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (SessionInfo session in _sessions)
+        {
+            if (session.IsVisible)
+            {
+                GameObject entry = GameObject.Instantiate(UIManager.ui.sessionPrefab, UIManager.ui.sessionListContent);
+                Lobby lobby = entry.GetComponent<Lobby>();
+                lobby.roomName.text = session.Name;
+                lobby.playerCount.text = session.PlayerCount + "/" + session.MaxPlayers;
+
+                if (session.IsOpen == false || session.PlayerCount >= session.MaxPlayers)
+                {
+                    lobby.joinBtn.interactable = false;
+                }
+                else
+                {
+                    lobby. joinBtn.interactable = true;
+                }
+            }
+        }
+    }
+    public async void ConnectToSession(string roomName)
+    {
+        if (runner == null)
+        {
+            runner = gameObject.AddComponent<NetworkRunner>();
+        }
+
         runner.ProvideInput = true;
 
         var gameArgs = new StartGameArgs
         {
-            GameMode = mode,
-            SessionName = $"{UIManager.ui.inputNickName.text}'s Room",
+            GameMode = GameMode.Client,
+            SessionName = roomName,
             PlayerCount = 3,
         };
 
@@ -102,8 +144,6 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
         StartCoroutine(ConnectingSession());
     }
 
-<<<<<<< HEAD
-=======
     public async void CreateSession()
     {
         if (runner == null)
@@ -143,7 +183,6 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
         _sessions = sessionList;
     }
 
->>>>>>> 166c8dd6b818daeb139fb63dfd01ee0377b178b3
     public void OnConnectedToServer(NetworkRunner runner)
     {
 
@@ -217,14 +256,9 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
             if (players.playerObject != null)
                 continue;
 
-            var obj = this.runner.Spawn(playerPrefab, Vector3.zero, Quaternion.identity, players.playerRef);
+            var obj = this.runner.Spawn(playerPrefab, SetPlayerSpawnPos.SetSpawnPosition(), Quaternion.identity, players.playerRef);
 
             players.playerObject = obj;
-
-            var cc = obj.GetComponent<CharacterController>();
-            cc.enabled = false;
-            obj.transform.position = new Vector3(0, 10, 0);
-            cc.enabled = true;
         }
     }
 
@@ -255,12 +289,9 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
 
         foreach (var player in runningPlayers)
         {
-            var obj = this.runner.Spawn(playerPrefab, Vector3.zero, Quaternion.identity, player.playerRef);
+            var obj = this.runner.Spawn(playerPrefab, SetPlayerSpawnPos.SetSpawnPosition(), Quaternion.identity, player.playerRef);
 
-            var cc = obj.GetComponent<CharacterController>();
-            cc.enabled = false;
-            obj.transform.position = new Vector3(0, 10, 0);
-            cc.enabled = true;
+            player.playerObject = obj;
         }
     }
 
@@ -268,10 +299,6 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
     {
         if(!this.runner.IsServer)
             return;
-    }
-
-    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
-    {
 
     }
 

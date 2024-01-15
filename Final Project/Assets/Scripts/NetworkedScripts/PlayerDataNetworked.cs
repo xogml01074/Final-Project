@@ -13,12 +13,5 @@ public class PlayerDataNetworked : NetworkBehaviour
         {
             UserId = FindObjectOfType<PlayerData>().UserID;
         }
-
-        GameManager.gm.AddPlayer(gameObject);
-    }
-
-    public override void Despawned(NetworkRunner runner, bool hasState)
-    { 
-        GameManager.gm.RemovePlayer(gameObject);
     }
 }

@@ -89,15 +89,9 @@ public class PlayerController : NetworkBehaviour
 
     public Transform camPosition;
 
-    NetworkCharacterControllerPrototype netCC;
-
-    [Networked] private NetworkButtons _buttonsPrevious { get; set; }
-
     public override void Spawned()
     {
         cc = GetComponent<CharacterController>();
-
-        netCC = GetComponent<NetworkCharacterControllerPrototype>();
 
         if (Object.HasInputAuthority)
         {
@@ -105,8 +99,6 @@ public class PlayerController : NetworkBehaviour
 
             CamFollow cf = Camera.main.GetComponent<CamFollow>();
             cf.target = camPosition;
-
-            GameManager.gm.pr = GetComponent<PlayerRotate>();
         }
 
         playerState = PlayerState.Idle;
@@ -140,45 +132,41 @@ public class PlayerController : NetworkBehaviour
             else
                 moveSpeed = 4;
 
-            if (GetInput(out NetworkInputData data))
-            { 
-                if (!isFire) // 'isFire'가 거짓일 경우 마우스 왼쪽을 누르면 사격한다.
+            if (!isFire) // 'isFire'가 거짓일 경우 마우스 왼쪽을 누르면 사격한다.
+            {
+                if (Input.GetMouseButtonDown(0))
                 {
-                    if (data.buttons.WasPressed(_buttonsPrevious, Buttons.fire0))
+                    bulletMagarzion--;
+
+                    Instantiate(bullet);
+
+                    StartCoroutine(ShootEffectOn(0.05f));
+                }
+            }
+            if (isFire) // 'isFire'가 참일 경우 마우스 왼쪽을 누르면 연사한다.
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    if (delay <= 0 && bulletMagarzion >= 1)
                     {
                         bulletMagarzion--;
+                        delay = setDelay;
 
-                        Runner.Spawn(bullet);
+                        Instantiate(bullet);
 
                         StartCoroutine(ShootEffectOn(0.05f));
                     }
                 }
-                if (isFire) // 'isFire'가 참일 경우 마우스 왼쪽을 누르면 연사한다.
+            }
+
+            if (Input.GetMouseButtonDown(1)) // 마우스 오른쪽을 누르면 로켓을 발사한다.
+            {
+                if (rocketDelay <= 0)
                 {
-                    if (data.buttons.WasPressed(_buttonsPrevious, Buttons.fire0))
-                    {
-                        if (delay <= 0 && bulletMagarzion >= 1)
-                        {
-                            bulletMagarzion--;
-                            delay = setDelay;
+                    rocketDelay = setRocketDelay;
 
-                            Runner.Spawn(bullet);
-
-                            StartCoroutine(ShootEffectOn(0.05f));
-                        }
-                    }
+                    Instantiate(rocket);
                 }
-
-                if (data.buttons.WasPressed(_buttonsPrevious, Buttons.fire1))
-                {
-                    if (rocketDelay <= 0)
-                    {
-                        rocketDelay = setRocketDelay;
-
-                        Runner.Spawn(rocket);
-                    }
-                }
-                _buttonsPrevious = data.buttons;
             }
 
             PlayerMoving();
@@ -196,8 +184,8 @@ public class PlayerController : NetworkBehaviour
         float v = Input.GetAxis("Vertical");
         
         // 이동 방향을 설정한다.
-        //Vector3 dir = new Vector3(h, 0, v);
-        //dir = dir.normalized;
+        Vector3 dir = new Vector3(h, 0, v);
+        dir = dir.normalized;
 
         // 플레이어가 죽었을때 움직임을 멈춘다.
         if (playerState != PlayerState.Die)
@@ -213,26 +201,26 @@ public class PlayerController : NetworkBehaviour
             anim.SetBool("move", false);
 
         // 보는 방향을 설정한다.
-        //dir = Camera.main.transform.TransformDirection(dir);
+        dir = Camera.main.transform.TransformDirection(dir);
 
+        yVelocity += gravity * Time.deltaTime;
 
-        //dir.y = yVelocity;
+        dir.y = yVelocity;
 
-        //cc.Move(dir * moveSpeed * Time.deltaTime);
+        cc.Move(dir * moveSpeed * Time.deltaTime);
 
-        if (GetInput(out NetworkInputData data))
-        {
-            netCC.Move(data.dir * moveSpeed * Runner.DeltaTime);
-            if (data.buttons.WasPressed(_buttonsPrevious, Buttons.Jump))
-                netCC.Jump();
-
-            _buttonsPrevious = data.buttons;
+        if (isJump && cc.collisionFlags == CollisionFlags.Below)
+        { 
+            yVelocity = 0;
+            isJump = false;
         }
         
         // Space를 누르면 점프
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !isJump)
         {
             anim.SetTrigger("jump");
+            yVelocity = jumpPower;
+            isJump = true;
         }
 
         // 이동중 애니메이션 변경
