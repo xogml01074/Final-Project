@@ -9,9 +9,9 @@ public class ZombiesSpawner : MonoBehaviour
 
     public List<GameObject> Zombies;
 
-    public float spawnDelay = 5;
-    public float currentTime = 0;
-    public int count = 0;
+    public float spawnDelay = 5f;
+    public float currentTime;
+    public int count;
 
     private void Start()
     {
@@ -23,6 +23,7 @@ public class ZombiesSpawner : MonoBehaviour
     private void Update()
     {
         currentTime += Time.deltaTime;
+        SetSpawnDelay();
     }
 
     IEnumerator ZombieSpawn()
@@ -38,23 +39,21 @@ public class ZombiesSpawner : MonoBehaviour
             Vector3 spawnPos = GetSpawnPoint();
             Instantiate(Zombies[idx], spawnPos, Quaternion.identity);
 
-            yield return new WaitForSeconds(SetSpawnDelay());
+            yield return new WaitForSeconds(spawnDelay);
         }
     }
 
-    private float SetSpawnDelay()
+    private void SetSpawnDelay()
     {
         if (spawnDelay == 1f)
-            return 1;
+            return;
 
-        if (currentTime >= 60)
+        if (currentTime <= 60)
         {
-            currentTime = 0;
             spawnDelay -= 0.5f;
+            currentTime = 0;
             count++;
         }
-
-        return spawnDelay;
     }
 
     // 콜라이더 범위안에 랜덤한 스폰포인트를 생성해 반환하는 메소드

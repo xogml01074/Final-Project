@@ -12,10 +12,6 @@ public class UIManager : MonoBehaviour
 
     public GameObject menu;
     public GameObject options;
-    private bool optionsActive;
-
-    public GameObject bgm;
-    public GameObject sfx;
     
     public GameObject lobby;
     public GameObject loding;
@@ -32,7 +28,6 @@ public class UIManager : MonoBehaviour
             ui = this;
 
             DontDestroyOnLoad(gameObject);
-            DontDestroyOnLoad(options);
         }
 
         else
@@ -42,36 +37,6 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         inputNickName.text = PlayerPrefs.GetString("NickName");
-    }
-
-    private void Update()
-    {
-        OnClickESC();
-    }
-
-    public void OnClickESC()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!optionsActive)
-            {
-                BGMManager.bgm.bgmSlider.value = PlayerPrefs.GetFloat("BGMSound");
-                SFXManager.sfx.sfxSlider.value = PlayerPrefs.GetFloat("SFXSound");
-
-                options.SetActive(true);
-                optionsActive = true;
-                bgm.SetActive(true);
-                sfx.SetActive(true);
-            }
-
-            else
-            {
-                bgm.SetActive(false);
-                sfx.SetActive(false);
-                options.SetActive(false);
-                optionsActive = false;
-            }
-        }
     }
 
     public void OnClickOptionsSave()
@@ -122,18 +87,11 @@ public class UIManager : MonoBehaviour
 
     public void OnClickOptions()
     {
-        BGMManager.bgm.bgmSlider.value = PlayerPrefs.GetFloat("BGMSound");
-        SFXManager.sfx.sfxSlider.value = PlayerPrefs.GetFloat("SFXSound");
-
         options.SetActive(true);
-        bgm.SetActive(true);
-        sfx.SetActive(true);
     }
 
     public void OnClickExitOptions()
     {
-        bgm.SetActive(false);
-        sfx.SetActive(false);
         options.SetActive(false);
     }
 
