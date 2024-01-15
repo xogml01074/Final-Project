@@ -43,6 +43,8 @@ public class CharacterMovement : NetworkBehaviour
     private Vector2 inputDir;
     private Vector3 moveDir;
 
+    public Animator cAnim;
+
     public override void Spawned()
     {
         if (!Object.HasInputAuthority)
@@ -55,6 +57,8 @@ public class CharacterMovement : NetworkBehaviour
         cam.gameObject.SetActive(true);
         miniMapCam.SetActive(true);
         RPC_SendNickName(UIManager.ui.inputNickName.text);
+
+        cAnim = GetComponentInChildren<Animator>();
     }
 
     public override void Render()
@@ -88,22 +92,36 @@ public class CharacterMovement : NetworkBehaviour
 
         inputDir = Vector2.zero;
 
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+
         // 버튼 입력값 설정
         if (buttons.IsSet(Buttons.forward))
         {
             inputDir += Vector2.up;
+
+            cAnim.SetFloat("speedY", v);
         }
         if (buttons.IsSet(Buttons.back))
         {
             inputDir -= Vector2.up;
+            cAnim.SetFloat("speedY", v);
         }
         if (buttons.IsSet(Buttons.right))
         {
             inputDir += Vector2.right;
+            cAnim.SetFloat("speedX", h);
         }
         if (buttons.IsSet(Buttons.left))
         {
             inputDir -= Vector2.right;
+            cAnim.SetFloat("speedX", h);
+        }
+
+        if (Input.GetKey(KeyCode.N))
+        {
+            cAnim.SetFloat("speedX", 0);
+            cAnim.SetFloat("speedY", 0);
         }
 
         // 캐릭터 점프
