@@ -141,7 +141,7 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
 
         await runner.StartGame(gameArgs);
 
-        StartCoroutine(ConnectingSession());
+        runner.SetActiveScene(1);
     }
 
     public async void CreateSession()
@@ -160,22 +160,7 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
 
         await runner.StartGame(gameArgs);
 
-        StartCoroutine(ConnectingSession());
-        
-    }
-
-    IEnumerator ConnectingSession()
-    {
-        Text lodingTxt = UIManager.ui.loding.GetComponentInChildren<Text>();
-        lodingTxt.text = "Connecting...";
-        UIManager.ui.loding.SetActive(true);
-
-        yield return new WaitForSeconds(2);
-
         runner.SetActiveScene(1);
-
-        UIManager.ui.loding.SetActive(false);
-
     }
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
