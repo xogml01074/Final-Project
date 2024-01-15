@@ -27,24 +27,24 @@ public class GameManager : NetworkBehaviour
     }
 
     // 현재의 게임 상태 변수
-    [Networked] public GameState gState { get; set; }
+    public GameState gState { get; set; }
 
-    // 게임 상태 UI 오브젝트 변수
-    public GameObject gameLabel;
+    //// 게임 상태 UI 오브젝트 변수
+    //public GameObject gameLabel;
 
-    // 게임 상태 UI 텍스트 컴포넌트 변수
-    Text gameText;
+    //// 게임 상태 UI 텍스트 컴포넌트 변수
+    //Text gameText;
 
-    // PlayerMove 클래스 변수
-    public PlayerMove player;
+    //// PlayerMove 클래스 변수
+    //public PlayerMove player;
 
     // PlayerController 클래스 변수
     public PlayerController player_Attacker;
     public List<GameObject> players;
 
-    public PlayerRotate pr;
+    //public PlayerRotate pr;
 
-    public Text loginTime;
+    //public Text loginTime;
     public override void Spawned()
     {
         // 초기 게임 상태는 준비 상태로 설정한다.
@@ -70,21 +70,21 @@ public class GameManager : NetworkBehaviour
 
     private void ClearOrNot()
     {
-        if (gState == GameState.Clear)
-        {
-            gameLabel.SetActive(true);
-            gameText.text = "클리어!";
+        //if (gState == GameState.Clear)
+        //{
+        //    gameLabel.SetActive(true);
+        //    gameText.text = "클리어!";
 
-            Time.timeScale = 0f;
-        }
+        //    Time.timeScale = 0f;
+        //}
 
-        else if (gState == GameState.GameOver)
-        {
-            gameLabel.SetActive(true);
-            gameText.text = "전원사망";
+        //else if (gState == GameState.GameOver)
+        //{
+        //    gameLabel.SetActive(true);
+        //    gameText.text = "전원사망";
 
-            Time.timeScale = 0f;
-        }
+        //    Time.timeScale = 0f;
+        //}
     }
 
     // 게임 종료 옵션

@@ -436,7 +436,6 @@ GameObject:
   - component: {fileID: 7387601861471409823}
   - component: {fileID: 7387601861471409821}
   - component: {fileID: 7387601861471409826}
-  - component: {fileID: 1943480133655677944}
   m_Layer: 0
   m_Name: Bomber
   m_TagString: Player
@@ -556,23 +555,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  ps: 0
   cc: {fileID: 7387601861471409821}
   cam: {fileID: 7387601861437401908}
   miniMapCam: {fileID: 3180838176446503935}
   nickNameTxt: {fileID: 7387601859653526278}
---- !u!114 &1943480133655677944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7387601861471409816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d8ad356ae67b8a48bf71fa80b2e3763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  options: {fileID: 0}
+  maxHP: 100
+  currentHP: 100
+  respawnTxt: {fileID: 0}
 --- !u!1001 &7387601861065045063
 PrefabInstance:
   m_ObjectHideFlags: 0
