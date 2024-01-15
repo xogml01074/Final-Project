@@ -1,33 +1,17 @@
 using Fusion;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterMovement : NetworkBehaviour
 {
-    public enum PlayerState 
-    {
-        Idle,
-        Walk,
-        Run,
-        Dead,
-    }
-
-    public PlayerState ps = PlayerState.Idle;
     [SerializeField]
     private NetworkCharacterControllerPrototype cc;
 
     [SerializeField]
     private Camera cam;
-    [SerializeField]
-    private GameObject miniMapCam;
 
     [SerializeField]
     private Text nickNameTxt;
-
-    public int maxHP = 100;
-    public int currentHP = 100;
-    public Text respawnTxt;
 
     // 닉네임 설정
     [Networked(OnChanged = nameof(OnNickNameChanged))]
@@ -43,18 +27,20 @@ public class CharacterMovement : NetworkBehaviour
     private Vector2 inputDir;
     private Vector3 moveDir;
 
+    public Animator cAnim;
+
     public override void Spawned()
     {
         if (!Object.HasInputAuthority)
         {
             Destroy(cam.gameObject);
-            Destroy(miniMapCam);
             return;
         }
-        
+
         cam.gameObject.SetActive(true);
-        miniMapCam.SetActive(true);
         RPC_SendNickName(UIManager.ui.inputNickName.text);
+
+        cAnim = GetComponentInChildren<Animator>();
     }
 
     public override void Render()
@@ -70,10 +56,9 @@ public class CharacterMovement : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (ps == PlayerState.Dead)
+        if (!Object.HasInputAuthority)
             return;
 
-        // 키 입력값에 따른 실행
         buttons = default;
 
         if (GetInput<NetworkInputData>(out var input))
@@ -88,38 +73,51 @@ public class CharacterMovement : NetworkBehaviour
 
         inputDir = Vector2.zero;
 
+<<<<<<< HEAD
+=======
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+
         // 버튼 입력값 설정
+>>>>>>> 166c8dd6b818daeb139fb63dfd01ee0377b178b3
         if (buttons.IsSet(Buttons.forward))
         {
             inputDir += Vector2.up;
+
+            cAnim.SetFloat("speedY", v);
         }
         if (buttons.IsSet(Buttons.back))
         {
             inputDir -= Vector2.up;
+            cAnim.SetFloat("speedY", v);
         }
         if (buttons.IsSet(Buttons.right))
         {
             inputDir += Vector2.right;
+            cAnim.SetFloat("speedX", h);
         }
         if (buttons.IsSet(Buttons.left))
         {
             inputDir -= Vector2.right;
+            cAnim.SetFloat("speedX", h);
+        }
+
+        if (Input.GetKey(KeyCode.N))
+        {
+            cAnim.SetFloat("speedX", 0);
+            cAnim.SetFloat("speedY", 0);
         }
 
         // 캐릭터 점프
         if (pressead.IsSet(Buttons.jump))
             cc.Jump();
 
-        // 캐릭터 이동
         moveDir = transform.forward * inputDir.y + transform.right * inputDir.x;
         moveDir.Normalize();
 
         cc.Move(moveDir);
 
         transform.rotation = Quaternion.Euler(0, (float)input.yaw, 0);
-
-        // 사망했을시 실행되는 리스폰 메소드
-        CheckRespawn();
     }
 
     public static void OnNickNameChanged(Changed<CharacterMovement> changed)
@@ -136,40 +134,5 @@ public class CharacterMovement : NetworkBehaviour
     public void RPC_SendNickName(NetworkString<_16> message)
     {
         NickName = message;
-    }
-
-    private void CheckRespawn()
-    {
-        if (currentHP <= 0)
-        {
-            StartCoroutine(RespawnPlayer());
-        }
-    }
-
-    IEnumerator RespawnPlayer()
-    {
-        // 리스폰 쿨타임
-        float ct = 15;
-        ct -= Time.deltaTime;
-
-        respawnTxt = GameObject.Find("RespawnText").GetComponent<Text>();
-        respawnTxt.gameObject.SetActive(true);
-
-        respawnTxt.text = string.Format($"사망하셨습니다.\n리스폰 까지 {(int)ct}");
-
-        yield return new WaitForSeconds(15);
-
-        if (ct <= 0)
-        {
-            respawnTxt.gameObject.SetActive(false);
-            transform.position = SetPlayerSpawnPos.SetSpawnPosition();
-            yield return null;
-        }
-
-        else
-        {
-            ps = PlayerState.Dead;
-            respawnTxt.text = string.Format($"게임 오버");
-        }
     }
 }
