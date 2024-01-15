@@ -8,9 +8,8 @@ public class ZombiesSpawner : MonoBehaviour
     public BoxCollider rangeCollider;
 
     public List<GameObject> Zombies;
-    public GameObject boss;
 
-    public float spawnDelay = 3f;
+    public float spawnDelay = 5f;
     public float currentTime;
     public int count;
 
@@ -34,7 +33,7 @@ public class ZombiesSpawner : MonoBehaviour
         while (true)
         {
             // 일정 시간이 지나면 좀비의 종류를 증가시키는 코드
-            if (count <= 5)
+            if (count >= 5)
                 idx = GetZombieType();
 
             Vector3 spawnPos = GetSpawnPoint();
@@ -51,7 +50,7 @@ public class ZombiesSpawner : MonoBehaviour
 
         if (currentTime <= 60)
         {
-            spawnDelay -= 0.25f;
+            spawnDelay -= 0.5f;
             currentTime = 0;
             count++;
         }

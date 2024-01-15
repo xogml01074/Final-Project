@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public GameObject options;
     
     public GameObject lobby;
+    public GameObject loding;
     public Button refereshBtn;
     public Transform sessionListContent;
     public GameObject sessionPrefab;
@@ -50,6 +51,19 @@ public class UIManager : MonoBehaviour
         NetworkCallback.Nc.ConnectToLobby(inputNickName.text);
         menu.SetActive(false);
         lobby.SetActive(true);
+
+        StartCoroutine(Loding());
+    }
+    
+    IEnumerator Loding()
+    {
+        yield return new WaitForSeconds(0.2f);
+        Text lodingTxt = loding.GetComponentInChildren<Text>();
+        lodingTxt.text = "Loding...";
+        loding.SetActive(true);
+
+        yield return new WaitForSeconds(3);
+        loding.SetActive(false);
     }
 
     public void OnClickCreate()
