@@ -71,7 +71,11 @@ AnimatorController:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Controller: {fileID: 9100000}
+=======
+    m_Controller: {fileID: 0}
+>>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======
     m_Controller: {fileID: 0}
 >>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
