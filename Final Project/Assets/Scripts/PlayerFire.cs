@@ -26,13 +26,13 @@ public class PlayerFire : NetworkBehaviour
     public Text bulletTxt;
 
     // 무기 모드 변수
-    enum WeaponMode
+    public enum WeaponMode
     {
         Normal,
         Reload,
         Destroyer
     }
-    WeaponMode wMode;
+    public WeaponMode wMode;
 
     // public override void Spawned()
     private void Start()

@@ -1,8 +1,9 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RocketController : MonoBehaviour
+public class RocketController : NetworkBehaviour
 {
     public float rt;
 
@@ -14,11 +15,11 @@ public class RocketController : MonoBehaviour
 
     public GameObject firePoint;
 
-    public float rocketPower = 50f;
+    public int rocketPower = 50;
 
     public float rocketRadius = 5f;
 
-    private void Start()
+    public override void Spawned()
     {
         firePoint = GameObject.Find("MuzzlePoint");
 
@@ -36,23 +37,14 @@ public class RocketController : MonoBehaviour
         Collider[] coll = Physics.OverlapSphere(transform.position, rocketRadius, 1 << 8);
         for (int i = 0; i < coll.Length; i++)
         {
-            /*if (Vector3.Distance(coll[i].transform.position, transform.position) > 4)
-                coll[i].GetComponent<EnemyController>().HitEnemy(10);
-            else if (Vector3.Distance(coll[i].transform.position, transform.position) > 3)
-                coll[i].GetComponent<EnemyController>().HitEnemy(20);
-            else if (Vector3.Distance(coll[i].transform.position, transform.position) > 2)
-                coll[i].GetComponent<EnemyController>().HitEnemy(30);
-            else if (Vector3.Distance(coll[i].transform.position, transform.position) > 1)
-                coll[i].GetComponent<EnemyController>().HitEnemy(40);
-            else
-                coll[i].GetComponent<EnemyController>().HitEnemy(rocketPower);*/
+            coll[i].GetComponent<ZombieMovement>().Hurt(rocketPower);
+            coll[i].GetComponent<TitanScript>().HitEnemy(rocketPower);
         }
 
-        Destroy(gameObject);
-
         eff_explosion.transform.position = gameObject.transform.position;
-
-        Instantiate(eff_explosion);
         
+        Runner.Spawn(eff_explosion);
+
+        Runner.Despawn(Object);
     }
 }
