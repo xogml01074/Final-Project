@@ -43,6 +43,8 @@ public class CharacterMovement : NetworkBehaviour
     private Vector2 inputDir;
     private Vector3 moveDir;
 
+    Animator playerAnim;
+
     public override void Spawned()
     {
         if (!Object.HasInputAuthority)
@@ -55,6 +57,8 @@ public class CharacterMovement : NetworkBehaviour
         cam.gameObject.SetActive(true);
         miniMapCam.SetActive(true);
         RPC_SendNickName(UIManager.ui.inputNickName.text);
+
+        playerAnim = GetComponentInChildren<Animator>();
     }
 
     public override void Render()
@@ -106,9 +110,19 @@ public class CharacterMovement : NetworkBehaviour
             inputDir -= Vector2.right;
         }
 
+        // 입력값에 따른 애니메이션
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        playerAnim.SetFloat("speedY", h);
+        playerAnim.SetFloat("speedX", v);
+
+
         // 캐릭터 점프
         if (pressead.IsSet(Buttons.jump))
+        {
             cc.Jump();
+            playerAnim.SetTrigger("Jump");
+        }
 
         // 캐릭터 이동
         moveDir = transform.forward * inputDir.y + transform.right * inputDir.x;

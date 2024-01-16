@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class CCManagement : MonoBehaviour
@@ -37,7 +35,7 @@ public class CCManagement : MonoBehaviour
 
     // (Bomber)
     public void openInfoB()
-    { 
+    {
         infoPannel.SetActive(true);
         bomberPlus.SetActive(true);
         attackerPlus.SetActive(false);
@@ -55,15 +53,19 @@ public class CCManagement : MonoBehaviour
     }
 
 
-    // 로그인 씬으로 돌아가기
-    public void goHome()
+    // 게임 종료
+    public void exitGame()
     {
-        SceneManager.LoadScene("MenuScene");
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+Application.Quit();
+#endif
     }
 
     // 선택하면 바로 게임 시작
     public void gameStart()
     {
-        SceneManager.LoadScene("Play");
+        SceneManager.LoadScene("MenuScene");
     }
 }
