@@ -62,8 +62,9 @@ public class UIManager : MonoBehaviour
         lodingTxt.text = "Loding...";
         loding.SetActive(true);
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
         loding.SetActive(false);
+        NetworkCallback.Nc.RefreshSessionListUI();
     }
 
     public void OnClickCreate()
