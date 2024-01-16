@@ -768,6 +768,7 @@ CanvasRenderer:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &177121080
 GameObject:
   m_ObjectHideFlags: 0
@@ -848,6 +849,8 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 177121080}
   m_CullTransparentMesh: 1
+=======
+>>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======
 >>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======
@@ -1889,7 +1892,11 @@ RectTransform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_RootOrder: 3
+=======
+  m_RootOrder: 2
+>>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======
   m_RootOrder: 2
 >>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
@@ -2721,7 +2728,11 @@ RectTransform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_RootOrder: 0
+=======
+  m_RootOrder: 1
+>>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======
   m_RootOrder: 1
 >>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
@@ -2793,6 +2804,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1148917075}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2875,6 +2887,8 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185694612}
+=======
+>>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======
 >>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======
@@ -3377,7 +3391,11 @@ RectTransform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_RootOrder: 1
+=======
+  m_RootOrder: 2
+>>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======
   m_RootOrder: 2
 >>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
@@ -3605,7 +3623,11 @@ RectTransform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_Father: {fileID: 1868999918}
+=======
+  m_Father: {fileID: 1530008075}
+>>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======
   m_Father: {fileID: 1530008075}
 >>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
@@ -4088,7 +4110,10 @@ RectTransform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   - {fileID: 1185694613}
+=======
+>>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======
 >>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======
@@ -4945,7 +4970,10 @@ RectTransform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   - {fileID: 1489544151}
+=======
+>>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======
 >>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======

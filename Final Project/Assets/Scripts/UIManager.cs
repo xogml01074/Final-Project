@@ -55,6 +55,7 @@ public class UIManager : MonoBehaviour
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         StartCoroutine(Loding());
     }
@@ -68,6 +69,8 @@ public class UIManager : MonoBehaviour
 
         yield return new WaitForSeconds(3);
         loding.SetActive(false);
+=======
+>>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======
 >>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 =======
