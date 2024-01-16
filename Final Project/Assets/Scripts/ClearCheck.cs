@@ -33,7 +33,7 @@ public class ClearCheck : MonoBehaviour
 
     public bool InPlayerCheck()
     {
-        if (playerCnt == GameManager.gm.players.Count)
+        if (playerCnt == NetworkCallback.Nc.runningPlayers.Count)
             return true;
 
         return false;

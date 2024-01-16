@@ -95,7 +95,7 @@ public class PlayerController : NetworkBehaviour
 
         if (Object.HasInputAuthority)
         {
-            GameManager.gm.player_Attacker = this;
+            //GameManager.gm.player_Attacker = this;
 
             CamFollow cf = Camera.main.GetComponent<CamFollow>();
             cf.target = camPosition;
