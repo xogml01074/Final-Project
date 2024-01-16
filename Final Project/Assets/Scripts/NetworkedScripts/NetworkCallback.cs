@@ -217,11 +217,24 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
     {
         var myInput = new NetworkInputData();
 
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        Vector3 dir = new Vector3(h, 0, v);
+        dir = dir.normalized;
+        dir = Camera.main.transform.TransformDirection(dir);
+        myInput.dir = dir;
+
         myInput.buttons.Set(Buttons.forward, Input.GetKey(KeyCode.W));
         myInput.buttons.Set(Buttons.back, Input.GetKey(KeyCode.S));
         myInput.buttons.Set(Buttons.right, Input.GetKey(KeyCode.D));
         myInput.buttons.Set(Buttons.left, Input.GetKey(KeyCode.A));
         myInput.buttons.Set(Buttons.jump, Input.GetKey(KeyCode.Space));
+
+        myInput.buttons.Set(Buttons.reload, Input.GetKey(KeyCode.R));
+        myInput.buttons.Set(Buttons.crouch, Input.GetKey(KeyCode.LeftControl));
+
+        myInput.buttons.Set(Buttons.fire0, Input.GetMouseButton(0));
+        myInput.buttons.Set(Buttons.fire1, Input.GetMouseButton(1));
 
         myInput.pitch = Pitch;
         myInput.yaw = Yaw;

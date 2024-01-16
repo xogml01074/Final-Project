@@ -40,13 +40,13 @@ public class BulletCtrl : NetworkBehaviour
         {
             if (Physics.Raycast(ray, out hitPoint))
             {
-                Destroy(gameObject);
+                Runner.Spawn(bloodEff);
 
                 bloodEff.transform.position = gameObject.transform.position;
                 
                 bloodEff.transform.forward = hitPoint.normal;
 
-                Instantiate(bloodEff);
+                Runner.Despawn(Object);
             }
         }
         // ¾Æ´Ò°æ¿ì ÅºÈç ¿ÀºêÁ§Æ®¸¦ »ý¼ºÇÑ´Ù.
@@ -54,13 +54,13 @@ public class BulletCtrl : NetworkBehaviour
         {
             if (Physics.Raycast(ray, out hitPoint))
             {
-                Destroy(gameObject);
+                Runner.Spawn(bulletHole);
 
                 bulletHole.transform.position = gameObject.transform.position;
 
                 bulletHole.transform.forward = hitPoint.normal;
 
-                Instantiate(bulletHole);
+                Runner.Despawn(Object);
             }
         }
         

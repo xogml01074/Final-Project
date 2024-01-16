@@ -182,6 +182,14 @@ PrefabInstance:
       propertyPath: runner
       value: 
       objectReference: {fileID: 5894599413105036225, guid: 47042cc57141a614f9c340c78f75787c, type: 3}
+    - target: {fileID: 7781229091892963120, guid: 6a5e6516f9dd4cf4aabeedd27f4c0f34, type: 3}
+      propertyPath: playerPrefab.RawGuidValue.Array.data[0]
+      value: 6112820448766783103
+      objectReference: {fileID: 0}
+    - target: {fileID: 7781229091892963120, guid: 6a5e6516f9dd4cf4aabeedd27f4c0f34, type: 3}
+      propertyPath: playerPrefab.RawGuidValue.Array.data[1]
+      value: -2366674081116326903
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a5e6516f9dd4cf4aabeedd27f4c0f34, type: 3}
 --- !u!1 &34414690

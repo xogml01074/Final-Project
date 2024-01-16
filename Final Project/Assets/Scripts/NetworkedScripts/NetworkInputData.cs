@@ -1,4 +1,5 @@
 using Fusion;
+using System.Numerics;
 
 enum Buttons 
 {
@@ -7,6 +8,10 @@ enum Buttons
     right = 2,
     left = 3,
     jump = 4,
+    crouch = 5,
+    reload = 6,
+    fire0 = 7,
+    fire1 = 8,
 }
 public struct NetworkInputData : INetworkInput
 {
@@ -14,4 +19,6 @@ public struct NetworkInputData : INetworkInput
 
     public Angle yaw; // 가로축
     public Angle pitch; // 세로축
+
+    public UnityEngine.Vector3 dir;
 }
