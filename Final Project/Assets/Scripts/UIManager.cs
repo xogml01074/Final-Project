@@ -1,8 +1,6 @@
-using Fusion;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -12,7 +10,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject menu;
     public GameObject options;
-    
+
     public GameObject lobby;
     public GameObject loding;
     public Button refereshBtn;
@@ -29,9 +27,6 @@ public class UIManager : MonoBehaviour
 
             DontDestroyOnLoad(gameObject);
         }
-
-        else
-            Destroy(gameObject);
     }
 
     private void Start()
@@ -54,7 +49,7 @@ public class UIManager : MonoBehaviour
 
         StartCoroutine(Loding());
     }
-    
+
     IEnumerator Loding()
     {
         yield return new WaitForSeconds(0.2f);
@@ -100,5 +95,24 @@ public class UIManager : MonoBehaviour
     {
         PlayerPrefs.SetString("NickName", inputNickName.text);
         PlayerPrefs.Save();
+    }
+
+    public void ToMenu()
+    {
+        SceneManager.LoadScene("MenuScene");
+    }
+
+    public void Quit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Appltcation.Quit();
+#endif
+    }
+
+    public void toCC()
+    {
+        SceneManager.LoadScene("CharacterChoiceScene");
     }
 }
