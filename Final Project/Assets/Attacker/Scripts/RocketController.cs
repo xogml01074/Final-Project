@@ -37,16 +37,7 @@ public class RocketController : NetworkBehaviour
         Collider[] coll = Physics.OverlapSphere(transform.position, rocketRadius, 1 << 8);
         for (int i = 0; i < coll.Length; i++)
         {
-            /*if (Vector3.Distance(coll[i].transform.position, transform.position) > 4)
-                coll[i].GetComponent<EnemyController>().HitEnemy(10);
-            else if (Vector3.Distance(coll[i].transform.position, transform.position) > 3)
-                coll[i].GetComponent<EnemyController>().HitEnemy(20);
-            else if (Vector3.Distance(coll[i].transform.position, transform.position) > 2)
-                coll[i].GetComponent<EnemyController>().HitEnemy(30);
-            else if (Vector3.Distance(coll[i].transform.position, transform.position) > 1)
-                coll[i].GetComponent<EnemyController>().HitEnemy(40);
-            else
-                coll[i].GetComponent<EnemyController>().HitEnemy(rocketPower);*/
+            coll[i].GetComponent<ZombieMovement>().Hurt(rocketPower);
         }
 
         eff_explosion.transform.position = gameObject.transform.position;

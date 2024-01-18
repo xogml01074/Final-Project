@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -7476823638643948901}
   - component: {fileID: 4537770331397609616}
   m_Layer: 6
-  m_Name: Rocket17_Green
+  m_Name: Rocket17_Green 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

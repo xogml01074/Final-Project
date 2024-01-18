@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4620086461391643985}
   - component: {fileID: 7097340958038424912}
   - component: {fileID: 4068778287776470413}
+  - component: {fileID: -313559919755219419}
   m_Layer: 6
   m_Name: Bullet1(1)
   m_TagString: Untagged
@@ -77,11 +78,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 903a8985e53f52a44ac08d2cccd0b9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   speed: 1000
   bulletHole: {fileID: 7550804330133459221, guid: 0a1a262466d538a47996f011b2ee5a7a, type: 3}
   firePoint: {fileID: 0}
   bloodEff: {fileID: 1013274939826982, guid: ffbf169ab9dcfdc45ae14010bc82a6b2, type: 3}
   bulletPower: 10
+--- !u!114 &-313559919755219419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000011023395326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 215ee8fa67879e84c8051e44f1de08b7
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 4068778287776470413}
+  SimulationBehaviours: []
 --- !u!1 &1000011260505556
 GameObject:
   m_ObjectHideFlags: 0

@@ -217,13 +217,6 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
     {
         var myInput = new NetworkInputData();
 
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-        Vector3 dir = new Vector3(h, 0, v);
-        dir = dir.normalized;
-        dir = Camera.main.transform.TransformDirection(dir);
-        myInput.dir = dir;
-
         myInput.buttons.Set(Buttons.forward, Input.GetKey(KeyCode.W));
         myInput.buttons.Set(Buttons.back, Input.GetKey(KeyCode.S));
         myInput.buttons.Set(Buttons.right, Input.GetKey(KeyCode.D));
@@ -239,7 +232,6 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
 
         myInput.pitch = Pitch;
         myInput.yaw = Yaw;
-        //myInput.mx = GameManager.gm.pr.mx;
 
         input.Set(myInput);
     }
