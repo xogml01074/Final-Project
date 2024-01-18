@@ -94,13 +94,15 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
         runner.JoinSessionLobby(SessionLobby.Shared);
     }
 
-
     public void RefreshSessionListUI()
     {
-        // 생성되어있는 세션 리스트 전부 삭제
-        foreach (Transform child in UIManager.ui.sessionListContent)
+        if (UIManager.ui.sessionListContent)
         {
-            Destroy(child.gameObject);
+            // 생성되어있는 세션 리스트 전부 삭제
+            foreach (Transform child in UIManager.ui.sessionListContent)
+            {
+                Destroy(child.gameObject);
+            }            
         }
 
         foreach (SessionInfo session in _sessions)
@@ -272,6 +274,7 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
             if (players.playerRef.Equals(player))
             {
                 this.runner.Despawn(players.playerObject);
+                this.runner.Disconnect(players.playerRef);
                 runningPlayers.Remove(players);
             }
             break;

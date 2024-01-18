@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 public class UIManager : MonoBehaviour
@@ -99,6 +100,7 @@ public class UIManager : MonoBehaviour
 
     public void ToMenu()
     {
+        //NetworkCallback.Nc.runner.
         SceneManager.LoadScene("MenuScene");
     }
 
@@ -107,7 +109,7 @@ public class UIManager : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Appltcation.Quit();
+        Application.Quit();
 #endif
     }
 
