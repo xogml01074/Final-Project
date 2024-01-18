@@ -64,8 +64,15 @@ Application.Quit();
     }
 
     // 선택하면 바로 게임 시작
-    public void gameStart()
+    public void choiceAttacker()
     {
+        UIManager.ui.characterChoice = 0;
+        SceneManager.LoadScene("MenuScene");
+    }
+
+    public void choiceBoomber()
+    {
+        UIManager.ui.characterChoice = 1;
         SceneManager.LoadScene("MenuScene");
     }
 }

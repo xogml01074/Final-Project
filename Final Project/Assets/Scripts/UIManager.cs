@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 public class UIManager : MonoBehaviour
@@ -17,6 +16,8 @@ public class UIManager : MonoBehaviour
     public Button refereshBtn;
     public Transform sessionListContent;
     public GameObject sessionPrefab;
+
+    public int characterChoice = 0;
 
     public InputField inputNickName;
 
@@ -100,7 +101,6 @@ public class UIManager : MonoBehaviour
 
     public void ToMenu()
     {
-        //NetworkCallback.Nc.runner.
         SceneManager.LoadScene("MenuScene");
     }
 
@@ -113,7 +113,7 @@ public class UIManager : MonoBehaviour
 #endif
     }
 
-    public void toCC()
+    public void ToCC()
     {
         SceneManager.LoadScene("CharacterChoiceScene");
     }

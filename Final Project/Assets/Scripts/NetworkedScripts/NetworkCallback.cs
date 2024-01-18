@@ -30,7 +30,7 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
     public NetworkRunner runner;
 
     public List<Player> runningPlayers = new List<Player>();
-    public NetworkPrefabRef playerPrefab;
+    public NetworkPrefabRef[] playerPrefabs;
 
     private List<SessionInfo> _sessions = new List<SessionInfo>();
 
@@ -109,7 +109,7 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
         {
             if (session.IsVisible)
             {
-                GameObject entry = GameObject.Instantiate(UIManager.ui.sessionPrefab, UIManager.ui.sessionListContent);
+                GameObject entry = Instantiate(UIManager.ui.sessionPrefab, UIManager.ui.sessionListContent);
                 Lobby lobby = entry.GetComponent<Lobby>();
                 lobby.roomName.text = session.Name;
                 lobby.playerCount.text = session.PlayerCount + "/" + session.MaxPlayers;
@@ -258,7 +258,7 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
             if (players.playerObject != null)
                 continue;
 
-            var obj = this.runner.Spawn(playerPrefab, SetPlayerSpawnPos.SetSpawnPosition(), Quaternion.identity, players.playerRef);
+            var obj = this.runner.Spawn(playerPrefabs[UIManager.ui.characterChoice], SetPlayerSpawnPos.SetSpawnPosition(), Quaternion.identity, players.playerRef);
 
             players.playerObject = obj;
         }
@@ -292,7 +292,7 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
 
         foreach (var player in runningPlayers)
         {
-            var obj = this.runner.Spawn(playerPrefab, SetPlayerSpawnPos.SetSpawnPosition(), Quaternion.identity, player.playerRef);
+            var obj = this.runner.Spawn(playerPrefabs[UIManager.ui.characterChoice], SetPlayerSpawnPos.SetSpawnPosition(), Quaternion.identity, player.playerRef);
 
             player.playerObject = obj;
         }
