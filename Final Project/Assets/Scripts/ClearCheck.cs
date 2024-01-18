@@ -1,14 +1,15 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClearCheck : MonoBehaviour
+public class ClearCheck : NetworkBehaviour
 {
     public int playerCnt = 0;
 
     public float currentTime = 0;
 
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
         currentTime += Time.deltaTime;
 

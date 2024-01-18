@@ -10,7 +10,7 @@ public class PlayerRotate : NetworkBehaviour
     private float rotSpeed = 300f;
 
     // 회전 값 변수
-    float mx = 0;
+    public float mx = 0;
 
     // public override void FixedUpdateNetwork()
     private void Update()
@@ -22,7 +22,14 @@ public class PlayerRotate : NetworkBehaviour
         // 1-1. 회전 값 변수에 마우스 입력 값만큼 미리 누적시킨다.
         mx += mouse_X * rotSpeed * Time.deltaTime;
 
-        // 2. 회전 방향으로 물체를 회전시킨다.
-        transform.eulerAngles = new Vector3(0, mx, 0);
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (GetInput(out NetworkInputData data))
+        {
+            // 2. 회전 방향으로 물체를 회전시킨다.
+            transform.eulerAngles = new Vector3(0, mx, 0);
+        }
     }
 }

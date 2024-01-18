@@ -59,6 +59,7 @@ public class PlayerController : NetworkBehaviour
 
     // 사격 딜레이 변수
     int delay = 0;
+
     public int setDelay = 50;
 
     public int reloadDelay = 1000;
@@ -89,9 +90,15 @@ public class PlayerController : NetworkBehaviour
 
     public Transform camPosition;
 
+    NetworkCharacterControllerPrototype netCC;
+
+    [Networked] private NetworkButtons _buttonsPrevious { get; set; }
+
     public override void Spawned()
     {
         cc = GetComponent<CharacterController>();
+
+        netCC = GetComponent<NetworkCharacterControllerPrototype>();
 
         if (Object.HasInputAuthority)
         {
@@ -99,6 +106,8 @@ public class PlayerController : NetworkBehaviour
 
             CamFollow cf = Camera.main.GetComponent<CamFollow>();
             cf.target = camPosition;
+
+            GameManager.gm.pr = GetComponent<PlayerRotate>();
         }
 
         playerState = PlayerState.Idle;
@@ -108,7 +117,7 @@ public class PlayerController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (GameManager.gm.gState != GameManager.GameState.Start)
+        if (GameManager.gm.gState == GameManager.GameState.Start)
         {
             if (delay > 0)
                 delay--;
@@ -132,47 +141,61 @@ public class PlayerController : NetworkBehaviour
             else
                 moveSpeed = 4;
 
-            if (!isFire) // 'isFire'가 거짓일 경우 마우스 왼쪽을 누르면 사격한다.
+            if (GetInput(out NetworkInputData data))
             {
-                if (Input.GetMouseButtonDown(0))
+                if (!isFire)    // 'isFire'가 거짓일 경우 마우스 왼쪽을 누르면 사격한다.
                 {
-                    bulletMagarzion--;
-
-                    Instantiate(bullet);
-
-                    StartCoroutine(ShootEffectOn(0.05f));
-                }
-            }
-            if (isFire) // 'isFire'가 참일 경우 마우스 왼쪽을 누르면 연사한다.
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    if (delay <= 0 && bulletMagarzion >= 1)
+                    if (data.buttons.WasPressed(_buttonsPrevious, Buttons.fire0))
                     {
-                        bulletMagarzion--;
-                        delay = setDelay;
+                        if (delay <= 0 && bulletMagarzion >= 1)
+                        {
+                            bulletMagarzion--;
 
-                        Instantiate(bullet);
+                            Runner.Spawn(bullet, firePoint.transform.position);
 
-                        StartCoroutine(ShootEffectOn(0.05f));
+                            StartCoroutine(ShootEffectOn(0.05f));
+                        }
                     }
                 }
-            }
-
-            if (Input.GetMouseButtonDown(1)) // 마우스 오른쪽을 누르면 로켓을 발사한다.
-            {
-                if (rocketDelay <= 0)
+                if (isFire)     // 'isFire'가 참일 경우 마우스 왼쪽을 누르면 연사한다.
                 {
-                    rocketDelay = setRocketDelay;
+                    if (data.buttons.WasPressed(_buttonsPrevious, Buttons.fire0))
+                    {
+                        if (delay <= 0 && bulletMagarzion >= 1)
+                        {
+                            bulletMagarzion--;
+                            delay = setDelay;
 
-                    Instantiate(rocket);
+                            Runner.Spawn(bullet, firePoint.transform.position);
+
+                            StartCoroutine(ShootEffectOn(0.05f));
+                        }
+                    }
                 }
+
+                if (data.buttons.WasPressed(_buttonsPrevious, Buttons.fire1))   // 마우스 오른쪽을 누르면 로켓을 발사한다.
+                {
+                    if (rocketDelay <= 0)
+                    {
+                        rocketDelay = setRocketDelay;
+
+                        Runner.Spawn(rocket, firePoint.transform.position);
+                    }
+                }
+
+                if (data.buttons.WasPressed(_buttonsPrevious, Buttons.reload)) // R키를 누르면 재장전 한다.
+                {
+                    anim.SetTrigger("reloading");
+                    delay = reloadDelay;
+                    bulletMagarzion = 30;
+                }
+
+                _buttonsPrevious = data.buttons;
             }
 
             PlayerMoving();
             AnimationUpdate();
             ChangeFM();
-            ReloadMagarzion();
         }
     }
 
@@ -184,8 +207,8 @@ public class PlayerController : NetworkBehaviour
         float v = Input.GetAxis("Vertical");
         
         // 이동 방향을 설정한다.
-        Vector3 dir = new Vector3(h, 0, v);
-        dir = dir.normalized;
+        //Vector3 dir = new Vector3(h, 0, v);
+        //dir = dir.normalized;
 
         // 플레이어가 죽었을때 움직임을 멈춘다.
         if (playerState != PlayerState.Die)
@@ -201,66 +224,70 @@ public class PlayerController : NetworkBehaviour
             anim.SetBool("move", false);
 
         // 보는 방향을 설정한다.
-        dir = Camera.main.transform.TransformDirection(dir);
+        //dir = Camera.main.transform.TransformDirection(dir);
 
-        yVelocity += gravity * Time.deltaTime;
+        //yVelocity += gravity * Time.deltaTime;
 
-        dir.y = yVelocity;
+        //dir.y = yVelocity;
 
-        cc.Move(dir * moveSpeed * Time.deltaTime);
+        //cc.Move(dir * moveSpeed * Time.deltaTime);
 
-        if (isJump && cc.collisionFlags == CollisionFlags.Below)
+        /*if (isJump && cc.collisionFlags == CollisionFlags.Below)
         { 
             yVelocity = 0;
             isJump = false;
-        }
-        
-        // Space를 누르면 점프
-        if (Input.GetKeyDown(KeyCode.Space) && !isJump)
+        }*/
+
+        if (GetInput(out NetworkInputData data))
         {
-            anim.SetTrigger("jump");
-            yVelocity = jumpPower;
-            isJump = true;
-        }
+            netCC.Move(data.dir * moveSpeed * Runner.DeltaTime);
 
-        // 이동중 애니메이션 변경
-        if (anim.GetBool("move"))
-        {
-            // LeftShift를 누르는 중에는 달린다
-            if (Input.GetKey(KeyCode.LeftShift))
-                anim.SetBool("run", true);
-            else
-                anim.SetBool("run", false);
-
-            if (Input.GetKey(KeyCode.A))
-                anim.SetBool("left", true);
-            else
-                anim.SetBool("left", false);
-
-            if (Input.GetKey(KeyCode.D))
-                anim.SetBool("right", true);
-            else
-                anim.SetBool("right", false);
-
-            if (Input.GetKey(KeyCode.S))
-                anim.SetBool("back", true);
-            else
-                anim.SetBool("back", false);
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            switch (anim.GetBool("crouch"))
+            // Space를 누르면 점프
+            if (data.buttons.WasPressed(_buttonsPrevious, Buttons.jump))
             {
-                case false:
-                    anim.SetBool("crouch", true);
-                    break;
-                case true:
-                    anim.SetBool("crouch", false);
-                    break;
+                netCC.Jump();
+                anim.SetTrigger("jump");
             }
-        }
 
+            // 이동중 애니메이션 변경
+            if (anim.GetBool("move"))
+            {
+                // LeftShift를 누르는 중에는 달린다
+                if (data.buttons.WasPressed(_buttonsPrevious, Buttons.run))
+                    anim.SetBool("run", true);
+                else
+                    anim.SetBool("run", false);
+
+                if (data.buttons.WasPressed(_buttonsPrevious, Buttons.left))
+                    anim.SetBool("left", true);
+                else
+                    anim.SetBool("left", false);
+
+                if (data.buttons.WasPressed(_buttonsPrevious, Buttons.right))
+                    anim.SetBool("right", true);
+                else
+                    anim.SetBool("right", false);
+
+                if (data.buttons.WasPressed(_buttonsPrevious, Buttons.back))
+                    anim.SetBool("back", true);
+                else
+                    anim.SetBool("back", false);
+            }
+
+            if (data.buttons.WasPressed(_buttonsPrevious, Buttons.crouch))
+            {
+                switch (anim.GetBool("crouch"))
+                {
+                    case false:
+                        anim.SetBool("crouch", true);
+                        break;
+                    case true:
+                        anim.SetBool("crouch", false);
+                        break;
+                }
+            }
+            _buttonsPrevious = data.buttons;
+        }
     }
 
     public void AnimationUpdate()
@@ -306,13 +333,9 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-    public void ReloadMagarzion() // 재장전 함수
+    public void hit(int damaged)
     {
-        if (Input.GetKeyDown(KeyCode.R)) // R키를 누르면 재장전 한다.
-        {
-            anim.SetTrigger("reloading");
-            delay = reloadDelay;
-            bulletMagarzion = 30;
-        }
+        hp -= damaged;
+
     }
 }

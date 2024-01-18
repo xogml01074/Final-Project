@@ -1,8 +1,9 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RocketController : MonoBehaviour
+public class RocketController : NetworkBehaviour
 {
     public float rt;
 
@@ -18,7 +19,7 @@ public class RocketController : MonoBehaviour
 
     public float rocketRadius = 5f;
 
-    private void Start()
+    public override void Spawned()
     {
         firePoint = GameObject.Find("MuzzlePoint");
 
@@ -48,11 +49,10 @@ public class RocketController : MonoBehaviour
                 coll[i].GetComponent<EnemyController>().HitEnemy(rocketPower);*/
         }
 
-        Destroy(gameObject);
-
         eff_explosion.transform.position = gameObject.transform.position;
 
-        Instantiate(eff_explosion);
+        Runner.Spawn(eff_explosion);
         
+        Runner.Despawn(Object);
     }
 }

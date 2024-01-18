@@ -45,6 +45,7 @@ public class GameManager : NetworkBehaviour
     public PlayerRotate pr;
 
     public Text loginTime;
+
     public override void Spawned()
     {
         // 초기 게임 상태는 준비 상태로 설정한다.

@@ -182,6 +182,14 @@ PrefabInstance:
       propertyPath: runner
       value: 
       objectReference: {fileID: 5894599413105036225, guid: 47042cc57141a614f9c340c78f75787c, type: 3}
+    - target: {fileID: 7781229091892963120, guid: 6a5e6516f9dd4cf4aabeedd27f4c0f34, type: 3}
+      propertyPath: playerPrefab.RawGuidValue.Array.data[0]
+      value: -2004526580539261651
+      objectReference: {fileID: 0}
+    - target: {fileID: 7781229091892963120, guid: 6a5e6516f9dd4cf4aabeedd27f4c0f34, type: 3}
+      propertyPath: playerPrefab.RawGuidValue.Array.data[1]
+      value: -853503738316710341
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a5e6516f9dd4cf4aabeedd27f4c0f34, type: 3}
 --- !u!1 &34414690
@@ -763,12 +771,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 145892232}
   m_CullTransparentMesh: 1
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 --- !u!1 &177121080
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,18 +851,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 177121080}
   m_CullTransparentMesh: 1
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
 --- !u!1 &272994390
 GameObject:
   m_ObjectHideFlags: 0
@@ -1887,31 +1877,7 @@ RectTransform:
   m_Children:
   - {fileID: 2016366997}
   m_Father: {fileID: 1868999918}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   m_RootOrder: 3
-=======
-  m_RootOrder: 2
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 2
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 2
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 2
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 2
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 2
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -2361,6 +2327,7 @@ MonoBehaviour:
   menu: {fileID: 1249014703}
   options: {fileID: 1637561838}
   lobby: {fileID: 1868999917}
+  loding: {fileID: 1185694612}
   refereshBtn: {fileID: 811186885}
   sessionListContent: {fileID: 769751804}
   sessionPrefab: {fileID: 3199572035739722855, guid: 2d69a883ec7ee244e95723e8d2a9857a, type: 3}
@@ -2723,31 +2690,7 @@ RectTransform:
   m_Children:
   - {fileID: 769751804}
   m_Father: {fileID: 1530008075}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   m_RootOrder: 0
-=======
-  m_RootOrder: 1
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 1
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 1
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 1
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 1
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 1
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2804,12 +2747,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1148917075}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   m_CullTransparentMesh: 1
 --- !u!1 &1185694612
 GameObject:
@@ -2887,18 +2824,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185694612}
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
   m_CullTransparentMesh: 1
 --- !u!1 &1225837423
 GameObject:
@@ -3386,31 +3311,7 @@ RectTransform:
   m_Children:
   - {fileID: 377483662}
   m_Father: {fileID: 1530008075}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   m_RootOrder: 1
-=======
-  m_RootOrder: 2
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 2
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 2
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 2
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 2
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_RootOrder: 2
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3618,31 +3519,7 @@ RectTransform:
   m_LocalScale: {x: 1.8, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   m_Father: {fileID: 1868999918}
-=======
-  m_Father: {fileID: 1530008075}
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_Father: {fileID: 1530008075}
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_Father: {fileID: 1530008075}
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_Father: {fileID: 1530008075}
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_Father: {fileID: 1530008075}
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
-  m_Father: {fileID: 1530008075}
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
@@ -3725,7 +3602,7 @@ RectTransform:
   m_Children:
   - {fileID: 1915426603}
   m_Father: {fileID: 1868999918}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -3894,16 +3771,15 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1489544151}
   - {fileID: 1148917076}
   - {fileID: 1314529680}
   m_Father: {fileID: 1868999918}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 60}
-  m_SizeDelta: {x: 1920, y: 960}
+  m_AnchoredPosition: {x: 0, y: -35}
+  m_SizeDelta: {x: 1920, y: 760}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1530008076
 MonoBehaviour:
@@ -3948,7 +3824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.54901963}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.62352943}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4105,25 +3981,7 @@ RectTransform:
   - {fileID: 2067916478}
   - {fileID: 1249014704}
   - {fileID: 1868999918}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   - {fileID: 1185694613}
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4452,7 +4310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4965,25 +4823,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   - {fileID: 1489544151}
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
-=======
->>>>>>> parent of 392b659 (Attacker멀티플레이 테스트)
   - {fileID: 1530008075}
   - {fileID: 1492035983}
   - {fileID: 811186884}
