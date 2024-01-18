@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject menu;
     public GameObject options;
+    public GameObject cc;
 
     public GameObject lobby;
     public GameObject loding;
@@ -102,6 +103,18 @@ public class UIManager : MonoBehaviour
     public void ToMenu()
     {
         SceneManager.LoadScene("MenuScene");
+    }
+
+    public void OnClickCharacterChoice()
+    {
+        cc.SetActive(true);
+        menu.SetActive(false);
+    }
+
+    public void OnClickCharacterChoiceBack()
+    {
+        cc.SetActive(false);
+        menu.SetActive(true);
     }
 
     public void Quit()

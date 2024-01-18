@@ -7,11 +7,7 @@ using UnityEngine.UI;
 public class CCManagement : MonoBehaviour
 {
     public TextMeshProUGUI TMP;
-    public Button backButton;
-    public Button homeButton;
     public GameObject infoPannel;
-    public Button attackerBtn;
-    public Button bomberBtn;
     public GameObject bomberPlus;
     public GameObject attackerPlus;
 
@@ -52,27 +48,26 @@ public class CCManagement : MonoBehaviour
         attackerPlus.SetActive(false);
     }
 
-
-    // 게임 종료
-    public void exitGame()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-Application.Quit();
-#endif
-    }
-
     // 선택하면 바로 게임 시작
     public void choiceAttacker()
     {
+        infoPannel.SetActive(false);
+        bomberPlus.SetActive(false);
+        attackerPlus.SetActive(false);
+
         UIManager.ui.characterChoice = 0;
-        SceneManager.LoadScene("MenuScene");
+        UIManager.ui.cc.SetActive(false);
+        UIManager.ui.menu.SetActive(true);
     }
 
     public void choiceBoomber()
     {
+        infoPannel.SetActive(false);
+        bomberPlus.SetActive(false);
+        attackerPlus.SetActive(false);
+
         UIManager.ui.characterChoice = 1;
-        SceneManager.LoadScene("MenuScene");
+        UIManager.ui.cc.SetActive(false);
+        UIManager.ui.menu.SetActive(true);
     }
 }
