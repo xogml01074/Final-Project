@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         Text lodingTxt = loding.GetComponentInChildren<Text>();
-        lodingTxt.text = "Loding...";
+        lodingTxt.text = "Loading...";
         loding.SetActive(true);
 
         yield return new WaitForSeconds(5);

@@ -21,9 +21,11 @@ public class PlayerFire : NetworkBehaviour
     // 현재 투척 무기 탄창
     public int currentCount = 6;
 
+    public Text bulletTxt;
+
     public Animator playerAnim;
 
-    public Text bulletTxt;
+    public Camera bCamera;
 
     // 무기 모드 변수
     public enum WeaponMode
@@ -59,8 +61,6 @@ public class PlayerFire : NetworkBehaviour
             // 탄약이 1개 이상이라도 있을 때
             if (currentCount >= 1)
             {
-                playerAnim.SetTrigger("Fire");
-
                 // 수류탄 오브젝트를 생성한 후 수류탄의 생성 위치를 발사 위치로 한다.
                 GameObject bomb = Instantiate(bombFactory);
                 bomb.transform.position = firePosition.transform.position;
@@ -69,7 +69,7 @@ public class PlayerFire : NetworkBehaviour
                 Rigidbody rb = bomb.GetComponent<Rigidbody>();
 
                 // 카메라의 정면 방향으로 수류탄에 물리적인 힘을 가한다.
-                Vector3 throwDir = Camera.main.transform.forward + Vector3.up * 0.5f;
+                Vector3 throwDir = bCamera.transform.forward + Vector3.up * 0.5f;
                 rb.AddForce(throwDir * throwPower, ForceMode.Impulse);
 
                 // 탄약 소모
@@ -89,7 +89,6 @@ public class PlayerFire : NetworkBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                playerAnim.SetTrigger("Reload");
                 StartCoroutine(ReloadingDelay());
             }
 
@@ -99,6 +98,7 @@ public class PlayerFire : NetworkBehaviour
     IEnumerator ReloadingDelay()
     {
         print("Reloading");
+        playerAnim.SetTrigger("Reload");
         yield return new WaitForSeconds(3F);
         currentCount = bulletCount;
     }

@@ -24,7 +24,7 @@ public class ZombieMovement : MonoBehaviour
     private ZombieState zState;
 
     public NavMeshAgent agent;
-    public Animator anim;
+    Animator anim;
 
     public GameObject target;
 
@@ -37,7 +37,9 @@ public class ZombieMovement : MonoBehaviour
     private void Start()
     {
         SetSpeed();
+        anim = GetComponentInChildren<Animator>();
     }
+
     private void Update()
     {
         FindTarget();
