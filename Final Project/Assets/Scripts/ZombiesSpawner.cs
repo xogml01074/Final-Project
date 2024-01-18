@@ -48,9 +48,9 @@ public class ZombiesSpawner : MonoBehaviour
         if (spawnDelay == 1f)
             return;
 
-        if (currentTime <= 60)
+        if (currentTime >= 30)
         {
-            spawnDelay -= 0.5f;
+            spawnDelay -= 0.25f;
             currentTime = 0;
             count++;
         }

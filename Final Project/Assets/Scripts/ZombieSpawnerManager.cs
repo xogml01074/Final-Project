@@ -22,11 +22,11 @@ public class ZombieSpawnerManager : MonoBehaviour
 
         z_Spawners[0].SetActive(true);
 
-        yield return new WaitForSeconds(300);
+        yield return new WaitForSeconds(150);
 
         z_Spawners[1].SetActive(true);
 
-        yield return new WaitForSeconds(300);
+        yield return new WaitForSeconds(150);
 
         z_Spawners[2].SetActive(true);
     }
@@ -37,7 +37,7 @@ public class ZombieSpawnerManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(280);
+            yield return new WaitForSeconds(140);
 
             Instantiate(boss, bossSpawnPoint.position, Quaternion.identity);
         }

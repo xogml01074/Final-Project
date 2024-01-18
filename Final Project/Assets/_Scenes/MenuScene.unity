@@ -2691,7 +2691,7 @@ MonoBehaviour:
   refereshBtn: {fileID: 811186885}
   sessionListContent: {fileID: 769751804}
   sessionPrefab: {fileID: 3199572035739722855, guid: 2d69a883ec7ee244e95723e8d2a9857a, type: 3}
-  characterChoice: 0
+  characterChoice: 1
   inputNickName: {fileID: 1086788584}
 --- !u!4 &902978691
 Transform:
