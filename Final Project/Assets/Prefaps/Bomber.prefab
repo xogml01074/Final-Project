@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &405929600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 405929601}
+  m_Layer: 0
+  m_Name: PlantPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &405929601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405929600}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.695, y: 0.047, z: -0.272}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6860434245908668754}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &371301328208329228
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,6 +625,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   firePosition: {fileID: 5114408920773132366}
   bombFactory: {fileID: 493161431230664325, guid: 5307548206cdc0549a5461de62c0aab9, type: 3}
+  mineFactory: {fileID: 100000, guid: 8f3bca1ae40d27e4a8a895f632c41e99, type: 3}
+  minePosition: {fileID: 405929600}
+  mineCount: 5
   throwPower: 10
   bulletCount: 6
   currentCount: 6
@@ -687,5 +721,10 @@ Transform:
 --- !u!1 &5114408920773132366 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2340762470673445897, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
+  m_PrefabInstance: {fileID: 7387601861065045063}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6860434245908668754 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4157702449337226517, guid: 5ed3f9e10bb7aab48aa45819ae2ef9f7, type: 3}
   m_PrefabInstance: {fileID: 7387601861065045063}
   m_PrefabAsset: {fileID: 0}

@@ -9,8 +9,16 @@ public class PlayerFire : NetworkBehaviour
     // 발사 위치
     public GameObject firePosition;
 
-    // 투척 무기 오브젝트
+    // 탄환
     public GameObject bombFactory;
+
+    // 지뢰
+    public GameObject mineFactory;
+
+    // 지뢰 위치
+    public GameObject minePosition;
+
+    public int mineCount = 5;
 
     // 투척 파워
     public float throwPower = 10f;
@@ -53,6 +61,7 @@ public class PlayerFire : NetworkBehaviour
         Reloading();
         // bulletTxt.text = $"{currentCount} / 6";
         meleeAttack();
+        Trapping();
     }
     public void Fire()
     {
@@ -82,6 +91,23 @@ public class PlayerFire : NetworkBehaviour
         }
     }
     // 플레이어가 발사 > 발사한걸로 터져서 > 적을 잡으면 > 점수가 오르게
+
+    public void Trapping()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (mineCount <= 0)
+            {
+                Debug.Log("Not Having Mine");
+                return;
+            }
+
+            GameObject mine = Instantiate(mineFactory);
+            mine.transform.position = minePosition.transform.position;
+            playerAnim.SetTrigger("Plant");
+            mineCount--;
+        }
+    }
 
     void Reloading()
     {
