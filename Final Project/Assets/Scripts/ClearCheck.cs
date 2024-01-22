@@ -16,19 +16,21 @@ public class ClearCheck : MonoBehaviour
     }
     private void ClearOrNot()
     {
-        if (currentTime < 690)
-        {
-            GameManager.gm.gState = GameManager.GameState.GameOver;
-            return;
-        }
-
-        else if (currentTime >= 600)
+        if (currentTime >= 600)
         {
             if (InPlayerCheck())
                 GameManager.gm.gState = GameManager.GameState.Clear;
 
             return;
         }
+
+        if (currentTime < 690)
+        {
+            GameManager.gm.gState = GameManager.GameState.GameOver;
+
+            return;
+        }
+
     }
 
     public bool InPlayerCheck()
@@ -38,6 +40,7 @@ public class ClearCheck : MonoBehaviour
 
         return false;
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

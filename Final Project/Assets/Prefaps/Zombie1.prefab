@@ -93,9 +93,10 @@ GameObject:
   m_Component:
   - component: {fileID: 630802968611164674}
   - component: {fileID: 630802968611164925}
-  - component: {fileID: 630802968611164924}
   - component: {fileID: -7979668049862366250}
   - component: {fileID: -4792602659026416925}
+  - component: {fileID: 4546249749565095089}
+  - component: {fileID: 630802968611164924}
   m_Layer: 8
   m_Name: Zombie1
   m_TagString: Enemy
@@ -142,26 +143,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &630802968611164924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 630802968611164678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18fe739cf95d79f4f9b845fe1f7101d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zType: 0
-  agent: {fileID: 630802968611164925}
-  anim: {fileID: 630802968419313718}
-  target: {fileID: 0}
-  attackDistnace: 1.5
-  zDamage: 15
-  maxHp: 100
-  currentHp: 100
 --- !u!54 &-7979668049862366250
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -192,6 +173,48 @@ CapsuleCollider:
   m_Height: 5.83
   m_Direction: 1
   m_Center: {x: 0, y: 2.7, z: 0}
+--- !u!114 &4546249749565095089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630802968611164678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 3d5aefd064df6b9468067ceb327e6f27
+  NestedObjects: []
+  NetworkedBehaviours: []
+  SimulationBehaviours: []
+--- !u!114 &630802968611164924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630802968611164678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18fe739cf95d79f4f9b845fe1f7101d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zType: 0
+  agent: {fileID: 630802968611164925}
+  target: {fileID: 0}
+  attackDistnace: 1.5
+  zDamage: 30
+  maxHp: 100
+  currentHp: 100
 --- !u!1001 &630802968412020054
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -628,10 +651,5 @@ PrefabInstance:
 --- !u!4 &630802968411883132 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400170, guid: abfe6fc5a9b390a488839c1fc3b58dcd, type: 3}
-  m_PrefabInstance: {fileID: 630802968412020054}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &630802968419313718 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9500000, guid: abfe6fc5a9b390a488839c1fc3b58dcd, type: 3}
   m_PrefabInstance: {fileID: 630802968412020054}
   m_PrefabAsset: {fileID: 0}

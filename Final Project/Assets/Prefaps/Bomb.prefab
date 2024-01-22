@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 493161431230664377}
+  - component: {fileID: -5371487726929352867}
   - component: {fileID: 7070128189042261286}
   - component: {fileID: -5820856869179561327}
   - component: {fileID: 9163359683127378714}
@@ -35,6 +36,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-5371487726929352867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493161431230664325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 5307548206cdc0549a5461de62c0aab9
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: -5820856869179561327}
+  SimulationBehaviours: []
 --- !u!54 &7070128189042261286
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -63,6 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ee39a3415522e4da0cbe9b9679f234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   attackPower: 20
   explosionRadius: 3
   bombParticle: {fileID: 198572880945154666}
