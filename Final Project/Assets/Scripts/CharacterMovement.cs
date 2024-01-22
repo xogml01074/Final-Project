@@ -27,6 +27,8 @@ public class CharacterMovement : NetworkBehaviour
 
     public int maxHP = 100;
     public int currentHP = 100;
+
+    public float ct;
     public Text respawnTxt;
 
     // 닉네임 설정
@@ -74,6 +76,8 @@ public class CharacterMovement : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        ct -= Time.deltaTime;
+
         if (ps == PlayerState.Dead)
             return;
 
@@ -163,13 +167,11 @@ public class CharacterMovement : NetworkBehaviour
     IEnumerator RespawnPlayer()
     {
         // 리스폰 쿨타임
-        float ct = 15;
-        ct -= Time.deltaTime;
+        ct = 15;
 
         respawnTxt = GameObject.Find("RespawnText").GetComponent<Text>();
+        respawnTxt.text = string.Format($"사망하셨습니다.\n리스폰 까지 {(int)ct}초");
         respawnTxt.gameObject.SetActive(true);
-
-        respawnTxt.text = string.Format($"사망하셨습니다.\n리스폰 까지 {(int)ct}");
 
         yield return new WaitForSeconds(15);
 

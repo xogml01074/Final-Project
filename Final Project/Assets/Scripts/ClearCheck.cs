@@ -16,13 +16,13 @@ public class ClearCheck : MonoBehaviour
     }
     private void ClearOrNot()
     {
-        if (currentTime < 1200)
+        if (currentTime < 690)
         {
             GameManager.gm.gState = GameManager.GameState.GameOver;
             return;
         }
 
-        else if (currentTime >= 1080)
+        else if (currentTime >= 600)
         {
             if (InPlayerCheck())
                 GameManager.gm.gState = GameManager.GameState.Clear;
