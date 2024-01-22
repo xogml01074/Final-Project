@@ -61,6 +61,7 @@ public class CharacterMovement : NetworkBehaviour
         RPC_SendNickName(UIManager.ui.inputNickName.text);
 
         playerAnim = GetComponentInChildren<Animator>();
+        respawnTxt = GameObject.Find("Canvas").transform.GetChild(2).GetComponent<Text>();
     }
 
     public override void Render()
@@ -169,7 +170,6 @@ public class CharacterMovement : NetworkBehaviour
         // 리스폰 쿨타임
         ct = 15;
 
-        respawnTxt = GameObject.Find("RespawnText").GetComponent<Text>();
         respawnTxt.text = string.Format($"사망하셨습니다.\n리스폰 까지 {(int)ct}초");
         respawnTxt.gameObject.SetActive(true);
 

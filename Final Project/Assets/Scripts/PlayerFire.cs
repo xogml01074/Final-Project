@@ -29,8 +29,6 @@ public class PlayerFire : NetworkBehaviour
     // ÇöÀç ÅõÃ´ ¹«±â ÅºÃ¢
     public int currentCount = 6;
 
-    public Text bulletTxt;
-
     public Animator playerAnim;
 
     public Camera bCamera;
@@ -86,7 +84,7 @@ public class PlayerFire : NetworkBehaviour
             }
             else if (currentCount == 0)
             {
-                print("No Bullet!");
+                Reloading();
             }
         }
     }

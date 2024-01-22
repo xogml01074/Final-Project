@@ -9,14 +9,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gm;
 
-    private void Awake()
-    {
-        if (gm == null)
-        {
-            gm = this;
-        }
-    }
-
     // 게임 상태 상수
     public enum GameState
     {
@@ -26,15 +18,19 @@ public class GameManager : MonoBehaviour
     }
 
     // 현재의 게임 상태
-    public GameState gState { get; set; }
+    public GameState gState = GameState.Start;
+
+    private void Awake()
+    {
+        if (gm == null)
+        {
+            gm = this;
+        }
+    }
+
 
     // 게임 상태 UI 오브젝트 변수
     public Text gameTxt;
-
-    private void Start()
-    {
-        gState = GameState.Start;
-    }
 
     private void Update()
     {

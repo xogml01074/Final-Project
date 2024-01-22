@@ -21,10 +21,10 @@ public class BombAction : NetworkBehaviour
 
     public override void Spawned()
     {
-        bombParticle = GetComponentInChildren<ParticleSystem>();
+        bombParticle = transform.GetChild(0).GetChild(11).GetComponent<ParticleSystem>();
         bombParticle.Pause();
     }
-
+        
     // 충돌했을 때의 처리
     private void OnCollisionEnter(Collision collision)
     {

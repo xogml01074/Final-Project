@@ -1,10 +1,11 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ZombieMovement : MonoBehaviour
+public class ZombieMovement : NetworkBehaviour
 {
     public enum ZombieType
     {
@@ -34,13 +35,13 @@ public class ZombieMovement : MonoBehaviour
     public float maxHp = 100;
     public float currentHp = 100;
 
-    private void Start()
+    public override void Spawned()
     {
         SetSpeedAndDamage();
         anim = GetComponentInChildren<Animator>();
     }
 
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
         FindTarget();
         AnimationUpdate();
@@ -87,7 +88,7 @@ public class ZombieMovement : MonoBehaviour
         foreach (GameObject player in players)
         {
             Vector3 dir = player.transform.position - transform.position;
-            float distance_Player = dir.magnitude;
+            float distancePlayer = dir.magnitude;
 
             // Physics.RaycastAll을 사용하여 모든 충돌 지점을 가져옴
             RaycastHit[] hits = Physics.RaycastAll(transform.position, dir.normalized, distance);
@@ -97,9 +98,9 @@ public class ZombieMovement : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Player"))
                 {
-                    if (distance_Player < distance)
+                    if (distancePlayer < distance)
                     {
-                        distance = distance_Player;
+                        distance = distancePlayer;
                         closestPlayer = player;
                     }
                 }
