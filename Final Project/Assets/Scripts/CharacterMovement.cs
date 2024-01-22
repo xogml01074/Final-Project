@@ -25,8 +25,8 @@ public class CharacterMovement : NetworkBehaviour
     [SerializeField]
     private Text nickNameTxt;
 
-    public int maxHP = 100;
-    public int currentHP = 100;
+    public float maxHP = 100;
+    public float currentHP = 100;
 
     public float ct;
     public Text respawnTxt;

@@ -47,8 +47,8 @@ public class GameManager : MonoBehaviour
         {
             gameTxt.text = "클리어!";
 
-            Time.timeScale = 0f;
             StartCoroutine(GoLobby());
+            Time.timeScale = 0f;
             return;
         }
 
@@ -56,15 +56,15 @@ public class GameManager : MonoBehaviour
         {
             gameTxt.text = "전원사망";
 
-            Time.timeScale = 0f;
             StartCoroutine(GoLobby());
+            Time.timeScale = 0f;
             return;
         }
     }
 
     IEnumerator GoLobby()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
 
         SceneManager.LoadScene(0);
     }

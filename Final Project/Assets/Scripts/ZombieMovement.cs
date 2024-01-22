@@ -36,7 +36,7 @@ public class ZombieMovement : MonoBehaviour
 
     private void Start()
     {
-        SetSpeed();
+        SetSpeedAndDamage();
         anim = GetComponentInChildren<Animator>();
     }
 
@@ -46,13 +46,16 @@ public class ZombieMovement : MonoBehaviour
         AnimationUpdate();
     }
 
-    private void SetSpeed()
+    private void SetSpeedAndDamage()
     {
         if (zType == ZombieType.Zombie)
-            agent.speed = 2;
+            agent.speed = 2.2f;
 
         else if (zType == ZombieType.SkinlessZombie)
-            agent.speed = 1.2f;
+        {
+            zDamage = 30;
+            agent.speed = 1.4f;
+        }
     }
 
     private void AnimationUpdate()
@@ -147,13 +150,14 @@ public class ZombieMovement : MonoBehaviour
 
     }
 
-    private void Attack()
+    public void Attack()
     {
         if (zState == ZombieState.Dead)
             return;
 
+        CharacterMovement attackT = target.GetComponent<CharacterMovement>();
         agent.velocity = Vector3.zero;
-
+        attackT.currentHP -= zDamage;
     }
 
     public void Hurt(float damage)

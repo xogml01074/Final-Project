@@ -37,7 +37,7 @@ public class ZombieSpawnerManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(140);
+            yield return new WaitForSeconds(240);
 
             Instantiate(boss, bossSpawnPoint.position, Quaternion.identity);
         }
