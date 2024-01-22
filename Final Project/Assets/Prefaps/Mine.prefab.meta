@@ -4,12 +4,12 @@ labels:
 - Bomb
 - C4
 - Explosive
+- FusionPrefab
+- Plastic
 - Prop
 - Weapon
-- Plastic
-NativeFormatImporter:
+PrefabImporter:
   externalObjects: {}
-  mainObjectFileID: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

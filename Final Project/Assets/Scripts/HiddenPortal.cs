@@ -7,10 +7,8 @@ using Unity.VisualScripting;
 public class HiddenPortal : MonoBehaviour
 {
     public ParticleSystem shPS;
-    public TextMeshProUGUI escapeTxt;
-    public bool playing;
     public float currentTime;
-    int pCheck = 0;
+    public bool playing;
 
     private void Start()
     {
@@ -21,12 +19,44 @@ public class HiddenPortal : MonoBehaviour
     private void Update()
     {
         currentTime += Time.deltaTime;
+
+        exxit();
+    }
+
+    /* private void OnCollisionEnter(Collision collision)
+{
         // 시간이 1120 ~ 1160 일 때만 열림
-        if (currentTime >= 1120 && currentTime <= 1160)
+    if (currentTime >= 1120 && currentTime <= 1160)
+    {
+        pCheck++;
+        if (pCheck == NetworkCallback.Nc.runningPlayers.Count)
+        {
+            // F 키를 눌러 탈출이라는 문구
+            escapeTxt.text = "Press F to Escape";
+            // 누르면 탈출
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                GameManager.gm.gState = GameManager.GameState.Clear;
+            }
+        }
+    }
+}
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            pCheck--;
+        }
+    }
+    */
+
+    void exxit()
+    {
+        if (currentTime >= 20 && currentTime <= 1160)
         {
             playing = true;
             shPS.Play();
-            // 인원수가 접속한 플레이어 수와 같다면
         }
         else if (currentTime < 1120)
         {
@@ -42,35 +72,6 @@ public class HiddenPortal : MonoBehaviour
         else
         {
             Destroy(shPS);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (currentTime >= 1120 && currentTime <= 1160)
-        {
-            if (other.CompareTag("Player"))
-            {
-                pCheck++;
-                if (pCheck == NetworkCallback.Nc.runningPlayers.Count)
-                {
-                    // F 키를 눌러 탈출이라는 문구
-                    escapeTxt.text = "Press F to Escape";
-                    // 누르면 탈출
-                    if (Input.GetKeyDown(KeyCode.F))
-                    {
-                        GameManager.gm.gState = GameManager.GameState.Clear;
-                    }
-                }
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            pCheck--;
         }
     }
 }
