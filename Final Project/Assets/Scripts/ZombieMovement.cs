@@ -12,7 +12,7 @@ public class ZombieMovement : MonoBehaviour
         SkinlessZombie,
     }
 
-    private enum ZombieState
+    public enum ZombieState
     {
         Idle,
         Move,
@@ -21,7 +21,7 @@ public class ZombieMovement : MonoBehaviour
     }
 
     public ZombieType zType;
-    private ZombieState zState;
+    public ZombieState zState;
 
     public NavMeshAgent agent;
     public Animator anim;

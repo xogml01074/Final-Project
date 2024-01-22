@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
-    public string UserID { get; set; }
-
-    public string LoginTime { get; set; }
+    //public string UserID { get; set; }
 
     private void Start()
     {

@@ -57,7 +57,7 @@ public class PlayerController : NetworkBehaviour
     public GameObject bullet;
     
     // 사격 딜레이 변수
-    float delay = 0;
+    public float delay = 0;
 
     public float setDelay = 50f;
 
@@ -89,8 +89,14 @@ public class PlayerController : NetworkBehaviour
 
     public Transform camPosition;
 
-    NetworkCharacterControllerPrototype netCC;
+    [SerializeField]
+    private NetworkCharacterControllerPrototype netCC;
 
+    [SerializeField]
+    private Text nickNameTxt;
+
+
+    [Networked]
     public NetworkButtons PrevButtons { get; set; }
 
     private NetworkButtons buttons;
@@ -101,6 +107,9 @@ public class PlayerController : NetworkBehaviour
     private Vector3 moveDir;
 
     public Text respawnTxt;
+
+    [Networked(OnChanged = nameof(OnNickNameChanged))]
+    NetworkString<_16> NickName { get; set; }
 
 
     public override void Spawned()
@@ -115,6 +124,8 @@ public class PlayerController : NetworkBehaviour
 
             GameManager.gm.pr = GetComponent<PlayerRotate>();
         }
+
+        RPC_SendNickName(UIManager.ui.inputNickName.text);
 
         playerState = PlayerState.Idle;
         fireMode = FireMode.One;
@@ -162,12 +173,11 @@ public class PlayerController : NetworkBehaviour
 
         if (fireMode == FireMode.One)    // 'fireMode'가 'One' 일 경우 마우스 왼쪽을 누르면 사격한다.
         {
-            if (buttons.IsSet(Buttons.fire0))
+            if (buttons.IsSet(Buttons.fire0One))
             {
                 if (delay <= 0 && bulletMagarzion >= 1)
                 {
                     bulletMagarzion--;
-                    delay = setDelay;
 
                     Runner.Spawn(bullet, firePoint.transform.position);
 
@@ -175,9 +185,10 @@ public class PlayerController : NetworkBehaviour
                 }
             }
         }
+
         if (fireMode == FireMode.Fire)     // 'fireMode'가 'Fire' 일 경우 마우스 왼쪽을 누르면 연사한다.
         {
-            if (buttons.IsSet(Buttons.fire0))
+            if (buttons.IsSet(Buttons.fire0Fire))
             {
                 if (delay <= 0 && bulletMagarzion >= 1)
                 {
@@ -206,14 +217,9 @@ public class PlayerController : NetworkBehaviour
             anim.SetTrigger("reloading");
             delay = reloadDelay;
             bulletMagarzion = 30;
+            Debug.Log("reloading");
         }
-
-        if (buttons.IsSet(Buttons.crouch))
-            anim.SetBool("crouch", true);
-        else
-            anim.SetBool("crouch", false);
         
-
         PlayerMoving();
     }
 
@@ -258,6 +264,28 @@ public class PlayerController : NetworkBehaviour
         else
             moveSpeed = 4;
 
+        if (pressead.IsSet(Buttons.crouch))
+        {
+            switch (anim.GetBool("crouch"))
+            {
+                case false:
+                    anim.SetBool("crouch", true);
+                    Debug.Log("crouch");
+                    break;
+                case true:
+                    anim.SetBool("crouch", false);
+                    Debug.Log("crouch");
+                    break;
+            }
+        }
+
+        // 캐릭터 점프
+        if (pressead.IsSet(Buttons.jump))
+        {
+            netCC.Jump();
+            Debug.Log("jump");
+        }
+
         // 이동중 애니메이션 변경
         if (anim.GetBool("move"))
         {
@@ -299,23 +327,6 @@ public class PlayerController : NetworkBehaviour
                 anim.SetBool("left", false);
         }
             
-        if (buttons.IsSet(Buttons.crouch))
-        {
-            switch (anim.GetBool("crouch"))
-            {
-                case false:
-                    anim.SetBool("crouch", true);
-                    break;
-                case true:
-                    anim.SetBool("crouch", false);
-                    break;
-            }
-        }
-
-        // 캐릭터 점프
-        if (pressead.IsSet(Buttons.jump))
-            netCC.Jump();
-
         // 캐릭터 이동
         moveDir = transform.forward * inputDir.y + transform.right * inputDir.x;
         moveDir.Normalize();
@@ -356,7 +367,7 @@ public class PlayerController : NetworkBehaviour
 
     public void ChangeFM() // 사격 모드 변경 함수
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             switch (fireMode)
             {
@@ -376,39 +387,53 @@ public class PlayerController : NetworkBehaviour
 
     }
 
-private void CheckRespawn()
-{
-    if (hp <= 0)
+    private void CheckRespawn()
     {
-        StartCoroutine(RespawnPlayer());
-    }
-}
-
-IEnumerator RespawnPlayer()
-{
-    // 리스폰 쿨타임
-    float ct = 15;
-    ct -= Time.deltaTime;
-
-    respawnTxt = GameObject.Find("RespawnText").GetComponent<Text>();
-    respawnTxt.gameObject.SetActive(true);
-
-    respawnTxt.text = string.Format($"사망하셨습니다.\n리스폰 까지 {(int)ct}");
-
-    yield return new WaitForSeconds(15);
-
-    if (ct <= 0)
-    {
-        respawnTxt.gameObject.SetActive(false);
-        transform.position = SetPlayerSpawnPos.SetSpawnPosition();
-        yield return null;
+        if (hp <= 0)
+        {
+            StartCoroutine(RespawnPlayer());
+        }
     }
 
-    else
+    IEnumerator RespawnPlayer()
     {
-        playerState = PlayerState.Dead;
-        respawnTxt.text = string.Format($"게임 오버");
+        // 리스폰 쿨타임
+        float ct = 15;
+        ct -= Time.deltaTime;
+
+        respawnTxt = GameObject.Find("RespawnText").GetComponent<Text>();
+        respawnTxt.gameObject.SetActive(true);
+
+        respawnTxt.text = string.Format($"사망하셨습니다.\n리스폰 까지 {(int)ct}");
+
+        yield return new WaitForSeconds(15);
+
+        if (ct <= 0)
+        {
+            respawnTxt.gameObject.SetActive(false);
+            transform.position = SetPlayerSpawnPos.SetSpawnPosition();
+            yield return null;
+        }
+
+        else
+        {
+            playerState = PlayerState.Dead;
+            respawnTxt.text = string.Format($"게임 오버");
+        }
     }
-}
+    public static void OnNickNameChanged(Changed<PlayerController> changed)
+    {
+        changed.Behaviour.SetNickName();
+    }
+        public void SetNickName()
+    {
+        nickNameTxt.text = NickName.Value;
+    }
+
+    [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]
+    public void RPC_SendNickName(NetworkString<_16> message)
+    {
+        NickName = message;
+    }
 
 }

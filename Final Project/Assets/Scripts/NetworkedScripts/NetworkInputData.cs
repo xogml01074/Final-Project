@@ -11,8 +11,9 @@ enum Buttons
     run = 5,
     crouch = 6,
     reload = 7,
-    fire0 = 8,
-    fire1 = 9,
+    fire0One = 8,
+    fire0Fire = 9,
+    fire1 = 10,
 }
 public struct NetworkInputData : INetworkInput
 {

@@ -12,7 +12,7 @@ public class PlayerDataNetworked : NetworkBehaviour
         if (Object.HasStateAuthority)
         {
             PlayerData pd = FindObjectOfType<PlayerData>();
-            UserId = pd.UserID;
+            //UserId = pd.UserID;
         }
     }
 }

@@ -217,8 +217,8 @@ MonoBehaviour:
   - {fileID: 633297030235784315}
   weapon01_Power: 3
   bullet: {fileID: 1000011023395326, guid: 2ce15a1900ef14a459f78260cd05a3dc, type: 3}
-  setDelay: 10
-  reloadDelay: 200
+  setDelay: 5
+  reloadDelay: 100
   hp: 100
   maxHp: 100
   power: 3
@@ -232,7 +232,9 @@ MonoBehaviour:
   rocketDelay: 0
   setRocketDelay: 5
   camPosition: {fileID: 633297030520719074}
-  respawnTxt: {fileID: 1690179556999323795}
+  netCC: {fileID: 3199836674971359618}
+  nickNameTxt: {fileID: 1690179556999323795}
+  respawnTxt: {fileID: 0}
 --- !u!114 &2974968990135257874
 MonoBehaviour:
   m_ObjectHideFlags: 0
