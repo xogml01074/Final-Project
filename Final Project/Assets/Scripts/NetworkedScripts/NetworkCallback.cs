@@ -228,6 +228,14 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
         myInput.buttons.Set(Buttons.right, Input.GetKey(KeyCode.D));
         myInput.buttons.Set(Buttons.left, Input.GetKey(KeyCode.A));
         myInput.buttons.Set(Buttons.jump, Input.GetKey(KeyCode.Space));
+        myInput.buttons.Set(Buttons.run, Input.GetKey(KeyCode.LeftShift));
+    
+        myInput.buttons.Set(Buttons.reload, Input.GetKeyDown(KeyCode.R));
+        myInput.buttons.Set(Buttons.crouch, Input.GetKeyDown(KeyCode.C));
+
+        myInput.buttons.Set(Buttons.fire0One, Input.GetMouseButtonDown(0));
+        myInput.buttons.Set(Buttons.fire0Fire, Input.GetMouseButton(0));
+        myInput.buttons.Set(Buttons.fire1, Input.GetMouseButton(1));
 
         myInput.pitch = Pitch;
         myInput.yaw = Yaw;

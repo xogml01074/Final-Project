@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7550804330133459222}
   - component: {fileID: 7550804330133459223}
   - component: {fileID: 7550804330133459305}
+  - component: {fileID: 4786179739453388967}
   m_Layer: 0
   m_Name: bulllet_hole
   m_TagString: Untagged
@@ -25,8 +26,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7550804330133459221}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 459.19836, y: 38.0666, z: 119.428375}
+  m_LocalRotation: {x: 0, y: 0.7055809, z: 0, w: 0.7086294}
+  m_LocalPosition: {x: 403.79315, y: 18.7108, z: 410.79526}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -98,3 +99,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToDestroy: 5
+--- !u!114 &4786179739453388967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7550804330133459221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 0a1a262466d538a47996f011b2ee5a7a
+  NestedObjects: []
+  NetworkedBehaviours: []
+  SimulationBehaviours: []
