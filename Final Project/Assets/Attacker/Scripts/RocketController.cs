@@ -1,8 +1,9 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RocketController : MonoBehaviour
+public class RocketController : NetworkBehaviour
 {
     public float rt;
 
@@ -18,15 +19,11 @@ public class RocketController : MonoBehaviour
 
     public float rocketRadius = 5f;
 
-    private void Start()
+    public override void Spawned()
     {
-        firePoint = GameObject.Find("MuzzlePoint");
-
-        transform.position = firePoint.transform.position;
-
         transform.forward = Camera.main.transform.forward;
 
-        GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * speed);
+        GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * speed, ForceMode.Impulse);
 
         Destroy(gameObject, 5f);
     }
@@ -36,23 +33,23 @@ public class RocketController : MonoBehaviour
         Collider[] coll = Physics.OverlapSphere(transform.position, rocketRadius, 1 << 8);
         for (int i = 0; i < coll.Length; i++)
         {
-            /*if (Vector3.Distance(coll[i].transform.position, transform.position) > 4)
-                coll[i].GetComponent<EnemyController>().HitEnemy(10);
+            if (Vector3.Distance(coll[i].transform.position, transform.position) > 4)
+                coll[i].GetComponent<ZombieMovement>().Hurt(10);
             else if (Vector3.Distance(coll[i].transform.position, transform.position) > 3)
-                coll[i].GetComponent<EnemyController>().HitEnemy(20);
+                coll[i].GetComponent<ZombieMovement>().Hurt(20);
             else if (Vector3.Distance(coll[i].transform.position, transform.position) > 2)
-                coll[i].GetComponent<EnemyController>().HitEnemy(30);
+                coll[i].GetComponent<ZombieMovement>().Hurt(30);
             else if (Vector3.Distance(coll[i].transform.position, transform.position) > 1)
-                coll[i].GetComponent<EnemyController>().HitEnemy(40);
+                coll[i].GetComponent<ZombieMovement>().Hurt(40);
             else
-                coll[i].GetComponent<EnemyController>().HitEnemy(rocketPower);*/
+                coll[i].GetComponent<ZombieMovement>().Hurt(rocketPower);
         }
-
-        Destroy(gameObject);
 
         eff_explosion.transform.position = gameObject.transform.position;
 
-        Instantiate(eff_explosion);
-        
+        Runner.Spawn(eff_explosion);
+
+        Runner.Despawn(Object);
     }
 }
+
