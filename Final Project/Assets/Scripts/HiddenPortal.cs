@@ -23,47 +23,19 @@ public class HiddenPortal : MonoBehaviour
         exxit();
     }
 
-    /* private void OnCollisionEnter(Collision collision)
-{
-        // 시간이 1120 ~ 1160 일 때만 열림
-    if (currentTime >= 1120 && currentTime <= 1160)
-    {
-        pCheck++;
-        if (pCheck == NetworkCallback.Nc.runningPlayers.Count)
-        {
-            // F 키를 눌러 탈출이라는 문구
-            escapeTxt.text = "Press F to Escape";
-            // 누르면 탈출
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                GameManager.gm.gState = GameManager.GameState.Clear;
-            }
-        }
-    }
-}
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            pCheck--;
-        }
-    }
-    */
-
     void exxit()
     {
-        if (currentTime >= 20 && currentTime <= 1160)
+        if (currentTime >= 444 && currentTime <= 555)
         {
             playing = true;
             shPS.Play();
         }
-        else if (currentTime < 1120)
+        else if (currentTime < 444)
         {
             playing = false;
             shPS.Pause();
         }
-        else if (currentTime > 1160 && shPS.isPlaying)
+        else if (currentTime > 555 && shPS.isPlaying)
         {
             playing = false;
             shPS.Pause();

@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         ClearOrNot();
     }
 
-    private void ClearOrNot()
+    public void ClearOrNot()
     {
         if (gState == GameState.Clear)
         {

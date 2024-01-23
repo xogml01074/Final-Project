@@ -85,7 +85,7 @@ MonoBehaviour:
   bulletHole: {fileID: 7550804330133459221, guid: 0a1a262466d538a47996f011b2ee5a7a, type: 3}
   firePoint: {fileID: 0}
   bloodEff: {fileID: 1013274939826982, guid: ffbf169ab9dcfdc45ae14010bc82a6b2, type: 3}
-  bulletPower: 10
+  bulletPower: 3
   target: {fileID: 0}
 --- !u!114 &4491945575092262435
 MonoBehaviour:

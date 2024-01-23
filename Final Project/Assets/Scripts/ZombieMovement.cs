@@ -35,11 +35,11 @@ public class ZombieMovement : NetworkBehaviour
     public float maxHp = 100;
     public float currentHp = 100;
 
-    public void Start()
+    public override void Spawned()
     {
-        SetSpeedAndDamage();
         anim = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        SetSpeedAndDamage();
     }
 
     public override void FixedUpdateNetwork()

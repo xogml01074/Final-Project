@@ -18,7 +18,11 @@ public class ClientCharacter : MonoBehaviour
             GameObject canvas = GameObject.FindWithTag("Options");
             options = canvas.transform.GetChild(0).gameObject;
 
-            options.SetActive(true);
+            if (!options)
+                options.SetActive(true);
+
+            else
+                options.SetActive(false);
         }
     }
 }
