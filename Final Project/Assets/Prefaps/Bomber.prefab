@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 405929600}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.7, y: 0.28, z: -0.27}
+  m_LocalPosition: {x: -0.83, y: 0.043, z: -0.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -570,7 +570,7 @@ MonoBehaviour:
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
   gravity: -20
-  jumpImpulse: 8
+  jumpImpulse: 10
   acceleration: 10
   braking: 10
   maxSpeed: 5
@@ -599,8 +599,6 @@ MonoBehaviour:
   currentHP: 100
   ct: 0
   respawnTxt: {fileID: 0}
-  th: 0
-  tv: 0
 --- !u!114 &1943480133655677944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -635,7 +633,6 @@ MonoBehaviour:
   throwPower: 10
   bulletCount: 6
   currentCount: 6
-  bulletTxt: {fileID: 0}
   playerAnim: {fileID: 5114408919403220861}
   bCamera: {fileID: 7387601861437401908}
   wMode: 0
