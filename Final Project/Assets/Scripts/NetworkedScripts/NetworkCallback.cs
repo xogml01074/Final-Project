@@ -175,9 +175,6 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
         yield return new WaitForSeconds(2);
 
         runner.SetActiveScene(1);
-
-        UIManager.ui.loding.SetActive(false);
-
     }
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {

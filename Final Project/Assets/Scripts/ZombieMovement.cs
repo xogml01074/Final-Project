@@ -158,7 +158,7 @@ public class ZombieMovement : NetworkBehaviour
 
     public void Attack()
     {
-        if (zState == ZombieState.Dead)
+        if (zState == ZombieState.Dead || target)
             return;
 
         StartCoroutine(AttackPlayer());
@@ -168,7 +168,7 @@ public class ZombieMovement : NetworkBehaviour
     {
         CharacterMovement attackT = target.GetComponent<CharacterMovement>();
         agent.velocity = Vector3.zero;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         attackT.currentHP -= zDamage;
     }
 

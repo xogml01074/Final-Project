@@ -55,6 +55,9 @@ public class PlayerFire : NetworkBehaviour
     // public override void FixedUpdateNetwork()
     private void Update()
     {
+        if (!Object.HasInputAuthority)
+            return;
+
         Fire();
         Reloading();
         // bulletTxt.text = $"{currentCount} / 6";
