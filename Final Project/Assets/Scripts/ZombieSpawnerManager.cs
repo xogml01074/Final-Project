@@ -1,15 +1,16 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieSpawnerManager : MonoBehaviour
+public class ZombieSpawnerManager : NetworkBehaviour
 {
     public List<GameObject> z_Spawners;
     
     public GameObject boss;
     public Transform bossSpawnPoint;
 
-    private void Start()
+    public override void Spawned()
     {
         StartCoroutine(SetAcitiveSpawner());
         StartCoroutine(BossSpawn());

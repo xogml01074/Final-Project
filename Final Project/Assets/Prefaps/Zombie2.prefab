@@ -131,7 +131,7 @@ MonoBehaviour:
   agent: {fileID: 2365905486496208123}
   target: {fileID: 0}
   attackDistnace: 2.5
-  zDamage: 15
+  zDamage: 30
   maxHp: 100
   currentHp: 100
 --- !u!1 &3784539047458376704
