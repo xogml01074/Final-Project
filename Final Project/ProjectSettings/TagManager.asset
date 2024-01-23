@@ -11,6 +11,7 @@ TagManager:
   - Weapon
   - FxTemporaire
   - Options
+  - Boss
   layers:
   - Default
   - TransparentFX
