@@ -50,7 +50,6 @@ public class CharacterMovement : NetworkBehaviour
     public override void Spawned()
     {
         playerAnim = GetComponentInChildren<Animator>();
-
         if (!Object.HasInputAuthority)
         {
             Destroy(cam.gameObject);
