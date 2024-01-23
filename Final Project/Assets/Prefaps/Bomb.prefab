@@ -33,6 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4868560297709184450}
+  - {fileID: 4882558766368660}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -90,9 +91,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   attackPower: 20
+<<<<<<< Updated upstream
   explosionRadius: 15
+=======
+  explosionRadius: 3
+  bp: {fileID: 0}
+>>>>>>> Stashed changes
   bombParticle: {fileID: 198572880945154666}
-  bomb: {fileID: 493161431230664325}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -114,7 +119,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 4868560297709184450}
+    m_TransformParent: {fileID: 493161431230664377}
     m_Modifications:
     - target: {fileID: 1134129239631916, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
       propertyPath: m_Name
@@ -123,6 +128,10 @@ PrefabInstance:
     - target: {fileID: 1134129239631916, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1134129239631916, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1143295807935202, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
       propertyPath: m_Layer
@@ -146,7 +155,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4882558394911734, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4882558394911734, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
       propertyPath: m_LocalScale.x
@@ -232,8 +241,14 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114324878773532104, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
+--- !u!4 &4882558766368660 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4882558394911734, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
+  m_PrefabInstance: {fileID: 2053377122}
+  m_PrefabAsset: {fileID: 0}
 --- !u!198 &198572880945154666 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 198572881580852744, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}

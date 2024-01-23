@@ -2,17 +2,17 @@ using Fusion;
 
 enum Buttons 
 {
-    forward = 0,
-    back = 1,
-    right = 2,
-    left = 3,
-    jump = 4,
-    run = 5,
-    crouch = 6,
-    reload = 7,
-    fire0One = 8,
-    fire0Fire = 9,
-    fire1 = 10,
+    forward,
+    back,
+    right,
+    left,
+    jump,
+    run,
+    crouch,
+    reload,
+    fire0One,
+    fire0Fire,
+    fire1,
 }
 public struct NetworkInputData : INetworkInput
 {

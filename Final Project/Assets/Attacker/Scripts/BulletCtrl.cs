@@ -13,7 +13,7 @@ public class BulletCtrl : NetworkBehaviour
 
     public GameObject bloodEff;
 
-    public float bulletPower = 10f;
+    public float bulletPower = 20f;
 
     Rigidbody rb;
 
