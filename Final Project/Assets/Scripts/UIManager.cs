@@ -35,7 +35,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        inputNickName.text = PlayerPrefs.GetString("NickName");
+        //inputNickName.text = PlayerPrefs.GetString("NickName");
     }
 
     public void OnClickOptionsSave()

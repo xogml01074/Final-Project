@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HiddenAdd : MonoBehaviour
 {
@@ -19,18 +20,15 @@ public class HiddenAdd : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         isIn = true;
-        if (currentTime >= 20 && currentTime <= 1160)
+        if (currentTime >= 444 && currentTime <= 555)
         {
             pCheck++;
             if (pCheck == NetworkCallback.Nc.runningPlayers.Count)
             {
-                // F 키를 눌러 탈출이라는 문구
-                escapeTxt.text = "Press F to Escape";
-                // 누르면 탈출
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    GameManager.gm.gState = GameManager.GameState.Clear;
-                }
+                Color color = new Color32(153, 102, 255, 255);
+                escapeTxt.color = color;
+                escapeTxt.text = "HIDDEN PORTAL ENDING!\n THE END";
+                Time.timeScale = 0f;
             }
         }
     }
@@ -40,5 +38,4 @@ public class HiddenAdd : MonoBehaviour
         escapeTxt.text = "";
         pCheck--;
     }
-
 }

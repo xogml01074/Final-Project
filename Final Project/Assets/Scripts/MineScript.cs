@@ -22,9 +22,9 @@ public class MineScript : NetworkBehaviour
 
             // 저장된 Collider 배열에 있는 모든 에너미에게 수류탄 데미지를 적용한다.
             // 여기 안됨
-            for (int i = 0; i < cols.Length; ++i)
+            for (int i = 0; i < cols.Length; i++)
             {
-                cols[i].GetComponent<ZombieMovement>().Hurt(mPower);
+                cols[i].GetComponentInChildren<ZombieMovement>().Hurt(mPower);
             }
             mineParticle.Play();
             Destroy(gameObject, 0.3f);
@@ -33,9 +33,9 @@ public class MineScript : NetworkBehaviour
         {
             mineParticle.Play();
             Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, 1 << 8);
-            for (int i = 0; i < cols.Length; ++i)
+            for (int i = 0; i < cols.Length; i++)
             {
-                cols[i].GetComponent<TitanScript>().HitEnemy(mPower);
+                cols[i].gameObject.GetComponent<TitanScript>().HitEnemy(mPower);
             }
             mineParticle.Play();
             Destroy(gameObject, 0.1f);
