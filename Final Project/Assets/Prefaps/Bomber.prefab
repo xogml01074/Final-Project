@@ -599,6 +599,7 @@ MonoBehaviour:
   currentHP: 100
   ct: 0
   respawnTxt: {fileID: 0}
+  playerAnim: {fileID: 0}
 --- !u!114 &1943480133655677944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -626,7 +627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   firePosition: {fileID: 5114408920773132366}
-  bombFactory: {fileID: 493161431230664325, guid: 5307548206cdc0549a5461de62c0aab9, type: 3}
+  bombFactory: {fileID: 3116739650267785347, guid: 005b82723ead6a44dbaa0109304e6887, type: 3}
   mineFactory: {fileID: 100000, guid: 8f3bca1ae40d27e4a8a895f632c41e99, type: 3}
   minePosition: {fileID: 405929600}
   mineCount: 5
