@@ -210,15 +210,6 @@ public class PlayerController : NetworkBehaviour
             Debug.Log("reloading");
         }
 
-        PlayerMoving();
-    }
-
-    // 플레이어 이동 함수
-    public void PlayerMoving()
-    {
-        if (playerState == PlayerState.Dead)
-            return;
-
         // 입력 키를 받아온다.
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
@@ -227,19 +218,6 @@ public class PlayerController : NetworkBehaviour
             playerState = PlayerState.Move;
         else
             playerState = PlayerState.Idle;
-
-        // 키 입력값에 따른 실행
-        buttons = default;
-
-        if (GetInput<NetworkInputData>(out var input))
-        {
-            buttons = input.buttons;
-        }
-
-        pressead = buttons.GetPressed(PrevButtons);
-        released = buttons.GetReleased(PrevButtons);
-
-        PrevButtons = buttons;
 
         inputDir = Vector2.zero;
 
@@ -323,12 +301,9 @@ public class PlayerController : NetworkBehaviour
 
         netCC.Move(moveDir);
 
-        transform.rotation = Quaternion.Euler(0, (float)input.yaw, 0);
-
         // 사망했을시 실행되는 리스폰 메소드
         CheckRespawn();
     }
-
 
     public void AnimationUpdate()
     {
