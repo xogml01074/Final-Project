@@ -37,31 +37,13 @@ public class ZombieMovement : NetworkBehaviour
 
     public void Start()
     {
-        SetSpeedAndDamage();
-        ps = GameObject.FindGameObjectsWithTag("Player");
         anim = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
-    }
-
-    public void Update()
-    {
-        AnimationUpdate();
+        SetSpeedAndDamage();
         FindTarget();
     }
 
-    private void SetSpeedAndDamage()
-    {
-        if (zType == ZombieType.Zombie)
-            agent.speed = 2.2f;
-
-        else if (zType == ZombieType.SkinlessZombie)
-        {
-            zDamage = 30;
-            agent.speed = 1.4f;
-        }
-    }
-
-    public void AnimationUpdate()
+    public override void FixedUpdateNetwork()
     {
         switch (zState)
         {
@@ -81,7 +63,19 @@ public class ZombieMovement : NetworkBehaviour
         }
     }
 
-    public void FindTarget()
+    private void SetSpeedAndDamage()
+    {
+        if (zType == ZombieType.Zombie)
+            agent.speed = 2.2f;
+
+        else if (zType == ZombieType.SkinlessZombie)
+        {
+            zDamage = 30;
+            agent.speed = 1.4f;
+        }
+    }
+
+    private void FindTarget()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         float distance = Mathf.Infinity;
@@ -156,7 +150,7 @@ public class ZombieMovement : NetworkBehaviour
 
     }
 
-    public void Attack()
+    private void Attack()
     {
         if (zState == ZombieState.Dead || target)
             return;
