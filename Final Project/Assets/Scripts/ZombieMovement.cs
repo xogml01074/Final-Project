@@ -1,7 +1,5 @@
 using Fusion;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -35,14 +33,17 @@ public class ZombieMovement : NetworkBehaviour
     public float maxHp = 100;
     public float currentHp = 100;
 
+    public GameObject[] ps;
+
     public void Start()
     {
         SetSpeedAndDamage();
+        ps = GameObject.FindGameObjectsWithTag("Player");
         anim = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
     }
 
-    public override void FixedUpdateNetwork()
+    public void Update()
     {
         AnimationUpdate();
         FindTarget();
@@ -60,7 +61,7 @@ public class ZombieMovement : NetworkBehaviour
         }
     }
 
-    private void AnimationUpdate()
+    public void AnimationUpdate()
     {
         switch (zState)
         {
@@ -80,7 +81,7 @@ public class ZombieMovement : NetworkBehaviour
         }
     }
 
-    private void FindTarget()
+    public void FindTarget()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         float distance = Mathf.Infinity;
@@ -97,13 +98,10 @@ public class ZombieMovement : NetworkBehaviour
             // 반복문을 사용해 부딪힌 지점의 플레이어들의 거리만 계산후 타겟 설정
             foreach (RaycastHit hit in hits)
             {
-                if (hit.collider.CompareTag("Player"))
+                if (distancePlayer < distance)
                 {
-                    if (distancePlayer < distance)
-                    {
-                        distance = distancePlayer;
-                        closestPlayer = player;
-                    }
+                    distance = distancePlayer;
+                    closestPlayer = player;
                 }
             }
         }
@@ -141,7 +139,7 @@ public class ZombieMovement : NetworkBehaviour
 
     private void Move()
     {
-        if (zState == ZombieState.Dead || target == null)
+        if (target == null)
             return;
 
         agent.SetDestination(target.transform.position);
@@ -163,8 +161,14 @@ public class ZombieMovement : NetworkBehaviour
         if (zState == ZombieState.Dead)
             return;
 
+        StartCoroutine(AttackPlayer());
+    }
+
+    IEnumerator AttackPlayer()
+    {
         CharacterMovement attackT = target.GetComponent<CharacterMovement>();
         agent.velocity = Vector3.zero;
+        yield return new WaitForSeconds(1f);
         attackT.currentHP -= zDamage;
     }
 
