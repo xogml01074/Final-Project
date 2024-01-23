@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterMovement : NetworkBehaviour
 {
-    public enum PlayerState 
+    public enum PlayerState
     {
         Idle,
         Walk,
@@ -55,13 +55,12 @@ public class CharacterMovement : NetworkBehaviour
             Destroy(miniMapCam);
             return;
         }
-        
+
         cam.gameObject.SetActive(true);
         miniMapCam.SetActive(true);
         RPC_SendNickName(UIManager.ui.inputNickName.text);
 
         playerAnim = GetComponentInChildren<Animator>();
-        respawnTxt = GameObject.Find("Canvas").transform.GetChild(2).GetComponent<Text>();
     }
 
     public override void Render()
@@ -77,8 +76,6 @@ public class CharacterMovement : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        ct -= Time.deltaTime;
-
         if (ps == PlayerState.Dead)
             return;
 
@@ -137,8 +134,9 @@ public class CharacterMovement : NetworkBehaviour
 
         transform.rotation = Quaternion.Euler(0, (float)input.yaw, 0);
 
-        // 사망했을시 실행되는 리스폰 메소드
-        CheckRespawn();
+        // 사망했을시 실행되는 리스폰 코루틴
+        if (currentHP <= 0)
+            RespawnCheck();
     }
 
     public static void OnNickNameChanged(Changed<CharacterMovement> changed)
@@ -157,29 +155,19 @@ public class CharacterMovement : NetworkBehaviour
         NickName = message;
     }
 
-    private void CheckRespawn()
+    private void RespawnCheck()
     {
-        if (currentHP <= 0)
-        {
-            StartCoroutine(RespawnPlayer());
-        }
-    }
-
-    IEnumerator RespawnPlayer()
-    {
-        // 리스폰 쿨타임
-        ct = 15;
-
-        respawnTxt.text = string.Format($"사망하셨습니다.\n리스폰 까지 {(int)ct}초");
+        respawnTxt = GameObject.Find("Canvas").transform.GetChild(2).GetComponent<Text>();
         respawnTxt.gameObject.SetActive(true);
+        respawnTxt.text = string.Format($"사망하셨습니다.\n리스폰 까지 {(int)ct}초");
 
-        yield return new WaitForSeconds(15);
+        StartCoroutine(RespawnPlayer());
 
         if (ct <= 0)
         {
             respawnTxt.gameObject.SetActive(false);
             transform.position = SetPlayerSpawnPos.SetSpawnPosition();
-            yield return null;
+            return;
         }
 
         else
@@ -187,5 +175,14 @@ public class CharacterMovement : NetworkBehaviour
             ps = PlayerState.Dead;
             respawnTxt.text = string.Format($"게임 오버");
         }
+    }
+
+    IEnumerator RespawnPlayer()
+    {
+        // 리스폰 쿨타임
+        ct = 15;
+        ct -= Time.deltaTime;
+
+        yield return new WaitForSeconds(15);
     }
 }

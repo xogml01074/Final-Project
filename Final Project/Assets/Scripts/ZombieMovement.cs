@@ -35,16 +35,17 @@ public class ZombieMovement : NetworkBehaviour
     public float maxHp = 100;
     public float currentHp = 100;
 
-    public override void Spawned()
+    public void Start()
     {
         SetSpeedAndDamage();
         anim = GetComponentInChildren<Animator>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     public override void FixedUpdateNetwork()
     {
-        FindTarget();
         AnimationUpdate();
+        FindTarget();
     }
 
     private void SetSpeedAndDamage()
@@ -91,7 +92,7 @@ public class ZombieMovement : NetworkBehaviour
             float distancePlayer = dir.magnitude;
 
             // Physics.RaycastAll을 사용하여 모든 충돌 지점을 가져옴
-            RaycastHit[] hits = Physics.RaycastAll(transform.position, dir.normalized, distance);
+            RaycastHit[] hits = Physics.RaycastAll(transform.position, dir, distance);
 
             // 반복문을 사용해 부딪힌 지점의 플레이어들의 거리만 계산후 타겟 설정
             foreach (RaycastHit hit in hits)
@@ -108,6 +109,7 @@ public class ZombieMovement : NetworkBehaviour
         }
 
         target = closestPlayer;
+
         // 만약 타겟이 있지만 플레이어와의 거리가 공격 거리보다 멀다면
         if (target != null && distance > attackDistnace)
         {
@@ -126,9 +128,15 @@ public class ZombieMovement : NetworkBehaviour
             return;
 
         if (zType == ZombieType.Zombie)
+        {
             anim.SetBool("Idle", true);
+            FindTarget();
+        }
+
         else
-            return;
+        {
+            FindTarget();
+        }
     }
 
     private void Move()
@@ -146,7 +154,6 @@ public class ZombieMovement : NetworkBehaviour
             zState = ZombieState.Attack;
             anim.SetBool("Walk", false);
             anim.SetBool("Attack", true);
-            return;
         }
 
     }
@@ -171,15 +178,8 @@ public class ZombieMovement : NetworkBehaviour
 
     private void Dead()
     {
-        StartCoroutine(DeadProcess());
-    }
-
-    IEnumerator DeadProcess()
-    {
         agent.velocity = Vector3.zero;
         anim.SetTrigger("Dead");
-        yield return new WaitForSeconds(1.5f);
-
-        Destroy(gameObject);
+        Destroy(gameObject, 1.5f);
     }
 }

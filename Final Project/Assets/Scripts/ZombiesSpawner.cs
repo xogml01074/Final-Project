@@ -1,9 +1,10 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ZombiesSpawner : MonoBehaviour
+public class ZombiesSpawner : NetworkBehaviour
 {
     public BoxCollider rangeCollider;
 
@@ -13,14 +14,14 @@ public class ZombiesSpawner : MonoBehaviour
     public float currentTime;
     public int count;
 
-    private void Start()
+    public override void Spawned()
     {
         rangeCollider = GetComponent<BoxCollider>();
 
         StartCoroutine(ZombieSpawn());
     }
 
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
         currentTime += Time.deltaTime;
         SetSpawnDelay();
