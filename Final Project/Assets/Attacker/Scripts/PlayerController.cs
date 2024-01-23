@@ -36,10 +36,6 @@ public class PlayerController : NetworkBehaviour
 
     public Animator anim;
 
-    // 점프 확인 변수
-    public bool isJump = false;
-
-
     // 사격 발사 위치 변수
     public GameObject firePoint;
 
@@ -62,10 +58,6 @@ public class PlayerController : NetworkBehaviour
 
     public float power = 1;
 
-    public Slider hpBar;
-
-    public Text hpText;
-
     // 탄창 변수
     public float bulletMagarzion = 30;
 
@@ -73,8 +65,6 @@ public class PlayerController : NetworkBehaviour
 
     // 로켓 변수
     public GameObject rocket;
-    public Text rocketDelayText;
-    public Slider rocketBar;
 
     // 로켓 딜레이 변수
     public float rocketDelay = 0;
@@ -118,6 +108,8 @@ public class PlayerController : NetworkBehaviour
 
         playerState = PlayerState.Idle;
         fireMode = FireMode.One;
+
+        
     }
 
     private void Update()
@@ -149,16 +141,6 @@ public class PlayerController : NetworkBehaviour
         released = buttons.GetReleased(PrevButtons);
 
         PrevButtons = buttons;
-
-        //hpText.text = hp.ToString();
-        //magerzionText.text = bulletMagarzion.ToString() + "/30";
-        //rocketBar.value = rocketDelay;
-        //hpBar.value = hp;
-
-        /*if (rocketDelay <= 0)
-            rocketDelayText.text = "";
-        else
-            rocketDelayText.text = rocketDelay.ToString("0.00");*/
 
         if (fireMode == FireMode.One)    // 'fireMode'가 'One' 일 경우 마우스 왼쪽을 누르면 사격한다.
         {
@@ -206,7 +188,6 @@ public class PlayerController : NetworkBehaviour
             anim.SetTrigger("reloading");
             delay = reloadDelay;
             bulletMagarzion = 30;
-            Debug.Log("reloading");
         }
 
         // 입력 키를 받아온다.
@@ -224,24 +205,16 @@ public class PlayerController : NetworkBehaviour
         if (playerState != PlayerState.Move)
             anim.SetBool("move", false);
 
-        if (anim.GetBool("back") || anim.GetBool("crouch"))
-            moveSpeed = 3;
-        else if (anim.GetBool("run"))
-            moveSpeed = 7;
-        else
-            moveSpeed = 4;
-
+        // 캐릭터 앉기
         if (pressead.IsSet(Buttons.crouch))
         {
             switch (anim.GetBool("crouch"))
             {
                 case false:
                     anim.SetBool("crouch", true);
-                    Debug.Log("crouch");
                     break;
                 case true:
                     anim.SetBool("crouch", false);
-                    Debug.Log("crouch");
                     break;
             }
         }
@@ -250,10 +223,10 @@ public class PlayerController : NetworkBehaviour
         if (pressead.IsSet(Buttons.jump))
         {
             netCC.Jump();
-            Debug.Log("jump");
+            anim.SetTrigger("jump");
         }
 
-        // 이동중 애니메이션 변경
+        // 이동중 애니메이션 실행
         if (anim.GetBool("move"))
         {
             // 버튼 입력값 설정
@@ -348,7 +321,6 @@ public class PlayerController : NetworkBehaviour
     public void hit(int damaged)
     {
         hp -= damaged;
-
     }
 
     private void CheckRespawn()

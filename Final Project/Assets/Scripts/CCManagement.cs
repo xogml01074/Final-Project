@@ -26,7 +26,7 @@ public class CCManagement : MonoBehaviour
         attackerPlus.SetActive(true);
         bomberPlus.SetActive(false);
         TMP.text = "Attacker 정보\nAttacker는 보통 일반 FPS게임과 같은 캐릭터 입니다.\n연사, 단발, 특수 탄을 발사 할 수 있으며, 가장 보편적인 캐릭터입니다.\n이동, 달리기, 점프 모두 기본적인 수치이며 사격방식을 바꿀 수 있습니다.\n 총알은 발 당 3데미지를 가졌으며," +
-            "거리별 특수 탄의 데미지가 달라지는 기능이 있습니다.\n \n \nAttacker Basic Speed : 7f, 사격 방식 변경 : C";
+            "거리별 특수 탄의 데미지가 달라지는 기능이 있습니다.\n \n \nAttacker Basic Speed : 7f, 사격 방식 변경 : F";
     }
 
     // (Bomber)
