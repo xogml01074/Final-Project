@@ -318,7 +318,7 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-    public void hit(int damaged)
+    public void hit(float damaged)
     {
         hp -= damaged;
     }

@@ -24,7 +24,7 @@ public class MineScript : NetworkBehaviour
             // ¿©±â ¾ÈµÊ
             for (int i = 0; i < cols.Length; i++)
             {
-                cols[i].GetComponentInChildren<ZombieMovement>().Hurt(mPower);
+                cols[i].GetComponent<ZombieMovement>().Hurt(mPower);
             }
             mineParticle.Play();
             Destroy(gameObject, 0.3f);
@@ -35,7 +35,7 @@ public class MineScript : NetworkBehaviour
             Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, 1 << 8);
             for (int i = 0; i < cols.Length; i++)
             {
-                cols[i].gameObject.GetComponent<TitanScript>().HitEnemy(mPower);
+                cols[i].GetComponent<TitanScript>().HitEnemy(mPower);
             }
             mineParticle.Play();
             Destroy(gameObject, 0.1f);

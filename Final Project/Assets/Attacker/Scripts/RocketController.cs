@@ -15,7 +15,7 @@ public class RocketController : NetworkBehaviour
 
     public GameObject firePoint;
 
-    public float rocketPower = 50f;
+    public float rocketPower = 40f;
 
     public float rocketRadius = 5f;
 

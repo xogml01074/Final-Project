@@ -32,7 +32,7 @@ public class BombAction : NetworkBehaviour
 
             for (int i = 0; i < cols.Length; i++)
             {
-                cols[i].gameObject.GetComponentInChildren<ZombieMovement>().Hurt(attackPower);
+                cols[i].GetComponent<ZombieMovement>().Hurt(attackPower);
             }
             bombParticle.Play();
             Destroy(gameObject, 0.5f);
@@ -42,7 +42,7 @@ public class BombAction : NetworkBehaviour
             Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, 1 << 8);
             for (int i = 0; i < cols.Length; ++i)
             {
-                cols[i].GetComponentInChildren<TitanScript>().HitEnemy(attackPower);
+                cols[i].GetComponent<TitanScript>().HitEnemy(attackPower);
             }
             bombParticle.Play();
             Destroy(gameObject, 0.1f);
