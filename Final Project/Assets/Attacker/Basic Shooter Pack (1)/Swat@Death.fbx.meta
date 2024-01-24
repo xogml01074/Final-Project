@@ -1,39 +1,9 @@
 fileFormatVersion: 2
-guid: 336ab711ff39e8f4f869de271b77baf2
+guid: a53774e25df4cd74ca5bc9d899fa7f32
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Soldier_Body_diffuse
-    second: {fileID: 2800000, guid: e4fbf774925e2f248bf6c81ff418cb1e, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Soldier_Body_normal
-    second: {fileID: 2800000, guid: 4b0cc091f808c1c4b97a880f681a1165, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Soldier_Body_specular
-    second: {fileID: 2800000, guid: a32a44b577b6ee24787a1fe591b29ca8, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Soldier_head_diffuse
-    second: {fileID: 2800000, guid: edb0aad343c6d6c4f858eac679ed3a22, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Soldier_head_normal
-    second: {fileID: 2800000, guid: 00b01faf2e3d5f642b7b8fd8099fd39f, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Soldier_head_specular
-    second: {fileID: 2800000, guid: e71f65592c4247d4ea3e735745bf7429, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -105,8 +75,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips:
-  - a53774e25df4cd74ca5bc9d899fa7f32
+  referencedClips: []
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
@@ -929,11 +898,11 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 336ab711ff39e8f4f869de271b77baf2, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
