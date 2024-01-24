@@ -57,7 +57,7 @@ public class UniqueItem : NetworkBehaviour
         else
         {
             print("Enemy Collected");
-            destroyDelay();
+            StartCoroutine(destroyDelay());
         }
     }
 
