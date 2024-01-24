@@ -20,20 +20,21 @@ public class ZombieMovement : NetworkBehaviour
     }
 
     public ZombieType zType;
-    private ZombieState zState;
+    private ZombieState zState = ZombieState.Move;
 
     public NavMeshAgent agent;
     Animator anim;
 
     public GameObject target;
 
+    public Vector3 dir;
+    public float distance = Mathf.Infinity;
+
     public float attackDistnace = 2.5f;
     public float zDamage = 15;
 
     public float maxHp = 100;
     public float currentHp = 100;
-
-    public GameObject[] ps;
 
     public void Start()
     {
@@ -78,12 +79,11 @@ public class ZombieMovement : NetworkBehaviour
     private void FindTarget()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        float distance = Mathf.Infinity;
         GameObject closestPlayer = null;
 
         foreach (GameObject player in players)
         {
-            Vector3 dir = player.transform.position - transform.position;
+            dir = player.transform.position - transform.position;
             float distancePlayer = dir.magnitude;
 
             // Physics.RaycastAll을 사용하여 모든 충돌 지점을 가져옴
@@ -109,9 +109,6 @@ public class ZombieMovement : NetworkBehaviour
             anim.SetBool("Attack", false);
             anim.SetBool("Walk", true);
         }
-        // 만약 모든 플레이어가 사망했다면
-        else if (target == null)
-            zState = ZombieState.Idle;
     }
 
     private void Idle()
@@ -138,9 +135,6 @@ public class ZombieMovement : NetworkBehaviour
 
         agent.SetDestination(target.transform.position);
 
-        Vector3 dir = target.transform.position - transform.position;
-        float distance = dir.magnitude;
-
         if (distance <= attackDistnace)
         {
             zState = ZombieState.Attack;
@@ -148,22 +142,36 @@ public class ZombieMovement : NetworkBehaviour
             anim.SetBool("Attack", true);
         }
 
+        // 만약 모든 플레이어가 사망했다면
+        else if (target == null)
+            zState = ZombieState.Idle;
     }
 
     private void Attack()
     {
-        if (zState == ZombieState.Dead || target)
+        if (zState == ZombieState.Dead || !target)
             return;
 
         StartCoroutine(AttackPlayer());
+
+        if (distance > attackDistnace)
+        {
+            zState = ZombieState.Move;
+            anim.SetBool("Walk", true);
+            anim.SetBool("Attack", false);
+        }
     }
 
     IEnumerator AttackPlayer()
     {
         CharacterMovement attackT = target.GetComponent<CharacterMovement>();
-        agent.velocity = Vector3.zero;
-        yield return new WaitForSeconds(2f);
+        agent.isStopped = true;
+
+        yield return new WaitForSeconds(1f);
+
+        agent.isStopped = false;
         attackT.currentHP -= zDamage;
+
     }
 
     public void Hurt(float damage)
@@ -176,7 +184,7 @@ public class ZombieMovement : NetworkBehaviour
 
     private void Dead()
     {
-        agent.velocity = Vector3.zero;
+        agent.isStopped = true;
         anim.SetTrigger("Dead");
         Destroy(gameObject, 1.5f);
     }
