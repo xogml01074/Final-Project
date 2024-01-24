@@ -193,4 +193,9 @@ public class CharacterMovement : NetworkBehaviour
     {
         maxHP -= damage;
     }
+
+    public void Heal(int hpm)
+    {
+        currentHP = hpm;
+    }
 }

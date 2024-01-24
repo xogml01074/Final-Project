@@ -15,22 +15,23 @@ public class UniqueItem : NetworkBehaviour
     // 유니크 아이템 충돌 처리
     private void OnTriggerEnter(Collider other)
     {
+        print("닿음");
         // 충돌 상대가 Bomber 일경우
         if (other.gameObject.name == "Bomber(Clone)")
         {
             randomValue = 1;
-            bomber.GetComponent<PlayerFire>().currentCount += 6;
-            bomber.GetComponent<CharacterMovement>().currentHP = 100;
-            print("Bonb Count Added");
+            other.GetComponent<PlayerFire>().UBC(6);
+            other.GetComponent<CharacterMovement>().Heal(100);
+            print("Bomb Count Added");
 
             if (randomValue == Random.Range(0, 8))
             {
-                ba.GetComponent<BombAction>().attackPower += 10;
+                ba.GetComponent<BombAction>().EAP(10);
                 print("Bomb Power Enhanced");
             }
             else if (randomValue == Random.Range(0, 20))
             {
-                ba.GetComponent<BombAction>().explosionRadius += 3f;
+                ba.GetComponent<BombAction>().EER(3f);
                 print("Bomb Radius Increased");
             }
             Destroy(gameObject);
@@ -38,18 +39,17 @@ public class UniqueItem : NetworkBehaviour
         else if (other.gameObject.name == "Player_Attacker(Clone)")
         {
             randomValue = 2;
-            pA.GetComponent<PlayerController>().bulletMagarzion += 30;
-            pA.GetComponent<PlayerController>().hp = 100;
+            other.GetComponent<PlayerController>().BC(30);
+            other.GetComponent<PlayerController>().Heal(100);
             print("Bullet Count Added");
             if (randomValue == Random.Range(0, 8))
             {
-                bC.GetComponent<BulletCtrl>().bulletPower += 2;
+                bC.GetComponent<BulletCtrl>().UBP(2);
                 print("Bullet Power Enhanced");
             }
             else if (randomValue == Random.Range(0, 20))
             {
-                rC.GetComponent<RocketController>().rocketRadius += 5f;
-                rC.GetComponent<RocketController>().rocketPower += 10F;
+                rC.GetComponent<RocketController>().URV(10f);
                 print("Rocket Power, Radius Enhanced");
             }
         }

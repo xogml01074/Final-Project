@@ -92,12 +92,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   attackPower: 20
   explosionRadius: 15
-  explosionRadius: 3
-  bp: {fileID: 0}
   bombParticle: {fileID: 198572880945154666}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!135 &9163359683127378714
 SphereCollider:
   m_ObjectHideFlags: 0

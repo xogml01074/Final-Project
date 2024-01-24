@@ -12,9 +12,11 @@ public class MineScript : NetworkBehaviour
     public override void Spawned()
     {
         mineParticle = transform.GetChild(0).GetComponent<ParticleSystem>();
+        enemyLayer = LayerMask.NameToLayer("Enemy");
     }
     private void OnTriggerEnter(Collider other)
     {
+        int ELayer = (1 << enemyLayer);
         if (other.gameObject.name == "Zombie1(Clone)" || other.gameObject.name == "Zombie2(Clone)")
         {
             // 폭발 효과 반경 내에서 레이어가 'Enemy'(8)인 모든 게임 오브젝트들의 Collider 컴포넌트를 배열에 저장한다
@@ -24,18 +26,18 @@ public class MineScript : NetworkBehaviour
             // 여기 안됨
             for (int i = 0; i < cols.Length; i++)
             {
-                cols[i].GetComponent<ZombieMovement>().Hurt(mPower);
+                cols[i].gameObject.GetComponent<ZombieMovement>().Hurt(mPower);
             }
             mineParticle.Play();
             Destroy(gameObject, 0.3f);
         }
-        else if (other.gameObject.name == "Titan(Clone)")
+        else if (other.gameObject.name == "Boss(Clone)")
         {
             mineParticle.Play();
             Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, 1 << 8);
             for (int i = 0; i < cols.Length; i++)
             {
-                cols[i].GetComponent<TitanScript>().HitEnemy(mPower);
+                cols[i].gameObject.GetComponent<TitanScript>().HitEnemy(mPower);
             }
             mineParticle.Play();
             Destroy(gameObject, 0.1f);

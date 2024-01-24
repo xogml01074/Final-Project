@@ -372,4 +372,15 @@ public class PlayerController : NetworkBehaviour
         NickName = message;
     }
 
+    // Unique Item을 위한 스크립트 
+    public void BC(int count)
+    {
+        bulletMagarzion += count;
+    }
+
+    public void Heal(int value)
+    {
+        hp = value;
+    }
+
 }

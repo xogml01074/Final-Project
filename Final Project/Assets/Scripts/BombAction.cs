@@ -15,8 +15,6 @@ public class BombAction : NetworkBehaviour
 
     public ParticleSystem bombParticle;
 
-    public LayerMask enemyLayer;
-
     public override void Spawned()
     {
         bombParticle = transform.GetChild(1).GetComponent<ParticleSystem>();
@@ -32,17 +30,18 @@ public class BombAction : NetworkBehaviour
 
             for (int i = 0; i < cols.Length; i++)
             {
-                cols[i].GetComponent<ZombieMovement>().Hurt(attackPower);
+                cols[i].gameObject.GetComponent<ZombieMovement>().Hurt(attackPower);
             }
             bombParticle.Play();
             Destroy(gameObject, 0.5f);
         }
-        else if (collision.gameObject.name == "Titan(Clone)")
+        else if (collision.gameObject.name == "Boss(Clone)")
         {
+            print("Boss Hit");
             Collider[] cols = Physics.OverlapSphere(transform.position, explosionRadius, 1 << 8);
             for (int i = 0; i < cols.Length; ++i)
             {
-                cols[i].GetComponent<TitanScript>().HitEnemy(attackPower);
+                cols[i].gameObject.GetComponent<TitanScript>().HitEnemy(attackPower);
             }
             bombParticle.Play();
             Destroy(gameObject, 0.1f);
@@ -52,5 +51,15 @@ public class BombAction : NetworkBehaviour
             bombParticle.Play();
             Destroy(gameObject, 0.2f);
         }
+    }
+
+    public void EAP(int value)
+    {
+        attackPower += value;
+    }
+
+    public void EER(float value)
+    {
+        explosionRadius += value;
     }
 }

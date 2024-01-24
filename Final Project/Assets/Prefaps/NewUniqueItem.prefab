@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4438385241936355150}
   - component: {fileID: 1523875598019280580}
   - component: {fileID: 3013867645316366062}
+  - component: {fileID: 8081471301581813991}
   m_Layer: 0
   m_Name: NewUniqueItem
   m_TagString: Untagged
@@ -95,10 +96,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4430102611065753774}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
+  m_IsTrigger: 0
+  m_Enabled: 0
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 593fb08bd6d2d77469414b312517bad2, type: 3}
 --- !u!114 &1523875598019280580
@@ -144,6 +145,19 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 1523875598019280580}
   SimulationBehaviours: []
+--- !u!65 &8081471301581813991
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430102611065753774}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9, y: 13, z: 7}
+  m_Center: {x: 0.5, y: 6.5, z: -0.5}
 --- !u!1001 &558279750109563178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -186,6 +200,10 @@ PrefabInstance:
     - target: {fileID: 3280519133390621005, guid: a71be3e7990efb040a07565c43cbb198, type: 3}
       propertyPath: m_Name
       value: CFXR3 Magic Aura A (Runic)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280519133390621041, guid: a71be3e7990efb040a07565c43cbb198, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3280519133390621042, guid: a71be3e7990efb040a07565c43cbb198, type: 3}
       propertyPath: m_RootOrder
@@ -237,7 +255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3280519133430969737, guid: a71be3e7990efb040a07565c43cbb198, type: 3}
       propertyPath: m_Intensity
-      value: 0
+      value: 2.9305463
       objectReference: {fileID: 0}
     - target: {fileID: 3531368748785038516, guid: a71be3e7990efb040a07565c43cbb198, type: 3}
       propertyPath: m_LocalScale.x

@@ -51,5 +51,12 @@ public class RocketController : NetworkBehaviour
 
         Runner.Despawn(Object);
     }
+
+    // Unique Item 을 위한 스크립트
+    public void URV(float value)
+    {
+        rocketRadius += value;
+        rocketPower += value;
+    }
 }
 
