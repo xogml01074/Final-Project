@@ -314,7 +314,6 @@ MonoBehaviour:
   fireMode: 0
   moveSpeed: 5
   anim: {fileID: 2006556790832525696}
-  isJump: 0
   firePoint: {fileID: 8810805935165605730}
   eff_Flash:
   - {fileID: 633297031143162861}
@@ -328,15 +327,11 @@ MonoBehaviour:
   setDelay: 10
   reloadDelay: 200
   hp: 100
+  ct: 15
   maxHp: 100
   power: 3
-  hpBar: {fileID: 0}
-  hpText: {fileID: 0}
   bulletMagarzion: 30
-  magerzionText: {fileID: 0}
   rocket: {fileID: 7247016212275673575, guid: 846a10ab3ace773428bcacb8d3c66d6c, type: 3}
-  rocketDelayText: {fileID: 0}
-  rocketBar: {fileID: 0}
   rocketDelay: 0
   setRocketDelay: 5
   camPosition: {fileID: 633297030520719074}

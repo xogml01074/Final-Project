@@ -13,7 +13,7 @@ public class ZombieMovement : NetworkBehaviour
         SkinlessZombie,
     }
 
-    private enum ZombieState
+    public enum ZombieState
     {
         Idle,
         Move,
@@ -22,7 +22,7 @@ public class ZombieMovement : NetworkBehaviour
     }
 
     public ZombieType zType;
-    private ZombieState zState;
+    public ZombieState zState;
 
     public NavMeshAgent agent;
     Animator anim;
@@ -180,6 +180,7 @@ public class ZombieMovement : NetworkBehaviour
     {
         agent.velocity = Vector3.zero;
         anim.SetTrigger("Dead");
-        Destroy(gameObject, 1.5f);
+        
+        Runner.Despawn(Object);
     }
 }

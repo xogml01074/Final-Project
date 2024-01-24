@@ -58,10 +58,11 @@ public class PlayerController : NetworkBehaviour
 
     public float power = 1;
 
+    // 리스폰 쿨타임
+    public float ct = 15f;
+
     // 탄창 변수
     public float bulletMagarzion = 30;
-
-    public Text magerzionText;
 
     // 로켓 변수
     public GameObject rocket;
@@ -122,6 +123,10 @@ public class PlayerController : NetworkBehaviour
         if (rocketDelay > 0)
             rocketDelay -= Time.deltaTime;
 
+        if (playerState == PlayerState.Dead)
+            ct -= Time.deltaTime;
+        else
+            ct = 15f;
     }
 
     public override void FixedUpdateNetwork()
@@ -183,11 +188,14 @@ public class PlayerController : NetworkBehaviour
             }
         }
 
-        if (buttons.IsSet(Buttons.reload)) // R키를 누르면 재장전 한다.
+        if (delay <= 0)
         {
-            anim.SetTrigger("reloading");
-            delay = reloadDelay;
-            bulletMagarzion = 30;
+            if (buttons.IsSet(Buttons.reload)) // R키를 누르면 재장전 한다.
+            {   
+                anim.SetTrigger("reloading");
+                delay = reloadDelay;
+                bulletMagarzion = 30;
+            }
         }
 
         // 입력 키를 받아온다.
@@ -201,7 +209,7 @@ public class PlayerController : NetworkBehaviour
 
         inputDir = Vector2.zero;
 
-        // 플레이어가 Move가 아닐경우 움직임을 멈춘다.
+        // 플레이어가 Move가 아닐경우 애니메이션을 멈춘다.
         if (playerState != PlayerState.Move)
             anim.SetBool("move", false);
 
@@ -273,8 +281,6 @@ public class PlayerController : NetworkBehaviour
 
         netCC.Move(moveDir);
 
-        // 사망했을시 실행되는 리스폰 메소드
-        CheckRespawn();
     }
 
     public void AnimationUpdate()
@@ -286,8 +292,10 @@ public class PlayerController : NetworkBehaviour
             case PlayerState.Move:
                 anim.SetBool("move", true);
                 break;
+            case PlayerState.Dead:
+                CheckRespawn();
+                break;
         }
-
     }
 
     IEnumerator ShootEffectOn(float duration)
@@ -321,21 +329,19 @@ public class PlayerController : NetworkBehaviour
     public void hit(int damaged)
     {
         hp -= damaged;
+
+        if (hp <= 0)
+            playerState = PlayerState.Dead;
     }
 
+    // 사망했을시 실행되는 리스폰 메소드
     private void CheckRespawn()
     {
-        if (hp <= 0)
-        {
-            StartCoroutine(RespawnPlayer());
-        }
+        StartCoroutine(RespawnPlayer());
     }
 
     IEnumerator RespawnPlayer()
     {
-        // 리스폰 쿨타임
-        float ct = 15;
-        ct -= Time.deltaTime;
 
         respawnTxt = GameObject.Find("RespawnText").GetComponent<Text>();
         respawnTxt.gameObject.SetActive(true);
@@ -350,7 +356,6 @@ public class PlayerController : NetworkBehaviour
             transform.position = SetPlayerSpawnPos.SetSpawnPosition();
             yield return null;
         }
-
         else
         {
             playerState = PlayerState.Dead;
