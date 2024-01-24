@@ -15,7 +15,7 @@ public class RocketController : NetworkBehaviour
 
     public GameObject firePoint;
 
-    public float rocketPower = 50f;
+    public float rocketPower = 40f;
 
     public float rocketRadius = 5f;
 
@@ -50,6 +50,13 @@ public class RocketController : NetworkBehaviour
         Runner.Spawn(eff_explosion);
 
         Runner.Despawn(Object);
+    }
+
+    // Unique Item 을 위한 스크립트
+    public void URV(float value)
+    {
+        rocketRadius += value;
+        rocketPower += value;
     }
 }
 

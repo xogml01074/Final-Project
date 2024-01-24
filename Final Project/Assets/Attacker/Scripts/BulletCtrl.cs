@@ -67,4 +67,10 @@ public class BulletCtrl : NetworkBehaviour
             }
         }
     }
+
+    // Unique Item을 위한 스크립트
+    public void UBP(int value)
+    {
+        bulletPower += value;
+    }
 }

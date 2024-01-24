@@ -233,7 +233,7 @@ MonoBehaviour:
   eff_explosion: {fileID: 100012, guid: 5f5e08f64c8423c46ae4bd7e46588425, type: 3}
   speed: 10
   firePoint: {fileID: 0}
-  rocketPower: 50
+  rocketPower: 40
   rocketRadius: 5
 --- !u!114 &1887547803523060860
 MonoBehaviour:

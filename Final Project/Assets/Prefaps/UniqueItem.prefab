@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8195022677959169131}
   - component: {fileID: 8195022677959169130}
   - component: {fileID: 8195022677959169129}
+  - component: {fileID: -6944179406827309496}
   m_Layer: 0
   m_Name: UniqueItem
   m_TagString: Untagged
@@ -112,8 +113,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b568642a0d8d154796b872c518e006b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   randomValue: 0
   ba: {fileID: 493161431230664325, guid: 5307548206cdc0549a5461de62c0aab9, type: 3}
+  bomber: {fileID: 7387601861471409816, guid: 7fee7ca0cf19d55409f4ef5f76e227df, type: 3}
+  pA: {fileID: 290629074653923400, guid: 2dfd2008b27d2ee43b1e2a3fdfbe27f4, type: 3}
+  bC: {fileID: 1000011023395326, guid: 2ce15a1900ef14a459f78260cd05a3dc, type: 3}
+  rC: {fileID: 7247016212275673575, guid: 846a10ab3ace773428bcacb8d3c66d6c, type: 3}
+--- !u!114 &-6944179406827309496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8195022677959169128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 1
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 4d64fcea026274e40a48c0dfbd0ce496
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 8195022677959169129}
+  SimulationBehaviours: []
 --- !u!1001 &9150082872663384472
 PrefabInstance:
   m_ObjectHideFlags: 0

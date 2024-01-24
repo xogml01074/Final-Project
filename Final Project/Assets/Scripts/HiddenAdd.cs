@@ -28,7 +28,7 @@ public class HiddenAdd : MonoBehaviour
                 Color color = new Color32(153, 102, 255, 255);
                 escapeTxt.color = color;
                 escapeTxt.text = "HIDDEN PORTAL ENDING!\n THE END";
-                Time.timeScale = 0f;
+                StartCoroutine(GoLobby());
             }
         }
     }
@@ -37,5 +37,12 @@ public class HiddenAdd : MonoBehaviour
     {
         escapeTxt.text = "";
         pCheck--;
+    }
+
+    IEnumerator GoLobby()
+    {
+        yield return new WaitForSeconds(3);
+
+        SceneManager.LoadScene(0);
     }
 }

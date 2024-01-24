@@ -188,4 +188,14 @@ public class CharacterMovement : NetworkBehaviour
 
         yield return new WaitForSeconds(15);
     }
+
+    public void Hurt(int damage)
+    {
+        maxHP -= damage;
+    }
+
+    public void Heal(int hpm)
+    {
+        currentHP = hpm;
+    }
 }

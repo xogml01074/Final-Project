@@ -2,8 +2,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using Fusion;
+using static UnityEngine.GraphicsBuffer;
 
-public class TitanScript : MonoBehaviour
+public class TitanScript : NetworkBehaviour
 {
     enum TitanState
     {
@@ -21,10 +23,9 @@ public class TitanScript : MonoBehaviour
     CharacterController tcc;
     float currentTime = 0;
     float attackDelay = 3f;
-    public int attackPower = 15;
+    public int attackPower = 30;
     public int maxHp = 300;
     public int currentHp = 300;
-    public Slider hpSlider;
     public Animator titanAnim;
     public NavMeshAgent navTitan;
 
@@ -32,23 +33,22 @@ public class TitanScript : MonoBehaviour
     GameObject nearplayer;
     public GameObject itemFactory;
 
-    private void Start()
+    public override void Spawned()
     {
         t_State = TitanState.Idle;
         tcc = GetComponent<CharacterController>();
         navTitan = GetComponent<NavMeshAgent>();
-        nearplayer = GameObject.FindWithTag("Player");
     }
 
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
         switch (t_State)
         {
             case TitanState.Idle:
-                Idle();
+                // Idle();
                 break;
             case TitanState.Move:
-                Move();
+                FindTargetAndMove();
                 break;
             case TitanState.Attack:
                 Attack();
@@ -60,11 +60,95 @@ public class TitanScript : MonoBehaviour
                 //Die();
                 break;
         }
+    }
 
-        hpSlider.value = (float)currentHp / maxHp;
+    private void FindTargetAndMove()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        float distance = Mathf.Infinity;
+        GameObject closestPlayer = null;
 
-        float dcc = Vector3.Distance(nearplayer.transform.position, titan.transform.position);
-        titanAnim.SetFloat("Distance", dcc);
+        foreach (GameObject player in players)
+        {
+            Vector3 dir = player.transform.position - transform.position;
+            float distancePlayer = dir.magnitude;
+            titanAnim.SetFloat("Distance", distancePlayer);
+
+            // Physics.RaycastAll을 사용하여 모든 충돌 지점을 가져옴
+            RaycastHit[] hits = Physics.RaycastAll(transform.position, dir, distance);
+
+            // 반복문을 사용해 부딪힌 지점의 플레이어들의 거리만 계산후 타겟 설정
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.CompareTag("Player"))
+                {
+                    if (distancePlayer < distance)
+                    {
+                        distance = distancePlayer;
+                        closestPlayer = player;
+                    }
+                }
+            }
+        }
+
+        nearplayer = closestPlayer;
+
+        // 만약 타겟이 있지만 플레이어와의 거리가 공격 거리보다 멀다면
+        if (nearplayer != null && distance > attackDistance)
+        {
+            titanAnim.SetTrigger("IdleToMove");
+        }
+        // 만약 모든 플레이어가 사망했다면
+        else if (nearplayer == null)
+        {
+            navTitan.isStopped = true;
+            t_State = TitanState.Idle;
+            titanAnim.SetTrigger("MoveToIdle");
+        }
+        else if (Time.timeScale == 0)
+        {
+            StartCoroutine(DieProcess());
+        }
+
+        // Move() 합침
+        // 만일, 플레이어와의 거리가 공격 범위 밖이라면 플레이어를 향해 이동한다.
+        if (distance > findDistance)
+        {
+            // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화한다.
+            navTitan.isStopped = true;
+            navTitan.ResetPath();
+
+            // 내비게이션으로 접근하는 최소 거리를 공격 가능 거리로 설정한다.
+            navTitan.stoppingDistance = attackDistance;
+
+            // 내비게이션의 목적지를 플레이어의 위치로 설정한다.
+            navTitan.destination = nearplayer.transform.position;
+            
+            // 거리가 15 이내면 속도 증가
+            if (distance < 15)
+            {
+                navTitan.speed = 10f;
+            }
+            else
+            {
+                navTitan.speed = moveSpeed;
+            }
+        }
+        else if (distance <= attackDistance)
+        {
+            t_State = TitanState.Attack;
+            print("상태 전환 : Move -> Attack");
+
+            // 누적 시간을 공격 딜레이 시간만큼 미리 진행시켜 놓는다.
+            currentTime = attackDelay;
+
+            // 공격 대기 애니메이션 플레이
+            titanAnim.SetTrigger("MoveToAttackDelay");
+
+            // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화한다.
+            navTitan.isStopped = true;
+            navTitan.ResetPath();
+        }
     }
 
     // 죽음 상태 함수
@@ -109,8 +193,8 @@ public class TitanScript : MonoBehaviour
             {
                 //player.GetComponent<PlayerMove>().DamageAction(attackPower);
                 print("공격");
+                AttackAction();
                 currentTime = 0;
-
                 // 공격 애니메이션 플레이
                 titanAnim.SetTrigger("StartAttack");
                 titanAnim.SetInteger("AttackIndex", Random.Range(0, 3));
@@ -131,74 +215,13 @@ public class TitanScript : MonoBehaviour
     // 플레이어의 스크립트의 데미지 처리 함수를 실행하기
     public void AttackAction()
     {
-        // 데미지 들어가는 함수 참조
-        // player.GetComponent<PlayerMove>().DamageAction(attackPower);
-    }
-
-    void Move()
-    {
-        float minDistance = float.MaxValue;
-        float distance = Vector3.Distance(transform.position, nearplayer.transform.position);
-        if (minDistance > distance)
+        if (nearplayer.name == "Bomber(Clone)")
         {
-            minDistance = distance;
+            nearplayer.GetComponent<CharacterMovement>().Hurt(attackPower);
         }
-
-        // 만일, 플레이어와의 거리가 공격 범위 밖이라면 플레이어를 향해 이동한다.
-        if (minDistance > attackDistance)
+        else if (nearplayer.name == "Player_Attacker(Clone)")
         {
-            // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화한다.
-            navTitan.isStopped = true;
-            navTitan.ResetPath();
-
-            // 내비게이션으로 접근하는 최소 거리를 공격 가능 거리로 설정한다.
-            navTitan.stoppingDistance = attackDistance;
-
-            // 내비게이션의 목적지를 플레이어의 위치로 설정한다.
-            navTitan.destination = nearplayer.transform.position;
-            
-            // 거리가 15 이내면 속도 증가
-            if (distance < 15)
-            {
-                navTitan.speed = 10f;
-            }
-            else
-            {
-                navTitan.speed = moveSpeed;
-            }
-        }
-        else
-        {
-            t_State = TitanState.Attack;
-            print("상태 전환 : Move -> Attack");
-
-            // 누적 시간을 공격 딜레이 시간만큼 미리 진행시켜 놓는다.
-            currentTime = attackDelay;
-
-            // 공격 대기 애니메이션 플레이
-            titanAnim.SetTrigger("MoveToAttackDelay");
-
-            // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화한다.
-            navTitan.isStopped = true;
-            navTitan.ResetPath();
-        }
-    }
-
-    void Idle()
-    {
-        // 만일, 플레이어와의 거리가 액션 시작 범위 이내라면 Move 상태로 전환한다.
-        if (Vector3.Distance(transform.position, nearplayer.transform.position) < findDistance)
-        {
-            t_State = TitanState.Move;
-            print("상태 전환 : Idle -> Move");
-
-            // 이동 애니메이션으로 전환하기
-            titanAnim.SetTrigger("IdleToMove");
-        }
-        else if (Vector3.Distance(transform.position, nearplayer.transform.position) < findDistance)
-        {
-            t_State = TitanState.Idle;
-            titanAnim.SetTrigger("MoveToIdle");
+            nearplayer.GetComponent<PlayerController>().hit(attackPower);
         }
     }
 
@@ -243,63 +266,21 @@ public class TitanScript : MonoBehaviour
             Die();
         }
     }
-
-
-
-
-
-
-    /*
-    private void Update()
+    /* void Idle()
     {
-        DistanceCheck();
-        Die();
-        float dcc = Vector3.Distance(player.transform.position, titan.transform.position);
-        titanAnim.SetFloat("Distance", dcc);
-        int hpValue = currentHp;
-        titanAnim.SetInteger("Hp", hpValue);
-    }
-
-    public void DistanceCheck()
-    {
-        float dcc = Vector3.Distance(player.transform.position, titan.transform.position);
-        navTitan.destination = player.transform.position;
-        navTitan.isStopped = false;
-        if (dcc < 30f && dcc > 8f)
+        // 만일, 플레이어와의 거리가 액션 시작 범위 이내라면 Move 상태로 전환한다.
+        if (Vector3.Distance(transform.position, nearplayer.transform.position) < findDistance)
         {
-            navTitan.speed = 7.5f;
+            t_State = TitanState.Move;
+            print("상태 전환 : Idle -> Move");
+
+            // 이동 애니메이션으로 전환하기
+            titanAnim.SetTrigger("IdleToMove");
         }
-        else if (dcc <= 8f)
+        else if (Vector3.Distance(transform.position, nearplayer.transform.position) < findDistance)
         {
-            Attack();
-            return;
+            t_State = TitanState.Idle;
+            titanAnim.SetTrigger("MoveToIdle");
         }
-    }
-
-    public void Attack()
-    {
-        navTitan.isStopped = true;
-        float dcc = Vector3.Distance(player.transform.position, titan.transform.position);
-        titanAnim.SetInteger("AttackIndex", Random.Range(0, 3));
-        titanAnim.SetTrigger("Attack");
-        player.GetComponent<PlayerMove>().Damaged(attackPower);
-    }
-
-    public void Die()
-    {
-        if (currentHp <= 0)
-        {
-            GameObject uniqueItem = Instantiate(itemFactory);
-            uniqueItem.transform.position = titan.transform.position;
-            Destroy(titan);
-        }
-    }
-
-    public void HitTitan(int hitpower)
-    {
-        currentHp -= hitpower;
-        titanAnim.SetTrigger("GetHurt");
-    }
-
-    */
+    } */
 }

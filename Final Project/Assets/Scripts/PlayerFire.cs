@@ -21,13 +21,13 @@ public class PlayerFire : NetworkBehaviour
     public int mineCount = 5;
 
     // 투척 파워
-    public float throwPower = 10f;
+    public float throwPower;
 
     // 투척 무기 최대 탄창
-    public int bulletCount = 6;
+    public int bulletCount;
 
     // 현재 투척 무기 탄창
-    public int currentCount = 6;
+    public int currentCount;
 
     public Animator playerAnim;
 
@@ -42,18 +42,20 @@ public class PlayerFire : NetworkBehaviour
     }
     public WeaponMode wMode;
 
-    // public override void Spawned()
-    private void Start()
+    public override void Spawned()
     {
         // 무기 기본 모드를 노멀 모드로 설정한다.
         wMode = WeaponMode.Normal;
 
         playerAnim = GetComponentInChildren<Animator>();
+
+        bulletCount = 6;
+        currentCount = 6;
+        throwPower = 10f;
         // bulletTxt.text = $"{currentCount} / 6 ";
     }
 
-    // public override void FixedUpdateNetwork()
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
         Fire();
         Reloading();
@@ -138,5 +140,12 @@ public class PlayerFire : NetworkBehaviour
                 cols[i].gameObject.GetComponent<ZombieMovement>().Hurt(7);
             }
         }
+    }
+    public void UBC(int rndN)
+    {
+        print("Worked");
+        print(rndN);
+        currentCount += rndN;
+        print(gameObject.name);
     }
 }
