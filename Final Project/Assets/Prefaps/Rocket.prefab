@@ -234,7 +234,7 @@ MonoBehaviour:
   speed: 10
   firePoint: {fileID: 0}
   rocketPower: 40
-  rocketRadius: 5
+  rocketRadius: 15
 --- !u!114 &1887547803523060860
 MonoBehaviour:
   m_ObjectHideFlags: 0

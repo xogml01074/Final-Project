@@ -17,7 +17,7 @@ public class RocketController : NetworkBehaviour
 
     public float rocketPower = 40f;
 
-    public float rocketRadius = 5f;
+    public float rocketRadius = 15f;
 
     public override void Spawned()
     {
@@ -33,16 +33,19 @@ public class RocketController : NetworkBehaviour
         Collider[] coll = Physics.OverlapSphere(transform.position, rocketRadius, 1 << 8);
         for (int i = 0; i < coll.Length; i++)
         {
-            if (Vector3.Distance(coll[i].transform.position, transform.position) > 4)
-                coll[i].GetComponent<ZombieMovement>().Hurt(10);
-            else if (Vector3.Distance(coll[i].transform.position, transform.position) > 3)
-                coll[i].GetComponent<ZombieMovement>().Hurt(20);
-            else if (Vector3.Distance(coll[i].transform.position, transform.position) > 2)
-                coll[i].GetComponent<ZombieMovement>().Hurt(30);
-            else if (Vector3.Distance(coll[i].transform.position, transform.position) > 1)
-                coll[i].GetComponent<ZombieMovement>().Hurt(40);
-            else
-                coll[i].GetComponent<ZombieMovement>().Hurt(rocketPower);
+            if (coll[i].gameObject.tag == "Boss")
+                coll[i].GetComponent<TitanScript>().HitEnemy((int)rocketPower);
+            else if (coll[i].gameObject.tag == "Enemy")
+            {
+                if (Vector3.Distance(coll[i].transform.position, transform.position) > 12)
+                    coll[i].GetComponent<ZombieMovement>().Hurt(10);
+                else if (Vector3.Distance(coll[i].transform.position, transform.position) > 9)
+                    coll[i].GetComponent<ZombieMovement>().Hurt(20);
+                else if (Vector3.Distance(coll[i].transform.position, transform.position) > 6)
+                    coll[i].GetComponent<ZombieMovement>().Hurt(30);
+                else
+                    coll[i].GetComponent<ZombieMovement>().Hurt(rocketPower);
+            }
         }
 
         eff_explosion.transform.position = gameObject.transform.position;
