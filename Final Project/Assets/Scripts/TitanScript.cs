@@ -226,7 +226,7 @@ public class TitanScript : NetworkBehaviour
     }
 
     // 데미지 실행 함수
-    public void HitEnemy(int hitPower)
+    public void HitEnemy(float hitPower)
     {
         // 만일, 이미 피격 상태이거나 사망 상태라면 아무런 처리도 하지 않고
         // 함수를 종료한다.

@@ -19,15 +19,19 @@ public class BulletCtrl : NetworkBehaviour
 
     public Transform target;
 
+    private NetworkRunner runner;
+
     public override void Spawned()
     {
         transform.forward = Camera.main.transform.forward;
 
+        runner = GameObject.Find("NetworkCallback").GetComponent<NetworkRunner>();
         rb = GetComponent<Rigidbody>();
             
         rb.AddForce(Camera.main.transform.forward * speed, ForceMode.Impulse);
 
         Destroy(gameObject, 5f);
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -45,11 +49,14 @@ public class BulletCtrl : NetworkBehaviour
                 
                 bloodEff.transform.forward = hitPoint.normal;
 
-                collision.gameObject.GetComponent<ZombieMovement>().Hurt(bulletPower);
+                if (collision.gameObject.tag == "Enemy")
+                    collision.gameObject.GetComponent<ZombieMovement>().Hurt(bulletPower);
+                else if (collision.gameObject.tag == "Boss")
+                    collision.gameObject.GetComponent<TitanScript>().HitEnemy(bulletPower);
 
-                Runner.Spawn(bloodEff);
+                runner.Spawn(bloodEff);
 
-                Runner.Despawn(Object);
+                runner.Despawn(Object);
             }
         }
         // ¾Æ´Ò°æ¿ì ÅºÈç ¿ÀºêÁ§Æ®¸¦ »ý¼ºÇÑ´Ù.
@@ -61,9 +68,9 @@ public class BulletCtrl : NetworkBehaviour
 
                 bulletHole.transform.forward = hitPoint.normal;
                 
-                Runner.Spawn(bulletHole);
+                runner.Spawn(bulletHole);
 
-                Runner.Despawn(Object);
+                runner.Despawn(Object);
             }
         }
     }
