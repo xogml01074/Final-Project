@@ -57,11 +57,14 @@ public class PlayerFire : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        Fire();
-        Reloading();
-        // bulletTxt.text = $"{currentCount} / 6";
-        meleeAttack();
-        Trapping();
+        if (Object.HasInputAuthority)
+        {
+            Fire();
+            Reloading();
+            // bulletTxt.text = $"{currentCount} / 6";
+            meleeAttack();
+            Trapping();
+        }
     }
     public void Fire()
     {

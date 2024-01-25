@@ -10,8 +10,11 @@ public class ZombieSpawnerManager : NetworkBehaviour
     public GameObject boss;
     public Transform bossSpawnPoint;
 
+    public NetworkRunner runner;
+
     public override void Spawned()
     {
+        runner = GameObject.Find("NetworkCallback").GetComponent<NetworkRunner>();
         StartCoroutine(SetAcitiveSpawner());
         StartCoroutine(BossSpawn());
     }
@@ -40,7 +43,7 @@ public class ZombieSpawnerManager : NetworkBehaviour
         {
             yield return new WaitForSeconds(240);
 
-            Instantiate(boss, bossSpawnPoint.position, Quaternion.identity);
+            runner.Spawn(boss, bossSpawnPoint.position, Quaternion.identity);
         }
 
     }

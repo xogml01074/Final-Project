@@ -36,6 +36,7 @@ public class TitanScript : NetworkBehaviour
         t_State = TitanState.Idle;
         tcc = GetComponent<CharacterController>();
         navTitan = GetComponent<NavMeshAgent>();
+        navTitan.enabled = true;
     }
 
     public override void FixedUpdateNetwork()
@@ -68,24 +69,12 @@ public class TitanScript : NetworkBehaviour
 
         foreach (GameObject player in players)
         {
-            Vector3 dir = player.transform.position - transform.position;
-            float distancePlayer = dir.magnitude;
-            titanAnim.SetFloat("Distance", distancePlayer);
+            float distancePlayer = Vector3.Distance(transform.position, player.transform.position);
 
-            // Physics.RaycastAll을 사용하여 모든 충돌 지점을 가져옴
-            RaycastHit[] hits = Physics.RaycastAll(transform.position, dir, distance);
-
-            // 반복문을 사용해 부딪힌 지점의 플레이어들의 거리만 계산후 타겟 설정
-            foreach (RaycastHit hit in hits)
+            if (distancePlayer < distance)
             {
-                if (hit.collider.CompareTag("Player"))
-                {
-                    if (distancePlayer < distance)
-                    {
-                        distance = distancePlayer;
-                        closestPlayer = player;
-                    }
-                }
+                distance = distancePlayer;
+                closestPlayer = player;
             }
         }
 
@@ -205,7 +194,7 @@ public class TitanScript : NetworkBehaviour
         item.transform.position = titan.transform.position;
         yield return new WaitForSeconds(2f);
         print("소멸!");
-        Destroy(gameObject);
+        Runner.Despawn(Object);
     }
 
     void Damaged()

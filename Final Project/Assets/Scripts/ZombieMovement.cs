@@ -37,10 +37,12 @@ public class ZombieMovement : NetworkBehaviour
 
     public GameObject itemFactory;
 
+    public NetworkRunner runner;
     public override void Spawned()
     {
         anim = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        runner = GameObject.Find("NetworkCallback").GetComponent<NetworkRunner>();
         agent.enabled = true;
         SetSpeedAndDamage();
     }
@@ -155,10 +157,34 @@ public class ZombieMovement : NetworkBehaviour
             return;
 
         agent.isStopped = true;
-        if (target.gameObject.name == "Bomber(Clone)")
+        StartCoroutine(AttackPlayer());        
+    }
+
+    IEnumerator AttackPlayer()
+    {
+        yield return new WaitForSeconds(1);
+
+        float dis = Vector3.Distance(transform.position, target.transform.position);
+
+        if (dis > attackDistnace)
         {
-            CharacterMovement attackT = target.GetComponent<CharacterMovement>();
-            attackT.currentHP -= zDamage;
+            zState = ZombieState.Move;
+            anim.SetBool("Walk", true);
+            anim.SetBool("Attack", false);
+        }
+
+        else
+        {
+            if (target.gameObject.name == "Bomber(Clone)")
+            {
+                CharacterMovement attackT = target.GetComponent<CharacterMovement>();
+                attackT.currentHP -= zDamage;
+            }
+            else if (target.gameObject.name == "Player_Attacker(Clone)")
+            {
+                PlayerController controller = target.GetComponent<PlayerController>();
+                controller.hp -= zDamage;
+            }
         }
     }
 
@@ -172,7 +198,7 @@ public class ZombieMovement : NetworkBehaviour
 
     private void Dead()
     {
-        agent.velocity = Vector3.zero;
+        agent.isStopped = true;
         anim.SetTrigger("Dead");
 
         int rnd = 1;
@@ -181,6 +207,6 @@ public class ZombieMovement : NetworkBehaviour
             GameObject item = Instantiate(itemFactory);
             item.transform.position = transform.position;
         }
-        Runner.Despawn(Object);
+        runner.Despawn(Object);
     }
 }
