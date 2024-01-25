@@ -25,7 +25,7 @@ public class TitanScript : NetworkBehaviour
     float attackDelay = 3f;
     public int attackPower = 30;
     public int maxHp = 300;
-    public int currentHp = 300;
+    public float currentHp = 300;
     public Animator titanAnim;
     public NavMeshAgent navTitan;
 
