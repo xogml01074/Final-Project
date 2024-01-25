@@ -281,6 +281,9 @@ public class PlayerController : NetworkBehaviour
 
         netCC.Move(moveDir);
 
+        if (hp <= 0)
+            RespawnCheck();
+
     }
 
     public void AnimationUpdate()
@@ -293,7 +296,6 @@ public class PlayerController : NetworkBehaviour
                 anim.SetBool("move", true);
                 break;
             case PlayerState.Dead:
-                CheckRespawn();
                 break;
         }
     }
@@ -335,32 +337,35 @@ public class PlayerController : NetworkBehaviour
     }
 
     // 사망했을시 실행되는 리스폰 메소드
-    private void CheckRespawn()
+    private void RespawnCheck()
     {
-        StartCoroutine(RespawnPlayer());
-    }
-
-    IEnumerator RespawnPlayer()
-    {
-
-        respawnTxt = GameObject.Find("RespawnText").GetComponent<Text>();
+        respawnTxt = GameObject.Find("Canvas").transform.GetChild(2).GetComponent<Text>();
         respawnTxt.gameObject.SetActive(true);
+        respawnTxt.text = string.Format($"사망하셨습니다.\n리스폰 까지 {(int)ct}초");
 
-        respawnTxt.text = string.Format($"사망하셨습니다.\n리스폰 까지 {(int)ct}");
-
-        yield return new WaitForSeconds(15);
+        StartCoroutine(RespawnPlayer());
 
         if (ct <= 0)
         {
             respawnTxt.gameObject.SetActive(false);
             transform.position = SetPlayerSpawnPos.SetSpawnPosition();
-            yield return null;
+            return;
         }
+
         else
         {
             playerState = PlayerState.Dead;
             respawnTxt.text = string.Format($"게임 오버");
         }
+    }
+
+    IEnumerator RespawnPlayer()
+    {
+        // 리스폰 쿨타임
+        ct = 15;
+        ct -= Time.deltaTime;
+
+        yield return new WaitForSeconds(15);
     }
     public static void OnNickNameChanged(Changed<PlayerController> changed)
     {
