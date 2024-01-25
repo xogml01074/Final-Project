@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(GoLobby());
             Time.timeScale = 0f;
             return;
-        }
+         }
 
         if (gState == GameState.GameOver)
         {

@@ -76,6 +76,8 @@ public class CharacterMovement : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        ct -= Time.deltaTime;
+
         if (ps == PlayerState.Dead)
             return;
 
@@ -160,33 +162,30 @@ public class CharacterMovement : NetworkBehaviour
 
     private void RespawnCheck()
     {
-        respawnTxt = GameObject.Find("Canvas").transform.GetChild(2).GetComponent<Text>();
-        respawnTxt.gameObject.SetActive(true);
-        respawnTxt.text = string.Format($"사망하셨습니다.\n리스폰 까지 {(int)ct}초");
-
+        ps = PlayerState.Dead;
         StartCoroutine(RespawnPlayer());
-
-        if (ct <= 0)
-        {
-            respawnTxt.gameObject.SetActive(false);
-            transform.position = SetPlayerSpawnPos.SetSpawnPosition();
-            return;
-        }
-
-        else
-        {
-            ps = PlayerState.Dead;
-            respawnTxt.text = string.Format($"게임 오버");
-        }
     }
 
     IEnumerator RespawnPlayer()
     {
         // 리스폰 쿨타임
-        ct = 15;
-        ct -= Time.deltaTime;
+        ct = 15.1f;
+        respawnTxt = GameObject.Find("Canvas").transform.GetChild(2).GetComponent<Text>();
+        respawnTxt.gameObject.SetActive(true);
+        respawnTxt.text = string.Format($"사망하셨습니다.\n리스폰 까지 {(int)ct}초");
 
         yield return new WaitForSeconds(15);
+
+        if (ct <= 0)
+        {
+            respawnTxt.gameObject.SetActive(false);
+            transform.position = SetPlayerSpawnPos.SetSpawnPosition();
+        }
+
+        else
+        {      
+            respawnTxt.text = string.Format($"게임 오버");
+        }
     }
 
     public void Hurt(int damage)
