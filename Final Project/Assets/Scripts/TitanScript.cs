@@ -1,9 +1,7 @@
+using Fusion;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
-using Fusion;
-using static UnityEngine.GraphicsBuffer;
 
 public class TitanScript : NetworkBehaviour
 {
@@ -45,10 +43,10 @@ public class TitanScript : NetworkBehaviour
         switch (t_State)
         {
             case TitanState.Idle:
-                // Idle();
+                Idle();
                 break;
             case TitanState.Move:
-                FindTargetAndMove();
+                Move();
                 break;
             case TitanState.Attack:
                 Attack();
@@ -123,7 +121,7 @@ public class TitanScript : NetworkBehaviour
 
             // 내비게이션의 목적지를 플레이어의 위치로 설정한다.
             navTitan.destination = nearplayer.transform.position;
-            
+
             // 거리가 15 이내면 속도 증가
             if (distance < 15)
             {
@@ -151,6 +149,47 @@ public class TitanScript : NetworkBehaviour
         }
     }
 
+    void Move()
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        float dirb = Vector3.Distance(titan.transform.position, player.transform.position);
+
+        // 거리별 속도
+        if (dirb <= 15f)
+        {
+            navTitan.speed = 10f;
+        }
+        else
+        {
+            navTitan.speed = moveSpeed;
+        }
+
+        navTitan.isStopped = true;
+        navTitan.ResetPath();
+        navTitan.destination = player.transform.position;
+        navTitan.stoppingDistance = attackDistance;
+
+        if (dirb <= attackDistance)
+        {
+            t_State = TitanState.Attack;
+            print("상태 전환 : Move -> Attack");
+
+            // 누적 시간을 공격 딜레이 시간만큼 미리 진행시켜 놓는다.
+            currentTime = attackDelay;
+
+            // 공격 대기 애니메이션 플레이
+            titanAnim.SetTrigger("MoveToAttackDelay");
+
+            // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화한다.
+            navTitan.isStopped = true;
+            navTitan.ResetPath();
+        }
+    }
+    void Idle()
+    {
+        t_State = TitanState.Move;
+        titanAnim.SetTrigger("IdleToMove");
+    }
     // 죽음 상태 함수
     void Die()
     {
@@ -161,8 +200,9 @@ public class TitanScript : NetworkBehaviour
 
     IEnumerator DieProcess()
     {
-        tcc.enabled = false;
-
+        Destroy(tcc);
+        GameObject item = Instantiate(itemFactory);
+        item.transform.position = titan.transform.position;
         yield return new WaitForSeconds(2f);
         print("소멸!");
         Destroy(gameObject);
@@ -184,8 +224,9 @@ public class TitanScript : NetworkBehaviour
 
     void Attack()
     {
+        GameObject player = GameObject.FindWithTag("Player");
         // 만일 플레이어가 공격 범위 이내에 있다면 플레이어를 공격한다
-        if (Vector3.Distance(transform.position, nearplayer.transform.position) < attackDistance)
+        if (Vector3.Distance(transform.position, player.transform.position) < attackDistance)
         {
             // 일정한 시간마다 플레이어를 공격한다.
             currentTime += Time.deltaTime;
@@ -266,21 +307,4 @@ public class TitanScript : NetworkBehaviour
             Die();
         }
     }
-    /* void Idle()
-    {
-        // 만일, 플레이어와의 거리가 액션 시작 범위 이내라면 Move 상태로 전환한다.
-        if (Vector3.Distance(transform.position, nearplayer.transform.position) < findDistance)
-        {
-            t_State = TitanState.Move;
-            print("상태 전환 : Idle -> Move");
-
-            // 이동 애니메이션으로 전환하기
-            titanAnim.SetTrigger("IdleToMove");
-        }
-        else if (Vector3.Distance(transform.position, nearplayer.transform.position) < findDistance)
-        {
-            t_State = TitanState.Idle;
-            titanAnim.SetTrigger("MoveToIdle");
-        }
-    } */
 }

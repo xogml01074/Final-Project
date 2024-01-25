@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class HiddenAdd : MonoBehaviour
 {
-    int pCheck = 0;
+    public int pCheck = 0;
     public TextMeshProUGUI escapeTxt;
     public float currentTime;
     public GameObject gate;
@@ -23,6 +23,7 @@ public class HiddenAdd : MonoBehaviour
         if (currentTime >= 444 && currentTime <= 555)
         {
             pCheck++;
+            print($"Current Player : {pCheck}, Network Player : {NetworkCallback.Nc.runningPlayers.Count}");
             if (pCheck == NetworkCallback.Nc.runningPlayers.Count)
             {
                 Color color = new Color32(153, 102, 255, 255);

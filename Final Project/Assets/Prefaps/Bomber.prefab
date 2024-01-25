@@ -570,7 +570,7 @@ MonoBehaviour:
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
   gravity: -20
-  jumpImpulse: 10
+  jumpImpulse: 12
   acceleration: 10
   braking: 10
   maxSpeed: 5

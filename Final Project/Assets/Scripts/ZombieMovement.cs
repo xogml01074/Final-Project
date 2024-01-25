@@ -35,6 +35,8 @@ public class ZombieMovement : NetworkBehaviour
     public float maxHp = 100;
     public float currentHp = 100;
 
+    public GameObject itemFactory;
+
     public override void Spawned()
     {
         anim = GetComponentInChildren<Animator>();
@@ -180,7 +182,13 @@ public class ZombieMovement : NetworkBehaviour
     {
         agent.velocity = Vector3.zero;
         anim.SetTrigger("Dead");
-        
+
+        int rnd = 1;
+        if (rnd == Random.Range(0, 25))
+        {
+            GameObject item = Instantiate(itemFactory);
+            item.transform.position = transform.position;
+        }
         Runner.Despawn(Object);
     }
 }

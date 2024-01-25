@@ -53,17 +53,10 @@ public class UniqueItem : NetworkBehaviour
                 print("Rocket Power, Radius Enhanced");
             }
         }
-        // 아닌경우 (땅 / 적 등)
+        // 아닌경우
         else
         {
-            print("Enemy Collected");
-            StartCoroutine(destroyDelay());
+            print("Unique Item Dropped!");
         }
-    }
-
-    IEnumerator destroyDelay()
-    {
-        yield return new WaitForSeconds(3f);
-        Destroy(gameObject);
     }
 }
