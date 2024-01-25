@@ -99,18 +99,16 @@ public class PlayerController : NetworkBehaviour
     public override void Spawned()
     {
         netCC = GetComponent<NetworkCharacterControllerPrototype>();
+        RPC_SendNickName(UIManager.ui.inputNickName.text);
 
-        if (Object.HasInputAuthority)
+        if (!Object.HasInputAuthority)
         {
             return;
         }
 
-        RPC_SendNickName(UIManager.ui.inputNickName.text);
 
         playerState = PlayerState.Idle;
         fireMode = FireMode.One;
-
-        
     }
 
     private void Update()

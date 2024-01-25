@@ -183,9 +183,7 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
         _sessions = sessionList;
     }
 
-#pragma warning disable UNT0006 // Incorrect message signature
     public void OnConnectedToServer(NetworkRunner runner)
-#pragma warning restore UNT0006 // Incorrect message signature
     {
 
     }
@@ -205,9 +203,7 @@ public class NetworkCallback : MonoBehaviour, INetworkRunnerCallbacks
 
     }
 
-#pragma warning disable UNT0006 // Incorrect message signature
     public void OnDisconnectedFromServer(NetworkRunner runner)
-#pragma warning restore UNT0006 // Incorrect message signature
     {
 
     }
