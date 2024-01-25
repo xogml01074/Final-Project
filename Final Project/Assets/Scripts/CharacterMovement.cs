@@ -63,6 +63,7 @@ public class CharacterMovement : NetworkBehaviour
         miniMapCam.SetActive(true);
     }
 
+    // Fusion이 Physics를 처리할 때 유니티의 Update대신 사용
     public override void Render()
     {
         // 나에게 입력권한이 없다면 리턴

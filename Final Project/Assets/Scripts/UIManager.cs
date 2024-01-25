@@ -103,6 +103,7 @@ public class UIManager : MonoBehaviour
 
     public void ToMenu()
     {
+        NetworkCallback.Nc.runner.Shutdown();
         SceneManager.LoadScene("MenuScene");
     }
 
