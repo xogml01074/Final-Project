@@ -14,8 +14,11 @@ public class ZombiesSpawner : NetworkBehaviour
     public float currentTime;
     public int count;
 
-    public override void Spawned()
+    public NetworkRunner runner;
+
+    private void Start()
     {
+        runner = GameObject.Find("NetworkCallback").GetComponent<NetworkRunner>();
         rangeCollider = GetComponent<BoxCollider>();
 
         StartCoroutine(ZombieSpawn());
@@ -29,16 +32,16 @@ public class ZombiesSpawner : NetworkBehaviour
 
     IEnumerator ZombieSpawn()
     {
-        int idx = 0;
-
         while (true)
         {
+            int idx = 0;
+
             // 일정 시간이 지나면 좀비의 종류를 증가시키는 코드
             if (count >= 5)
                 idx = GetZombieType();
 
             Vector3 spawnPos = GetSpawnPoint();
-            Instantiate(Zombies[idx], spawnPos, Quaternion.identity);
+            runner.Spawn(Zombies[idx], spawnPos, Quaternion.identity);
 
             yield return new WaitForSeconds(spawnDelay);
         }
@@ -69,7 +72,7 @@ public class ZombiesSpawner : NetworkBehaviour
         rdX = Random.Range(-rdX / 2f, rdX / 2f);
         rdZ = Random.Range(-rdZ / 2f, rdZ / 2f);
         // 콜라이더 내부에서 랜덤한 위치 설정
-        Vector3 spawnPos = new Vector3(rdX, 0, rdZ);
+        Vector3 spawnPos = new Vector3(rdX, -0.7f, rdZ);
         // 기존 위치에 랜덤한 위치 플러스
         spawnPos += basePos;
 

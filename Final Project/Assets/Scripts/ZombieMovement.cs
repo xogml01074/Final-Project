@@ -39,6 +39,7 @@ public class ZombieMovement : NetworkBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        agent.enabled = true;
         SetSpeedAndDamage();
     }
 
@@ -88,23 +89,12 @@ public class ZombieMovement : NetworkBehaviour
 
         foreach (GameObject player in players)
         {
-            Vector3 dir = player.transform.position - transform.position;
-            float distancePlayer = dir.magnitude;
+            float distancePlayer = Vector3.Distance(transform.position, player.transform.position);
 
-            // Physics.RaycastAll을 사용하여 모든 충돌 지점을 가져옴
-            RaycastHit[] hits = Physics.RaycastAll(transform.position, dir, distance);
-
-            // 반복문을 사용해 부딪힌 지점의 플레이어들의 거리만 계산후 타겟 설정
-            foreach (RaycastHit hit in hits)
+            if (distancePlayer < distance)
             {
-                if (hit.collider.CompareTag("Player"))
-                {
-                    if (distancePlayer < distance)
-                    {
-                        distance = distancePlayer;
-                        closestPlayer = player;
-                    }
-                }
+                distance = distancePlayer;
+                closestPlayer = player;
             }
         }
 
@@ -144,18 +134,17 @@ public class ZombieMovement : NetworkBehaviour
         if (zState == ZombieState.Dead || target == null)
             return;
 
-        agent.SetDestination(target.transform.position);
-
-        Vector3 dir = target.transform.position - transform.position;
-        float distance = dir.magnitude;
+        float distance = Vector3.Distance(transform.position, target.transform.position);
 
         if (distance <= attackDistnace)
         {
             zState = ZombieState.Attack;
             anim.SetBool("Walk", false);
             anim.SetBool("Attack", true);
+            return;
         }
 
+        agent.SetDestination(target.transform.position);
     }
 
     public void Attack()
@@ -163,9 +152,12 @@ public class ZombieMovement : NetworkBehaviour
         if (zState == ZombieState.Dead)
             return;
 
-        CharacterMovement attackT = target.GetComponent<CharacterMovement>();
-        agent.velocity = Vector3.zero;
-        attackT.currentHP -= zDamage;
+        agent.isStopped = true;
+        if (target.gameObject.name == "Bomber(Clone)")
+        {
+            CharacterMovement attackT = target.GetComponent<CharacterMovement>();
+            attackT.currentHP -= zDamage;
+        }
     }
 
     public void Hurt(float damage)

@@ -50,6 +50,8 @@ public class CharacterMovement : NetworkBehaviour
     public override void Spawned()
     {
         playerAnim = GetComponentInChildren<Animator>();
+        RPC_SendNickName(UIManager.ui.inputNickName.text);
+
         if (!Object.HasInputAuthority)
         {
             Destroy(cam.gameObject);
@@ -59,8 +61,6 @@ public class CharacterMovement : NetworkBehaviour
 
         cam.gameObject.SetActive(true);
         miniMapCam.SetActive(true);
-        RPC_SendNickName(UIManager.ui.inputNickName.text);
-
     }
 
     public override void Render()
@@ -112,10 +112,10 @@ public class CharacterMovement : NetworkBehaviour
             inputDir -= Vector2.right;
         }
 
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
         if (Object.HasInputAuthority)
         {
+            float h = Input.GetAxis("Horizontal");
+            float v = Input.GetAxis("Vertical");
             // 입력값에 따른 애니메이션
             playerAnim.SetFloat("speedY", h);
             playerAnim.SetFloat("speedX", v);
